@@ -1,0 +1,82 @@
+{
+  "limits": [
+    {
+      "slug": "single-holding-shop-to",
+      "kind": "single_holding",
+      "target": "SHOP.TO",
+      "maxPct": 10,
+      "label": "SHOP.TO",
+      "rows": [
+        {
+          "slug": "single-holding-shop-to",
+          "label": "SHOP.TO",
+          "kind": "single_holding",
+          "maxPct": 10,
+          "currentPct": 14.1,
+          "status": "over",
+          "line": "SHOP.TO 14.1% (est.), over your 10% limit",
+          "note": "Share of your portfolio, cash included"
+        }
+      ]
+    },
+    {
+      "slug": "sector-technology",
+      "kind": "sector",
+      "target": "Technology",
+      "maxPct": 25,
+      "label": "Technology",
+      "rows": [
+        {
+          "slug": "sector-technology",
+          "label": "Technology",
+          "kind": "sector",
+          "maxPct": 25,
+          "currentPct": 21.8,
+          "status": "within",
+          "line": "Technology 21.8% (est.) of your 25% limit",
+          "note": "Share of your portfolio, cash included; 4.1% of your portfolio is unclassified",
+          "unclassifiedPct": 4.1
+        }
+      ]
+    },
+    {
+      "slug": "currency-usd",
+      "kind": "currency",
+      "target": "USD",
+      "maxPct": 30,
+      "label": "USD holdings",
+      "rows": [
+        {
+          "slug": "currency-usd",
+          "label": "USD holdings",
+          "kind": "currency",
+          "maxPct": 30,
+          "currentPct": 17.6,
+          "status": "within",
+          "line": "USD holdings 17.6% (est.) of your 30% limit",
+          "note": "Share of your portfolio, cash included; converted at the Bank of Canada rate of 2026-10-26",
+          "fxDate": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "slug": "single-holding-vfv-to",
+      "kind": "single_holding",
+      "target": "VFV.TO",
+      "maxPct": 20,
+      "label": "VFV.TO",
+      "rows": [
+        {
+          "slug": "single-holding-vfv-to",
+          "label": "VFV.TO",
+          "kind": "single_holding",
+          "maxPct": 20,
+          "currentPct": null,
+          "status": "cant_tell",
+          "line": "VFV.TO: can't tell against your 20% limit",
+          "note": "Share of your portfolio, cash included; latest positions date is unknown"
+        }
+      ]
+    }
+  ]
+}

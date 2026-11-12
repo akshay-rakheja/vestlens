@@ -1,0 +1,132 @@
+{
+  "goals": [
+    {
+      "savedFxDate": null,
+      "paceEstimated": false,
+      "paceFxDate": null,
+      "projectedWithRateCad": 91200,
+      "growthRatePct": 5,
+      "notes": [
+        "Counts your FHSA and TFSA, cash included"
+      ],
+      "slug": "house",
+      "name": "House deposit",
+      "targetCad": 80000,
+      "targetDate": "2028-06-30",
+      "savedCad": 52340.4,
+      "savedPct": 65.4,
+      "remainingCad": 27659.6,
+      "estimated": false,
+      "monthsLeft": 20.1,
+      "dateStatus": "future",
+      "neededPerMonthFlatCad": 1376,
+      "recentPacePerMonthCad": 1650,
+      "projectedAtPaceCad": 85500,
+      "series": [
+        {
+          "date": "2025-12-30",
+          "valueCad": 31000
+        },
+        {
+          "date": "2026-01-29",
+          "valueCad": 33100
+        },
+        {
+          "date": "2026-02-28",
+          "valueCad": 35200
+        },
+        {
+          "date": "2026-03-30",
+          "valueCad": 37300
+        },
+        {
+          "date": "2026-04-29",
+          "valueCad": 39400
+        },
+        {
+          "date": "2026-05-29",
+          "valueCad": 41500
+        },
+        {
+          "date": "2026-06-28",
+          "valueCad": 43600
+        },
+        {
+          "date": "2026-07-28",
+          "valueCad": 45700
+        },
+        {
+          "date": "2026-08-27",
+          "valueCad": 47800
+        },
+        {
+          "date": "2026-09-26",
+          "valueCad": 49900
+        },
+        {
+          "date": "2026-10-26",
+          "valueCad": 52000
+        }
+      ]
+    },
+    {
+      "savedFxDate": "2026-10-26",
+      "paceEstimated": true,
+      "paceFxDate": "2026-10-26",
+      "projectedWithRateCad": null,
+      "growthRatePct": null,
+      "notes": [],
+      "slug": "trip",
+      "name": "Japan trip",
+      "targetCad": 9000,
+      "targetDate": "2027-04-01",
+      "savedCad": 3180,
+      "savedPct": 35.3,
+      "remainingCad": 5820,
+      "estimated": true,
+      "monthsLeft": 5.2,
+      "dateStatus": "future",
+      "neededPerMonthFlatCad": 1119,
+      "recentPacePerMonthCad": 600,
+      "projectedAtPaceCad": 6300,
+      "series": [
+        {
+          "date": "2026-02-28",
+          "valueCad": 1200
+        },
+        {
+          "date": "2026-03-30",
+          "valueCad": 1420
+        },
+        {
+          "date": "2026-04-29",
+          "valueCad": 1640
+        },
+        {
+          "date": "2026-05-29",
+          "valueCad": 1860
+        },
+        {
+          "date": "2026-06-28",
+          "valueCad": 2080
+        },
+        {
+          "date": "2026-07-28",
+          "valueCad": 2300
+        },
+        {
+          "date": "2026-08-27",
+          "valueCad": 2520
+        },
+        {
+          "date": "2026-09-26",
+          "valueCad": 2740
+        },
+        {
+          "date": "2026-10-26",
+          "valueCad": 2960
+        }
+      ]
+    }
+  ]
+}

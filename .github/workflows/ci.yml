@@ -1,0 +1,174 @@
+# Checks the self-hosted line: pushes to selfhost (private repository) or main (public repository) and every pull
+# request. Nothing here builds an image, deploys or publishes. Synthetic inputs only: no secrets, no cloud access, no
+# brokerage reads. Steps that need private-only files are skipped with hashFiles when the file is absent, so the public
+# tree passes this same workflow.
+name: CI
+
+on:
+  push:
+    branches: [selfhost, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  widgets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults: { run: { working-directory: packages/widgets } }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: packages/widgets/package-lock.json }
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npx vitest run
+      - run: npm run build
+      # The API's widget-loader tests read the real widget build and skip without it.
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with: { name: widgets-dist, path: packages/widgets/dist, retention-days: 1 }
+
+  api:
+    needs: widgets
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults: { run: { working-directory: packages/api } }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: packages/api/package-lock.json }
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with: { name: widgets-dist, path: packages/widgets/dist }
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run prisma:validate
+        env: { DATABASE_URL: "postgresql://synthetic:synthetic@localhost:5432/synthetic" }
+      - run: npx vitest run
+
+  baseline-migration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: vestlens
+          POSTGRES_PASSWORD: vestlens
+          POSTGRES_DB: vestlens
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U vestlens -d vestlens"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    defaults: { run: { working-directory: packages/api } }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: packages/api/package-lock.json }
+      - run: npm ci --no-audit --no-fund
+      - run: npm run prisma:generate
+      # Applies the baseline to the empty service database and checks it against schema.prisma. The URL is built from
+      # parts so no connection string sits in the file.
+      - name: Baseline migration test
+        env:
+          PGUSER: vestlens
+          PGPASSWORD: vestlens
+          PGDATABASE: vestlens
+        run: |
+          scheme=postgresql
+          export BASELINE_TEST_DATABASE_URL="${scheme}://${PGUSER}:${PGPASSWORD}@localhost:5432/${PGDATABASE}"
+          npx vitest run scripts/baseline-migration.test.ts
+
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults: { run: { working-directory: packages/web } }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: packages/web/package-lock.json }
+      - run: npm ci --no-audit --no-fund
+      - run: npx vitest run
+      - run: npm run build
+
+  # A real Chromium signs in through the real login form (synthetic server, in-memory sessions, loopback only).
+  # API tests that set Origin by hand cannot catch a page that makes the browser send `Origin: null`.
+  browser-login:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: "packages/*/package-lock.json" }
+      - run: npm ci --no-audit --no-fund
+        working-directory: packages/api
+      - run: npm ci --no-audit --no-fund
+        working-directory: packages/web
+      - run: npx playwright install --with-deps chromium
+        working-directory: packages/web
+      - run: npm run test:e2e
+        working-directory: packages/web
+
+  scripts:
+    needs: widgets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: packages/api/package-lock.json }
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with: { name: widgets-dist, path: packages/widgets/dist }
+      # The script tests load the API's dependencies (a JSON-schema validator, tsx).
+      - run: npm ci --no-audit --no-fund
+        working-directory: packages/api
+      - run: node --test scripts/*.test.mjs
+      # The private repository's publication tools (never published).
+      - name: Publication tool tests
+        if: hashFiles('scripts/publish/snapshot.test.mjs') != ''
+        run: node --test scripts/publish/*.test.mjs
+
+  # Private repository only. The public tree has no scripts/publish-audit.py, so its one step is skipped there.
+  publication-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with: { fetch-depth: 0 }
+      # What this push added since the commit before it: databases, logs, documents and secret-looking text block.
+      # The audit script is private-repository tooling; the public tree skips this step.
+      - name: Publication audit
+        if: hashFiles('scripts/publish-audit.py') != ''
+        env:
+          BEFORE: ${{ github.event.before }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          base="$BEFORE"
+          if [ -n "$BASE_REF" ]; then base="origin/$BASE_REF"; fi
+          if [ -z "$base" ] || ! git cat-file -e "$base^{commit}" 2>/dev/null; then base=$(git merge-base HEAD origin/main); fi
+          python3 -I scripts/publish-audit.py HEAD --base "$base"
+
+  # Builds the Dockerfile and runs the real Compose stack (db, migrate, app) against a fake, read-only SnapTrade served by
+  # the script. Synthetic secrets in a temp directory, torn down with `down -v`. Pushes and deploys nothing.
+  compose-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        # The smoke script needs Node 22.18 or newer.
+        with: { node-version: "22.18" }
+      - run: node scripts/compose-smoke.mjs

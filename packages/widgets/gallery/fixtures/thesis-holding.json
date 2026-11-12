@@ -1,0 +1,50 @@
+{
+  "mode": "one",
+  "ticker": "RY.TO",
+  "thesis": null,
+  "holding": {
+    "sinceFirstBought": {
+      "returnPct": 41.7,
+      "vsSp500Pct": 18.3,
+      "vsTsxPct": 22.5,
+      "estimated": false,
+      "excluded": [],
+      "startDate": "2025-03-12",
+      "endDate": "2026-10-26",
+      "notes": [
+        "Benchmarks are price indices (dividends not included); your holding's dividends are counted."
+      ]
+    },
+    "weight": {
+      "pct": 7.3,
+      "estimated": true,
+      "asOf": "2026-10-26"
+    },
+    "limits": [],
+    "news": [
+      {
+        "title": "Shopify posts a record quarter on invented merchant growth",
+        "source": "Example Wire",
+        "publishedAt": "2026-10-24T12:00:00.000Z",
+        "tone": "news tone: positive",
+        "url": "https://news.example.test/t0"
+      },
+      {
+        "title": "Analyst raises price target after investor day",
+        "source": "Tech Ledger",
+        "publishedAt": "2026-10-21T12:00:00.000Z",
+        "tone": null,
+        "url": "https://news.example.test/t1"
+      },
+      {
+        "title": "Commerce platform announces a new payments partnership",
+        "source": "Example Business",
+        "publishedAt": "2026-10-18T12:00:00.000Z",
+        "tone": null,
+        "url": "https://news.example.test/t2"
+      }
+    ],
+    "newsLabel": "News in the last 30 days",
+    "noReasons": "No reasons saved for this holding."
+  }
+}

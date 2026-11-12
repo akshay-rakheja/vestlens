@@ -1,0 +1,80 @@
+/* The VestLens mark and the top bar shared by the signed-out and signed-in headers (from the public-site styles). Tokens: paper, ink and aperture teal. */
+:root {
+  --vl-ink: #14212b;
+  --vl-paper: #f4f7f6;
+  --vl-surface: #ffffff;
+  --vl-muted: #4d5c66;
+  --vl-mist: #d5dfdd;
+  --vl-line: #e3eae8;
+  --vl-aperture: #0e6b6b;
+  --vl-aperture-deep: #0a5252;
+  --vl-aperture-soft: #dcedea;
+  --vl-index: #9a9a95;
+  --vl-band: #14212b;
+  --vl-band-ink: #e5ecea;
+  --vl-band-muted: #b9c6c4;
+  --vl-band-accent: #7fd0c8;
+  --vl-display: "Bricolage Grotesque Variable", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --vl-body: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+:root {
+    --vl-ink: #e6eeec;
+    --vl-paper: #0f1a1f;
+    --vl-surface: #16252b;
+    --vl-muted: #9fb0b6;
+    --vl-mist: #2a3d44;
+    --vl-line: #22343a;
+    --vl-aperture: #4fb8b0;
+    --vl-aperture-deep: #7fd3cc;
+    --vl-aperture-soft: #1b4243;
+    --vl-index: #6b6b66;
+    --vl-band: #0a1317;
+    --vl-band-ink: #e6eeec;
+    --vl-band-muted: #9fb0b6;
+    --vl-band-accent: #7fd3cc;
+  }
+}
+.vl-topbar, .vl-topbar * { box-sizing: border-box; }
+.vl-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(1180px, 100%);
+  margin-inline: auto;
+  padding: 18px max(20px, env(safe-area-inset-left, 0px));
+  background: transparent;
+  border: 0;
+}
+.brand .vl-mark { color: var(--vl-ink); flex: none; }
+.brand.vl-brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--vl-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; color: var(--vl-ink); text-decoration: none; }
+.vl-button { font-family: var(--vl-display); }
+.vl-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--vl-aperture);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.vl-button:hover { background: var(--vl-aperture-deep); }
+@media (prefers-color-scheme: dark) {
+.vl-button { color: #0f1a1f; }
+}
+.vl-button-sm { min-height: 38px; padding: 0 16px; font-size: 0.95rem; }
+.vl-button:focus-visible {
+  outline: 2px solid var(--vl-aperture);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+.vl-button { transition: none; }
+}

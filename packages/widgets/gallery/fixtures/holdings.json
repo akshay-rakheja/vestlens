@@ -1,0 +1,347 @@
+{
+  "rows": [
+    {
+      "key": "XEQT.TO|CAD",
+      "symbol": "XEQT.TO",
+      "currency": "CAD",
+      "kind": "etf",
+      "units": 2150,
+      "price": 36.12,
+      "marketValue": 77658,
+      "bookCost": 61480,
+      "totalReturn": 16178,
+      "totalReturnFraction": 0.2631,
+      "weight": 0.352,
+      "weightCad": 0.312,
+      "dayChange": {
+        "amount": 387.1,
+        "fraction": 0.005,
+        "estimated": true
+      },
+      "accounts": [
+        {
+          "accountId": "acct-tfsa",
+          "label": "TFSA",
+          "units": 1400,
+          "marketValue": 50568,
+          "bookCost": 40200,
+          "totalReturn": 10368
+        },
+        {
+          "accountId": "acct-rrsp",
+          "label": "RRSP",
+          "units": 750,
+          "marketValue": 27090,
+          "bookCost": 21280,
+          "totalReturn": 5810
+        }
+      ]
+    },
+    {
+      "key": "VFV.TO|CAD",
+      "symbol": "VFV.TO",
+      "currency": "CAD",
+      "kind": "etf",
+      "units": 380,
+      "price": 142.8,
+      "marketValue": 54264,
+      "bookCost": 41200,
+      "totalReturn": 13064,
+      "totalReturnFraction": 0.3171,
+      "weight": 0.246,
+      "weightCad": 0.218,
+      "dayChange": {
+        "amount": 152.4,
+        "fraction": 0.0028,
+        "estimated": true
+      },
+      "accounts": [
+        {
+          "accountId": "acct-tfsa",
+          "label": "TFSA",
+          "units": 140,
+          "marketValue": 19992,
+          "bookCost": 15100,
+          "totalReturn": 4892
+        },
+        {
+          "accountId": "acct-rrsp",
+          "label": "RRSP",
+          "units": 240,
+          "marketValue": 34272,
+          "bookCost": 26100,
+          "totalReturn": 8172
+        }
+      ]
+    },
+    {
+      "key": "SHOP.TO|CAD",
+      "symbol": "SHOP.TO",
+      "currency": "CAD",
+      "kind": "equity",
+      "units": 210,
+      "price": 168.4,
+      "marketValue": 35364,
+      "bookCost": 21800,
+      "totalReturn": 13564,
+      "totalReturnFraction": 0.6222,
+      "weight": 0.16,
+      "weightCad": 0.141,
+      "dayChange": {
+        "amount": -212.7,
+        "fraction": -0.0059,
+        "estimated": true
+      },
+      "accounts": [
+        {
+          "accountId": "acct-personal",
+          "label": "Personal",
+          "units": 210,
+          "marketValue": 35364,
+          "bookCost": 21800,
+          "totalReturn": 13564
+        }
+      ]
+    },
+    {
+      "key": "ZEB.TO|CAD",
+      "symbol": "ZEB.TO",
+      "currency": "CAD",
+      "kind": "etf",
+      "units": 520,
+      "price": 36.9,
+      "marketValue": 19188,
+      "bookCost": 17900,
+      "totalReturn": 1288,
+      "totalReturnFraction": 0.072,
+      "weight": 0.087,
+      "weightCad": 0.077,
+      "dayChange": {
+        "amount": 41.6,
+        "fraction": 0.0022,
+        "estimated": true
+      },
+      "accounts": [
+        {
+          "accountId": "acct-fhsa",
+          "label": "FHSA",
+          "units": 520,
+          "marketValue": 19188,
+          "bookCost": 17900,
+          "totalReturn": 1288
+        }
+      ]
+    },
+    {
+      "key": "RY.TO|CAD",
+      "symbol": "RY.TO",
+      "currency": "CAD",
+      "kind": "equity",
+      "units": 95,
+      "price": 192.3,
+      "marketValue": 18268.5,
+      "bookCost": 14100,
+      "totalReturn": 4168.5,
+      "totalReturnFraction": 0.2956,
+      "weight": 0.083,
+      "weightCad": 0.073,
+      "dayChange": {
+        "amount": 66.5,
+        "fraction": 0.0037,
+        "estimated": true
+      },
+      "accounts": [
+        {
+          "accountId": "acct-rrsp",
+          "label": "RRSP",
+          "units": 95,
+          "marketValue": 18268.5,
+          "bookCost": 14100,
+          "totalReturn": 4168.5
+        }
+      ]
+    },
+    {
+      "key": "ENB.TO|CAD",
+      "symbol": "ENB.TO",
+      "currency": "CAD",
+      "kind": "equity",
+      "units": 300,
+      "price": 63.4,
+      "marketValue": 19020,
+      "bookCost": 15600,
+      "totalReturn": 3420,
+      "totalReturnFraction": 0.2192,
+      "weight": 0.086,
+      "weightCad": 0.076,
+      "dayChange": null,
+      "accounts": [
+        {
+          "accountId": "acct-tfsa",
+          "label": "TFSA",
+          "units": 300,
+          "marketValue": 19020,
+          "bookCost": 15600,
+          "totalReturn": 3420
+        }
+      ]
+    },
+    {
+      "key": "AAPL|USD",
+      "symbol": "AAPL",
+      "currency": "USD",
+      "kind": "equity",
+      "units": 85,
+      "price": 231.5,
+      "marketValue": 19677.5,
+      "bookCost": 15900,
+      "totalReturn": 3777.5,
+      "totalReturnFraction": 0.2376,
+      "weight": 0.567,
+      "weightCad": 0.185,
+      "dayChange": {
+        "amount": -82.4,
+        "fraction": -0.0042,
+        "estimated": true
+      },
+      "accounts": [
+        {
+          "accountId": "acct-personal-usd",
+          "label": "Personal (USD)",
+          "units": 85,
+          "marketValue": 19677.5,
+          "bookCost": 15900,
+          "totalReturn": 3777.5
+        }
+      ]
+    },
+    {
+      "key": "MSFT|USD",
+      "symbol": "MSFT",
+      "currency": "USD",
+      "kind": "equity",
+      "units": 22,
+      "price": 441.8,
+      "marketValue": 9719.6,
+      "bookCost": 8100,
+      "totalReturn": 1619.6,
+      "totalReturnFraction": 0.2,
+      "weight": 0.28,
+      "weightCad": 0.092,
+      "dayChange": {
+        "amount": 33.1,
+        "fraction": 0.0034,
+        "estimated": true
+      },
+      "accounts": [
+        {
+          "accountId": "acct-personal-usd",
+          "label": "Personal (USD)",
+          "units": 22,
+          "marketValue": 9719.6,
+          "bookCost": 8100,
+          "totalReturn": 1619.6
+        }
+      ]
+    },
+    {
+      "key": "VOO|USD",
+      "symbol": "VOO",
+      "currency": "USD",
+      "kind": "etf",
+      "units": 14,
+      "price": 521.3,
+      "marketValue": 7298.2,
+      "bookCost": null,
+      "totalReturn": null,
+      "totalReturnFraction": null,
+      "weight": 0.153,
+      "weightCad": 0.05,
+      "dayChange": null,
+      "accounts": [
+        {
+          "accountId": "acct-personal-usd",
+          "label": "Personal (USD)",
+          "units": 14,
+          "marketValue": 7298.2,
+          "bookCost": null,
+          "totalReturn": null
+        }
+      ]
+    }
+  ],
+  "totals": [
+    {
+      "currency": "CAD",
+      "marketValue": 223762.5,
+      "bookCost": 172080,
+      "totalReturn": 51682.5,
+      "totalReturnFraction": 0.3003,
+      "withCostBasis": 6,
+      "holdings": 6,
+      "cash": 7710
+    },
+    {
+      "currency": "USD",
+      "marketValue": 36695.3,
+      "bookCost": 24000,
+      "totalReturn": 5397.1,
+      "totalReturnFraction": 0.2249,
+      "withCostBasis": 2,
+      "holdings": 3,
+      "cash": 412
+    }
+  ],
+  "accounts": [
+    {
+      "id": "acct-tfsa",
+      "label": "TFSA"
+    },
+    {
+      "id": "acct-rrsp",
+      "label": "RRSP"
+    },
+    {
+      "id": "acct-fhsa",
+      "label": "FHSA"
+    },
+    {
+      "id": "acct-personal",
+      "label": "Personal"
+    },
+    {
+      "id": "acct-personal-usd",
+      "label": "Personal (USD)"
+    }
+  ],
+  "currencies": [
+    "CAD",
+    "USD"
+  ],
+  "omitted": 0,
+  "filters": {
+    "sort": "weight"
+  },
+  "fx": {
+    "rate": 1.3912,
+    "date": "2026-10-26"
+  },
+  "accountValue": [
+    {
+      "currency": "CAD",
+      "amount": 224140,
+      "source": "reported"
+    },
+    {
+      "currency": "USD",
+      "amount": 36907.3,
+      "source": "reported"
+    }
+  ],
+  "settings": {
+    "benchmark": "sp500",
+    "cadView": false,
+    "privacyDefault": false
+  },
+  "asOf": "@now"
+}

@@ -1,0 +1,105 @@
+{
+  "cad": [
+    { "input": 1500, "expected": "$1,500" },
+    { "input": 1234.5, "expected": "$1,234.50" },
+    { "input": 0.05, "expected": "$0.05" },
+    { "input": -250, "expected": "-$250" },
+    { "input": 0, "expected": "$0" }
+  ],
+  "dollars": [
+    { "input": 1234.5, "expected": "$1,235" },
+    { "input": 999.4, "expected": "$999" },
+    { "input": 0, "expected": "$0" },
+    { "input": -250.6, "expected": "-$251" },
+    { "input": 1500000, "expected": "$1,500,000" },
+    { "input": -0.4, "expected": "$0" }
+  ],
+  "estLabel": [
+    { "estimated": true, "fxDate": "2026-10-22", "expected": " (est., Bank of Canada rate 2026-10-22)" },
+    { "estimated": true, "fxDate": null, "expected": " (est.)" },
+    { "estimated": false, "fxDate": "2026-10-22", "expected": "" },
+    { "estimated": false, "fxDate": null, "expected": "" }
+  ],
+  "nativeMoney": [
+    { "amount": 1000, "currency": "USD", "expected": "US$1,000" },
+    { "amount": 1000.5, "currency": "USD", "expected": "US$1,000.50" },
+    { "amount": -1000, "currency": "USD", "expected": "-US$1,000" },
+    { "amount": 2500, "currency": "EUR", "expected": "EUR 2,500" }
+  ],
+  "convertedMoney": [
+    { "cad": "$1,350", "estimated": true, "rateDate": "2026-03-02", "native": { "amount": 1000, "currency": "USD" }, "expected": "$1,350 (est., BoC 2026-03-02; US$1,000)" },
+    { "cad": "$1,350", "estimated": true, "rateDate": null, "native": { "amount": 1000, "currency": "USD" }, "expected": "$1,350 (est., BoC date unknown; US$1,000)" },
+    { "cad": "$1,370", "estimated": false, "rateDate": null, "native": { "amount": 1000, "currency": "USD" }, "expected": "$1,370 (US$1,000 at the broker's rate)" },
+    { "cad": "$5,000", "estimated": false, "rateDate": null, "native": { "amount": 5000, "currency": "CAD" }, "expected": "$5,000" },
+    { "cad": "$5,000", "estimated": false, "rateDate": null, "native": null, "expected": "$5,000" },
+    { "cad": "$9,500", "estimated": true, "rateDate": null, "native": { "amount": 9500, "currency": "CAD" }, "expected": "$9,500 (est.)" }
+  ],
+  "fxNote": [
+    { "fx": { "estimated": false, "rateDates": [], "native": [] }, "expected": "" },
+    { "fx": { "estimated": true, "rateDates": ["2026-03-02"], "native": [{ "amount": 1000, "currency": "USD" }] }, "expected": " (est.; includes US$1,000 converted at the Bank of Canada rate of 2026-03-02)" },
+    { "fx": { "estimated": true, "rateDates": ["2026-03-02", "2026-06-01"], "native": [{ "amount": 1500, "currency": "USD" }] }, "expected": " (est.; includes US$1,500 converted at Bank of Canada rates from 2026-03-02–2026-06-01)" },
+    { "fx": { "estimated": true, "rateDates": [], "native": [{ "amount": 1000, "currency": "USD" }] }, "expected": " (est.; includes US$1,000 converted at Bank of Canada rates)" },
+    { "fx": { "estimated": false, "rateDates": [], "native": [{ "amount": 1000, "currency": "USD" }, { "amount": 200, "currency": "EUR" }] }, "expected": " (includes US$1,000 and EUR 200 converted at the broker's rate)" }
+  ],
+  "withdrawalNote": [
+    { "amount": "$2,000", "year": 2026, "over": true, "expected": "You withdrew $2,000 this year. That room comes back on 1 January 2027. Putting it back before then would be an over-contribution." },
+    { "amount": "$1,350 (est.; includes US$1,000 converted at the Bank of Canada rate of 2026-03-02)", "year": 2026, "over": true, "expected": "You withdrew $1,350 (est.; includes US$1,000 converted at the Bank of Canada rate of 2026-03-02) this year. That room comes back on 1 January 2027. Putting it back before then would be an over-contribution." },
+    { "amount": "$500", "year": 2026, "over": false, "expected": "You withdrew $500 this year. That room comes back on 1 January 2027. Putting it back before then would count as a new contribution against your remaining room." }
+  ],
+  "overLimitAlert": [
+    { "overLimitCad": 1350, "estimated": true, "fx": { "estimated": true, "rateDates": ["2026-03-02"], "native": [{ "amount": 1000, "currency": "USD" }] }, "expected": "Your TFSA contributions this year are about $1,350 (est.; includes US$1,000 converted at the Bank of Canada rate of 2026-03-02) over your room. CRA charges 1% a month on the excess." }
+  ],
+  "torontoDateTime": [
+    { "input": "2026-10-24T08:00:00.000Z", "expected": "24 October 2026, 4:00 a.m. Toronto time" },
+    { "input": "2026-01-15T17:30:00.000Z", "expected": "15 January 2026, 12:30 p.m. Toronto time" },
+    { "input": "2027-01-01T04:59:00.000Z", "expected": "31 December 2026, 11:59 p.m. Toronto time" }
+  ],
+  "withdrawalRowNote": [
+    { "row": { "qualifyingCad": 2000, "returnsCad": 0 }, "expected": "this reduced the amount over by $2,000" },
+    { "row": { "qualifyingCad": 0, "returnsCad": 500, "returnsOn": "2027-01-01" }, "expected": "this room comes back on 1 January 2027, not now" },
+    { "row": { "qualifyingCad": 1000, "returnsCad": 2000, "returnsOn": "2027-01-01" }, "expected": "this reduced the amount over by $1,000; the other $2,000 comes back on 1 January 2027, not now" },
+    { "row": { "qualifyingCad": null, "returnsCad": null }, "expected": null },
+    { "row": { "qualifyingCad": 0, "returnsCad": 500 }, "expected": null }
+  ],
+  "returningNote": [
+    { "result": { "year": 2026, "withdrawnCad": 2000, "returningCad": 0, "fx": { "contributions": { "estimated": false, "rateDates": [], "native": [] }, "withdrawals": { "estimated": false, "rateDates": [], "native": [] } } }, "expected": null },
+    { "result": { "year": 2026, "withdrawnCad": 3000, "returningCad": 2000, "roomLeftCad": 0, "fx": { "contributions": { "estimated": false, "rateDates": [], "native": [] }, "withdrawals": { "estimated": false, "rateDates": [], "native": [] } } }, "expected": "You withdrew $2,000 this year. That room comes back on 1 January 2027. Putting it back before then would be an over-contribution." },
+    { "result": { "year": 2026, "withdrawnCad": 1350, "returningCad": 1350, "roomLeftCad": 1000, "fx": { "contributions": { "estimated": false, "rateDates": [], "native": [] }, "withdrawals": { "estimated": true, "rateDates": ["2026-03-02"], "native": [{ "amount": 1000, "currency": "USD" }] } } }, "expected": "You withdrew $1,350 (est.; includes US$1,000 converted at the Bank of Canada rate of 2026-03-02) this year. That room comes back on 1 January 2027. Putting it back before then would be an over-contribution." },
+    { "result": { "year": 2026, "withdrawnCad": 1350, "returningCad": 350, "roomLeftCad": 0, "fx": { "contributions": { "estimated": false, "rateDates": [], "native": [] }, "withdrawals": { "estimated": true, "rateDates": ["2026-03-02"], "native": [{ "amount": 1000, "currency": "USD" }] } } }, "expected": "You withdrew $350 (est.) this year. That room comes back on 1 January 2027. Putting it back before then would be an over-contribution." },
+    { "result": { "year": 2026, "withdrawnCad": 500, "returningCad": 500, "roomLeftCad": 6000, "fx": { "contributions": { "estimated": false, "rateDates": [], "native": [] }, "withdrawals": { "estimated": false, "rateDates": [], "native": [] } } }, "expected": "You withdrew $500 this year. That room comes back on 1 January 2027. Putting it back before then would count as a new contribution against your remaining room." },
+    { "result": { "year": 2026, "withdrawnCad": 500, "returningCad": null, "fx": { "contributions": { "estimated": false, "rateDates": [], "native": [] }, "withdrawals": { "estimated": false, "rateDates": [], "native": [] } } }, "expected": "You withdrew $500 this year. Some or all of that room comes back on 1 January 2027; the exact amount needs the missing items above." },
+    { "result": { "year": 2026, "status": "missing", "withdrawnCad": 2000, "returningCad": 0, "fx": { "contributions": { "estimated": false, "rateDates": [], "native": [] }, "withdrawals": { "estimated": false, "rateDates": [], "native": [] } } }, "expected": "You withdrew $2,000 this year. Some or all of that room comes back on 1 January 2027; the exact amount needs the missing items above." },
+    { "result": { "year": 2026, "status": "missing", "withdrawnCad": 1350, "returningCad": null, "fx": { "contributions": { "estimated": false, "rateDates": [], "native": [] }, "withdrawals": { "estimated": true, "rateDates": ["2026-03-02"], "native": [{ "amount": 1000, "currency": "USD" }] } } }, "expected": "You withdrew $1,350 (est.; includes US$1,000 converted at the Bank of Canada rate of 2026-03-02) this year. Some or all of that room comes back on 1 January 2027; the exact amount needs the missing items above." }
+  ],
+  "matchedNote": [
+    { "row": { "amountCad": 1000, "native": { "amount": 1000, "currency": "CAD" }, "matchedWith": { "label": "Synthetic Cash", "date": "2026-03-04" } }, "expected": "matched to a transfer from Synthetic Cash on 4 March" },
+    { "row": { "amountCad": -500, "native": { "amount": -500, "currency": "CAD" }, "matchedWith": { "label": "Synthetic Cash ••1234", "date": "2026-12-31" } }, "expected": "matched to a transfer to Synthetic Cash ••1234 on 31 December" },
+    { "row": { "amountCad": null, "native": { "amount": -100, "currency": "USD" }, "matchedWith": { "label": "Synthetic USD", "date": "2026-07-01" } }, "expected": "matched to a transfer to Synthetic USD on 1 July" },
+    { "row": { "amountCad": 1000, "native": null }, "expected": null }
+  ],
+  "assumedNote": [
+    { "row": { "assumed": true }, "expected": "assumed; you can change this" },
+    { "row": {}, "expected": null }
+  ],
+  "fhsaHeadline": [
+    { "result": { "status": "known", "roomLeftCad": 5000, "overLimitCad": 0, "ledger": { "rows": [], "overSince": null, "undatedExcess": false } }, "expected": "About $5,000 of FHSA room left this year" },
+    { "result": { "status": "known", "roomLeftCad": 0, "overLimitCad": 1000, "ledger": { "rows": [], "overSince": "2026-06-10", "undatedExcess": false } }, "expected": "About $1,000 over your FHSA room since 10 June" },
+    { "result": { "status": "known", "roomLeftCad": 0, "overLimitCad": 250.5, "ledger": { "rows": [{ "kind": "outside_total", "label": "Synthetic FHSA" }], "overSince": null, "undatedExcess": true } }, "expected": "About $250.50 over your FHSA room; the date can't be told because Synthetic FHSA has a total, not dated deposits" },
+    { "result": { "status": "missing" }, "expected": "I can't give a number yet" }
+  ],
+  "fhsaWithdrawalNote": [
+    { "row": { "qualifyingCad": 600 }, "expected": "this reduced the amount over by $600" },
+    { "row": { "qualifyingCad": 250.5 }, "expected": "this reduced the amount over by $250.50" },
+    { "row": { "qualifyingCad": 600, "offsetsLater": true }, "expected": "this reduced the amount over by $600" },
+    { "row": { "qualifyingCad": 0, "offsetsLater": true }, "expected": "withdrawals don't give FHSA room back; this one counts against any amount over later this year" },
+    { "row": { "qualifyingCad": 0 }, "expected": "withdrawals don't give FHSA room back" },
+    { "row": { "qualifyingCad": null }, "expected": "withdrawals don't give FHSA room back" },
+    { "row": {}, "expected": "withdrawals don't give FHSA room back" }
+  ],
+  "notCountedLine": [
+    {"items": [{"label": "Wealthsimple TFSA ••Cs5Q"}, {"label": "Wealthsimple TFSA ••KgtA"}], "over": false, "expected": "Not counted: Wealthsimple TFSA ••Cs5Q and ••KgtA. Contributions to them aren't visible through SnapTrade. If you contributed to them this year, your room is lower than this."},
+    {"items": [{"label": "Managed TFSA"}], "over": false, "expected": "Not counted: Managed TFSA. Contributions to it aren't visible through SnapTrade. If you contributed to it this year, your room is lower than this."},
+    {"items": [{"label": "Managed TFSA"}], "over": true, "expected": "Not counted: Managed TFSA. Contributions to it aren't visible through SnapTrade. If you contributed to it this year, the amount over is higher than this."},
+    {"items": [{"label": "A ••1111"}, {"label": "B"}, {"label": "A ••2222"}], "over": false, "expected": "Not counted: A ••1111, B and A ••2222. Contributions to them aren't visible through SnapTrade. If you contributed to them this year, your room is lower than this."}
+  ]
+}

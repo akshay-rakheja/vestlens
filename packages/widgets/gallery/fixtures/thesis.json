@@ -1,0 +1,154 @@
+{
+  "mode": "one",
+  "ticker": "SHOP.TO",
+  "thesis": {
+    "reasons": "Commerce infrastructure with a long runway; I want to hold through the next two product cycles and trim only if it passes 15% of my portfolio.",
+    "boughtAround": "2026-01-05",
+    "check": {
+      "ticker": "SHOP.TO",
+      "writtenAt": "2026-01-05T15:00:00.000Z",
+      "timeFrame": {
+        "label": "10 months into a 3-year thesis",
+        "ended": false
+      },
+      "conditions": [
+        {
+          "id": "c1",
+          "text": "Price stays above $120",
+          "kind": "price_above",
+          "status": "held",
+          "evidence": {
+            "value": "$168.40",
+            "asOf": "2026-10-26"
+          }
+        },
+        {
+          "id": "c2",
+          "text": "Weight stays under 12% of the portfolio",
+          "kind": "weight_above",
+          "status": "broken",
+          "evidence": {
+            "value": "14.1%",
+            "asOf": "2026-10-26"
+          }
+        },
+        {
+          "id": "c3",
+          "text": "Operating margins keep improving",
+          "kind": "fundamental",
+          "status": "cant_tell",
+          "note": "can't check automatically yet"
+        }
+      ],
+      "news": [
+        {
+          "title": "Shopify posts a record quarter on invented merchant growth",
+          "source": "Example Wire",
+          "publishedAt": "2026-10-24T12:00:00.000Z",
+          "tone": "news tone: positive",
+          "url": "https://news.example.test/t0"
+        },
+        {
+          "title": "Analyst raises price target after investor day",
+          "source": "Tech Ledger",
+          "publishedAt": "2026-10-21T12:00:00.000Z",
+          "tone": null,
+          "url": "https://news.example.test/t1"
+        },
+        {
+          "title": "Commerce platform announces a new payments partnership",
+          "source": "Example Business",
+          "publishedAt": "2026-10-18T12:00:00.000Z",
+          "tone": null,
+          "url": "https://news.example.test/t2"
+        },
+        {
+          "title": "Company names a new finance chief",
+          "source": "Example Wire",
+          "publishedAt": "2026-10-15T12:00:00.000Z",
+          "tone": null,
+          "url": "https://news.example.test/t3"
+        },
+        {
+          "title": "Short interest falls for the third straight month",
+          "source": "Market Daily",
+          "publishedAt": "2026-10-12T12:00:00.000Z",
+          "tone": null,
+          "url": "https://news.example.test/t4"
+        }
+      ],
+      "earnings": [
+        {
+          "date": "2026-11-05"
+        },
+        {
+          "date": "2027-02-12"
+        }
+      ],
+      "playedOut": {
+        "returnPct": 18.4,
+        "vsSp500Pct": 6.2,
+        "vsTsxPct": 9.1,
+        "estimated": false,
+        "excluded": [],
+        "startDate": "2026-01-05",
+        "endDate": "2026-10-26",
+        "notes": [
+          "Benchmarks are price indices (dividends not included); your holding's dividends are counted."
+        ]
+      }
+    }
+  },
+  "holding": {
+    "sinceFirstBought": {
+      "returnPct": 41.7,
+      "vsSp500Pct": 18.3,
+      "vsTsxPct": 22.5,
+      "estimated": false,
+      "excluded": [],
+      "startDate": "2025-03-12",
+      "endDate": "2026-10-26",
+      "notes": [
+        "Benchmarks are price indices (dividends not included); your holding's dividends are counted."
+      ]
+    },
+    "weight": {
+      "pct": 14.1,
+      "estimated": true,
+      "asOf": "2026-10-26"
+    },
+    "limits": [
+      {
+        "label": "SHOP.TO",
+        "status": "over",
+        "currentPct": 14.1,
+        "line": "SHOP.TO 14.1% (est.), over your 10% limit",
+        "text": "SHOP.TO 14.1% (est.), over your 10% limit"
+      }
+    ],
+    "news": [
+      {
+        "title": "Shopify posts a record quarter on invented merchant growth",
+        "source": "Example Wire",
+        "publishedAt": "2026-10-24T12:00:00.000Z",
+        "tone": "news tone: positive",
+        "url": "https://news.example.test/t0"
+      },
+      {
+        "title": "Analyst raises price target after investor day",
+        "source": "Tech Ledger",
+        "publishedAt": "2026-10-21T12:00:00.000Z",
+        "tone": null,
+        "url": "https://news.example.test/t1"
+      },
+      {
+        "title": "Commerce platform announces a new payments partnership",
+        "source": "Example Business",
+        "publishedAt": "2026-10-18T12:00:00.000Z",
+        "tone": null,
+        "url": "https://news.example.test/t2"
+      }
+    ],
+    "newsLabel": "News since you wrote it"
+  }
+}

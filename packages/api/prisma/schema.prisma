@@ -1,0 +1,492 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum WebhookProcessingStatus {
+  RECEIVED
+  PROCESSED
+  FAILED
+  IGNORED
+}
+
+model AppUser {
+  id                   String                  @id @default(uuid()) @db.Uuid
+  authSubject          String                  @unique @db.VarChar(255)
+  brokerageConnections BrokerageConnection[]
+  brokerageAccounts    BrokerageAccount[]
+  portfolioSnapshots   PortfolioSnapshot[]
+  webhookEvents        WebhookEvent[]
+  portfolioSettings    PortfolioSettings?
+  dailyValues          DailyValue[]
+  activities           Activity[]
+  activitySyncStates   ActivitySyncState[]
+  historyQualities     AccountHistoryQuality[]
+  newsAlertDeliveries  NewsAlertDelivery[]
+  pendingDisconnects   PendingDisconnect[]
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+}
+
+model Activity {
+  id                 String    @id @default(uuid()) @db.Uuid
+  appUserId          String    @db.Uuid
+  appUser            AppUser   @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  snapTradeAccountId String    @db.VarChar(64)
+  dedupeKey          String    @db.VarChar(64)
+  type               String    @db.VarChar(48)
+  symbol             String?   @db.VarChar(40)
+  securityCurrency   String?   @db.VarChar(3)
+  isOption           Boolean   @default(false)
+  units              Decimal?  @db.Decimal(30, 10)
+  price              Decimal?  @db.Decimal(30, 10)
+  amount             Decimal?  @db.Decimal(30, 10)
+  fee                Decimal?  @db.Decimal(30, 10)
+  fxRate             Decimal?  @db.Decimal(30, 10)
+  currency           String?   @db.VarChar(3)
+  tradeDate          DateTime? @db.Date
+  settlementDate     DateTime? @db.Date
+  description        String?
+  syncedAt           DateTime
+
+  @@unique([appUserId, dedupeKey])
+  @@index([appUserId, snapTradeAccountId, tradeDate])
+}
+
+model ActivitySyncState {
+  appUserId           String    @db.Uuid
+  appUser             AppUser   @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  snapTradeAccountId  String    @db.VarChar(64)
+  backfillCompletedAt DateTime?
+  lastSyncedAt        DateTime?
+  lastError           String?   @db.VarChar(64)
+  activityCount       Int       @default(0)
+  earliestTradeDate   DateTime? @db.Date
+  dirty               Boolean   @default(false)
+
+  @@id([appUserId, snapTradeAccountId])
+}
+
+model AccountHistoryQuality {
+  appUserId          String   @db.Uuid
+  appUser            AppUser  @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  snapTradeAccountId String   @db.VarChar(64)
+  method             String   @db.VarChar(24)
+  reason             String?  @db.VarChar(48)
+  driftFraction      Decimal? @db.Decimal(12, 6)
+  /// JSON array of { date, amount } steps between reported and rebuilt values (spec 2026-11-04-unrecorded-flow-check).
+  unrecordedFlows    String?  @db.Text
+  computedAt         DateTime
+
+  @@id([appUserId, snapTradeAccountId])
+}
+
+model BrokerageConnection {
+  id                    String             @id @default(uuid()) @db.Uuid
+  appUserId             String             @db.Uuid
+  appUser               AppUser            @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  snapTradeConnectionId String             @db.VarChar(64)
+  brokerageSlug         String?            @db.VarChar(128)
+  brokerageName         String?            @db.VarChar(255)
+  disabled              Boolean            @default(false)
+  dataFreshnessMode     String?            @db.VarChar(32)
+  lastWebhookAt         DateTime?
+  accounts              BrokerageAccount[]
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+
+  @@unique([appUserId, snapTradeConnectionId])
+  @@index([appUserId, disabled])
+}
+
+// A connection the user disconnected (or SnapTrade reported deleted) whose removal SnapTrade
+// may still be processing. Reads hide it and never persist it; the nightly sweep re-purges it.
+// Holds ids and timestamps only, never portfolio values. Cleared once CONNECTION_DELETED has
+// been seen and the local purge has succeeded, or after RETENTION.pendingDisconnectDays.
+model PendingDisconnect {
+  id                    String    @id @default(uuid()) @db.Uuid
+  appUserId             String    @db.Uuid
+  appUser               AppUser   @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  snapTradeConnectionId String    @db.VarChar(64)
+  // Account ids purged with the connection, so the sweep can still find rows (activities,
+  // sync state) that an in-flight sync wrote after the BrokerageAccount rows were gone.
+  snapTradeAccountIds   String[]  @default([]) @db.VarChar(64)
+  requestedAt           DateTime
+  confirmedAt           DateTime?
+
+  @@unique([appUserId, snapTradeConnectionId])
+  @@index([confirmedAt, requestedAt])
+}
+
+model BrokerageAccount {
+  id                   String              @id @default(uuid()) @db.Uuid
+  appUserId            String              @db.Uuid
+  appUser              AppUser             @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  connectionId         String              @db.Uuid
+  connection           BrokerageConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  snapTradeAccountId   String              @db.VarChar(64)
+  institutionAccountId String?             @db.VarChar(255)
+  displayName          String?
+  maskedNumber         String?
+  institutionName      String
+  rawType              String?
+  category             String?             @db.VarChar(32)
+  status               String?             @db.VarChar(32)
+  isPaper              Boolean             @default(false)
+  reportedTotal        Decimal?            @db.Decimal(30, 10)
+  reportedCurrency     String?             @db.VarChar(3)
+  holdingsUnavailable  Boolean             @default(false)
+  holdingsLastSyncedAt DateTime?
+  snapshots            PortfolioSnapshot[]
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+
+  @@unique([appUserId, snapTradeAccountId])
+  @@index([appUserId, connectionId])
+}
+
+model PortfolioSnapshot {
+  id                 String            @id @default(uuid()) @db.Uuid
+  appUserId          String            @db.Uuid
+  appUser            AppUser           @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  accountId          String?           @db.Uuid
+  account            BrokerageAccount? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  snapTradeAccountId String            @db.VarChar(64)
+  payload            Json
+  positionsAsOf      DateTime?
+  capturedAt         DateTime          @default(now())
+
+  // Match PostgreSQL's truncation of the identifier in the baseline migration.
+  @@unique([appUserId, snapTradeAccountId, positionsAsOf], map: "PortfolioSnapshot_appUserId_snapTradeAccountId_positionsAsOf_ke")
+  @@index([appUserId, capturedAt])
+  @@index([appUserId, snapTradeAccountId, capturedAt])
+}
+
+model WebhookEvent {
+  id                 String                  @id @default(uuid()) @db.Uuid
+  snapTradeWebhookId String                  @unique @db.VarChar(64)
+  appUserId          String?                 @db.Uuid
+  appUser            AppUser?                @relation(fields: [appUserId], references: [id], onDelete: SetNull)
+  snapTradeUserId    String?                 @db.VarChar(255)
+  eventType          String                  @db.VarChar(128)
+  bodyDigest         String                  @unique @db.Char(64)
+  payload            Json
+  status             WebhookProcessingStatus @default(RECEIVED)
+  failureCode        String?                 @db.VarChar(64)
+  receivedAt         DateTime                @default(now())
+  processedAt        DateTime?
+
+  @@index([appUserId, receivedAt])
+  @@index([snapTradeUserId, receivedAt])
+}
+
+model PortfolioSettings {
+  appUserId        String   @id @db.Uuid
+  appUser          AppUser  @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  benchmark        String   @default("sp500") @db.VarChar(16)
+  cadView          Boolean  @default(true)
+  privacyDefault   Boolean  @default(false)
+  targetAllocation Json?
+  contributionRoom Json?
+  updatedAt        DateTime @updatedAt
+}
+
+model DailyValue {
+  id                 String   @id @default(uuid()) @db.Uuid
+  appUserId          String   @db.Uuid
+  appUser            AppUser  @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  date               DateTime @db.Date
+  snapTradeAccountId String   @db.VarChar(64)
+  currency           String   @db.VarChar(3)
+  value              Decimal  @db.Decimal(30, 10)
+  source             String   @db.VarChar(16)
+  capturedAt         DateTime @default(now())
+
+  @@unique([appUserId, date, snapTradeAccountId, currency])
+  @@index([appUserId, date])
+}
+
+model MarketDataCache {
+  key       String   @id @db.VarChar(200)
+  payload   Json
+  fetchedAt DateTime
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
+model McpOAuthClient {
+  clientId                String    @id @db.VarChar(64)
+  clientSecretHash        String?   @db.Char(64)
+  redirectUris            Json
+  clientName              String?   @db.VarChar(200)
+  tokenEndpointAuthMethod String    @db.VarChar(24)
+  grantTypes              Json
+  createdAt               DateTime  @default(now())
+  lastUsedAt              DateTime?
+
+  @@index([lastUsedAt])
+}
+
+model McpOAuthCimdCache {
+  url        String   @id @db.VarChar(2048)
+  document   Json
+  fetchedAt  DateTime
+  freshUntil DateTime
+  staleUntil DateTime
+
+  @@index([staleUntil])
+}
+
+model McpOAuthPending {
+  id                 String    @id @db.VarChar(64)
+  clientKey          String    @db.VarChar(2048)
+  redirectUri        String    @db.VarChar(2048)
+  state              String?   @db.VarChar(2048)
+  codeChallenge      String    @db.VarChar(128)
+  scope              String    @db.VarChar(64)
+  resource           String    @db.VarChar(2048)
+  upstreamState      String    @unique @db.VarChar(128)
+  upstreamNonce      String    @db.VarChar(128)
+  upstreamVerifier   String    @db.VarChar(128)
+  subject            String?   @db.VarChar(255)
+  consentCsrf        String?   @db.VarChar(128)
+  browserBindingHash String    @db.Char(64)
+  upstreamClaimedAt  DateTime?
+  expiresAt          DateTime
+
+  @@index([expiresAt])
+}
+
+model McpOAuthCode {
+  codeHash      String    @id @db.Char(64)
+  clientKey     String    @db.VarChar(2048)
+  redirectUri   String    @db.VarChar(2048)
+  codeChallenge String    @db.VarChar(128)
+  subject       String    @db.VarChar(255)
+  scope         String    @db.VarChar(64)
+  resource      String    @db.VarChar(2048)
+  expiresAt     DateTime
+  usedAt        DateTime?
+  familyId      String    @db.VarChar(64)
+
+  @@index([familyId])
+  @@index([expiresAt])
+  @@index([subject])
+}
+
+model McpOAuthRefreshToken {
+  tokenHash       String    @id @db.Char(64)
+  familyId        String    @db.VarChar(64)
+  clientKey       String    @db.VarChar(2048)
+  subject         String    @db.VarChar(255)
+  scope           String    @db.VarChar(64)
+  resource        String    @db.VarChar(2048)
+  parentHash      String?   @db.Char(64)
+  expiresAt       DateTime
+  familyExpiresAt DateTime
+  rotatedAt       DateTime?
+  revokedAt       DateTime?
+
+  @@index([familyId])
+  @@index([subject])
+  @@index([familyExpiresAt])
+}
+
+model McpOAuthRevokedFamily {
+  familyId  String   @id @db.VarChar(64)
+  revokedAt DateTime
+
+  @@index([revokedAt])
+}
+
+/// Access-token cut-off for one (subject, client), or for every client of the
+/// subject when clientKey is "*". Gateway access tokens issued at or before
+/// revokedAt (millisecond issue time) are refused at /mcp.
+model McpOAuthClientRevocation {
+  id        String   @id @default(uuid()) @db.Uuid
+  subject   String   @db.VarChar(255)
+  clientKey String   @db.VarChar(2048)
+  revokedAt DateTime
+
+  @@unique([subject, clientKey])
+  @@index([revokedAt])
+}
+
+model McpOAuthConsent {
+  id        String   @id @default(uuid()) @db.Uuid
+  subject   String   @db.VarChar(255)
+  clientKey String   @db.VarChar(2048)
+  scope     String   @db.VarChar(64)
+  grantedAt DateTime
+
+  @@unique([subject, clientKey])
+}
+
+model NewsArticle {
+  id          String   @id @default(uuid()) @db.Uuid
+  urlHash     String   @unique @db.Char(64)
+  url         String   @db.VarChar(2048)
+  headline    String   @db.VarChar(500)
+  snippet     String?  @db.VarChar(200)
+  source      String   @db.VarChar(200)
+  imageUrl    String?  @db.VarChar(2048)
+  publishedAt DateTime
+  symbols     String[] @db.VarChar(32)
+  fetchedAt   DateTime
+
+  ratings NewsRating[]
+
+  @@index([publishedAt])
+  @@index([symbols], type: Gin)
+}
+
+model NewsRating {
+  id                  String      @id @default(uuid()) @db.Uuid
+  articleId           String      @db.Uuid
+  symbol              String      @db.VarChar(32)
+  model               String      @db.VarChar(64)
+  ratedAt             DateTime
+  relevant            Float
+  sentiment           Float
+  sentimentConfidence Float
+  materiality         Float
+  eventType           String?     @db.VarChar(64)
+  eventConfidence     Float
+  credible            Float
+  clickbait           Float
+  duplicateOf         String?     @db.VarChar(64)
+  article             NewsArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, symbol])
+  @@index([symbol])
+}
+
+model NewsSymbolFetch {
+  symbol    String   @id @db.VarChar(32)
+  fetchedAt DateTime
+}
+
+model NewsSymbolStats {
+  symbol        String   @db.VarChar(32)
+  currency      String   @db.VarChar(8)
+  closes        Int
+  typicalMove   Float?
+  lastClose     Float?
+  prevClose     Float?
+  lastCloseDate String?  @db.VarChar(10)
+  updatedAt     DateTime
+
+  @@id([symbol, currency])
+}
+
+model NewsCalendarEvent {
+  id            String   @id @db.VarChar(128)
+  symbol        String   @db.VarChar(32)
+  kind          String   @db.VarChar(24)
+  date          DateTime
+  status        String   @db.VarChar(16)
+  source        String   @db.VarChar(64)
+  amountPerUnit Float?
+  currency      String?  @db.VarChar(8)
+
+  @@index([symbol, date])
+}
+
+model NewsAlertDelivery {
+  id          String   @id @default(uuid()) @db.Uuid
+  appUserId   String   @db.Uuid
+  appUser     AppUser  @relation(fields: [appUserId], references: [id], onDelete: Cascade)
+  clientKey   String   @db.VarChar(512)
+  alertId     String   @db.VarChar(128)
+  deliveredAt DateTime
+
+  @@unique([appUserId, clientKey, alertId])
+  @@index([appUserId])
+  @@index([deliveredAt])
+}
+
+model NewsBudget {
+  day   String @id @db.VarChar(10)
+  spent Int
+}
+
+/// Portfolio memory: one typed fact about a graph node, keyed by auth subject (no AppUser relation). Append-only: a newer fact for the same (node, property), and for reserved
+/// properties the same validFrom, sets supersededAt on the old one. At most one current fact per topic is enforced by the partial
+/// unique index "MemoryFact_current_topic_key" on (subject, nodeType, nodeKey, property,
+/// COALESCE(validFrom, DATE 'epoch')) WHERE supersededAt IS NULL, which lives in the baseline migration SQL only
+/// (Prisma cannot declare partial or expression indexes).
+model MemoryFact {
+  id           String    @id @default(uuid()) @db.Uuid
+  subject      String    @db.VarChar(255)
+  nodeType     String    @db.VarChar(16)
+  nodeKey      String    @db.VarChar(120)
+  property     String    @db.VarChar(64)
+  value        Json?
+  text         String    @db.VarChar(2000)
+  kind         String    @db.VarChar(16)
+  provenance   String    @db.VarChar(16)
+  validFrom    DateTime? @db.Date
+  validTo      DateTime? @db.Date
+  recordedAt   DateTime
+  source       String?   @db.VarChar(64)
+  supersededAt DateTime?
+
+  @@index([subject, nodeType, nodeKey, property, recordedAt])
+  @@index([subject, recordedAt])
+}
+
+/// One TFSA over-contribution alert per auth subject per Toronto year (spec §9a item 10): updated in place while the
+/// excess changes, cleared (kept as history) when room is back to $0 or more or an input goes missing. Subject-keyed
+/// like MemoryFact, with no AppUser foreign key; account deletion removes it by subject.
+model ContributionRoomAlert {
+  id        String    @id @default(uuid()) @db.Uuid
+  subject   String    @db.VarChar(255)
+  year      Int
+  excessCad Decimal   @db.Decimal(14, 2)
+  /// True when the excess includes Bank of Canada conversions (est.).
+  estimated Boolean   @default(false)
+  /// The room text's formatted conversion note, e.g. "(est.; includes US$1,000 converted at …)", or null for plain CAD.
+  note      String?   @db.VarChar(400)
+  raisedAt  DateTime
+  updatedAt DateTime
+  clearedAt DateTime?
+
+  @@unique([subject, year])
+}
+
+/// Nightly thesis-condition and concentration-limit nudges, keyed by auth subject (no AppUser relation, like
+/// ContributionRoomAlert). `target` is the ticker (thesis_condition) or the limit's slug (limit); `conditionId` is the
+/// condition id, or the limit's group key (listing, sector or class). At most one row per (subject, kind, target, conditionId) is enforced by
+/// the expression unique index "PortfolioNudge_subject_kind_target_condition_key" on
+/// (subject, kind, target, COALESCE(conditionId, '')), which lives in the baseline migration SQL only (Prisma cannot declare
+/// expression indexes). A Prisma-generated migration must never drop it.
+model PortfolioNudge {
+  id          String    @id @default(uuid()) @db.Uuid
+  subject     String    @db.VarChar(255)
+  /// "thesis_condition" | "limit" (CHECK constraint in the baseline migration).
+  kind        String    @db.VarChar(32)
+  target      String    @db.VarChar(120)
+  conditionId String?   @db.VarChar(120)
+  /// A short hash of what the nudge was stated against (a limit's maximum and accounts; a condition's kind and
+  /// threshold). Readers hide an open nudge whose basis no longer matches the current fact.
+  basis       String?   @db.VarChar(32)
+  /// The stated nudge, e.g. "Your SHOP thesis condition '…' looks broken (…)."; facts only, at most 400 characters.
+  text        String    @db.VarChar(400)
+  raisedAt    DateTime
+  updatedAt   DateTime
+  clearedAt   DateTime?
+
+  @@index([subject, clearedAt])
+}
+
+model OwnerSession {
+  id         String   @id @db.VarChar(64)
+  createdAt  DateTime @default(now())
+  lastSeenAt DateTime
+  expiresAt  DateTime
+}

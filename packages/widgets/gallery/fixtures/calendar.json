@@ -1,0 +1,150 @@
+{
+  "range": "1m",
+  "asOf": "@now",
+  "weeks": [
+    {
+      "weekStart": "@monday-7",
+      "events": [
+        {
+          "id": "e1",
+          "symbol": "SHOP.TO",
+          "kind": "earnings",
+          "date": "@monday-4",
+          "status": "confirmed",
+          "estimated": false,
+          "amount": null,
+          "outcome": {
+            "headline": "Shopify beats on revenue and lifts its full-year outlook",
+            "source": "Example Wire",
+            "mood": "strongly_positive"
+          }
+        }
+      ]
+    },
+    {
+      "weekStart": "@monday+0",
+      "events": [
+        {
+          "id": "e2",
+          "symbol": "AAPL",
+          "kind": "earnings",
+          "date": "@monday+3",
+          "status": "confirmed",
+          "estimated": false,
+          "amount": null,
+          "outcome": null
+        },
+        {
+          "id": "e3",
+          "symbol": "XEQT.TO",
+          "kind": "dividend_pay",
+          "date": "@monday+4",
+          "status": "expected",
+          "estimated": true,
+          "amount": {
+            "perUnit": 0.18,
+            "units": 2150,
+            "total": 387,
+            "currency": "CAD"
+          },
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "weekStart": "@monday+7",
+      "events": [
+        {
+          "id": "e4",
+          "symbol": "MSFT",
+          "kind": "earnings",
+          "date": "@monday+9",
+          "status": "expected",
+          "estimated": true,
+          "amount": null,
+          "outcome": null
+        },
+        {
+          "id": "e5",
+          "symbol": "RY.TO",
+          "kind": "dividend_pay",
+          "date": "@monday+11",
+          "status": "confirmed",
+          "estimated": false,
+          "amount": {
+            "perUnit": 1.54,
+            "units": 95,
+            "total": 146.3,
+            "currency": "CAD"
+          },
+          "outcome": null
+        },
+        {
+          "id": "e6",
+          "symbol": "AAPL",
+          "kind": "dividend_pay",
+          "date": "@monday+11",
+          "status": "expected",
+          "estimated": true,
+          "amount": {
+            "perUnit": 0.25,
+            "units": 85,
+            "total": 21.25,
+            "currency": "USD"
+          },
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "weekStart": "@monday+21",
+      "events": [
+        {
+          "id": "e7",
+          "symbol": "ENB.TO",
+          "kind": "dividend_pay",
+          "date": "@monday+24",
+          "status": "expected",
+          "estimated": true,
+          "amount": {
+            "perUnit": 0.9425,
+            "units": 300,
+            "total": 282.75,
+            "currency": "CAD"
+          },
+          "outcome": null
+        }
+      ]
+    }
+  ],
+  "thisWeek": {
+    "earnings": 1,
+    "dividends": 1
+  },
+  "accounts": [
+    {
+      "id": "acct-tfsa",
+      "label": "TFSA"
+    },
+    {
+      "id": "acct-rrsp",
+      "label": "RRSP"
+    },
+    {
+      "id": "acct-fhsa",
+      "label": "FHSA"
+    },
+    {
+      "id": "acct-personal",
+      "label": "Personal"
+    }
+  ],
+  "filters": {
+    "range": "1m"
+  },
+  "settings": {
+    "benchmark": "sp500",
+    "cadView": false,
+    "privacyDefault": false
+  }
+}

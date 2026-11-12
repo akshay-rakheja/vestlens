@@ -1,0 +1,534 @@
+{
+  "year": 2026,
+  "years": [
+    2024,
+    2025,
+    2026
+  ],
+  "currencyTotals": [
+    {
+      "currency": "CAD",
+      "net": 4535,
+      "gross": 4535,
+      "withholding": 0,
+      "interest": 47.4,
+      "forward12m": 4310,
+      "unmatchedWithholding": {
+        "count": 0,
+        "amount": 0
+      },
+      "forwardCoverage": {
+        "payers": 6,
+        "covered": 5
+      },
+      "yieldOnCost": 0.0312,
+      "currentYield": 0.0268
+    },
+    {
+      "currency": "USD",
+      "net": 86.82,
+      "gross": 102.15,
+      "withholding": 15.33,
+      "interest": 0,
+      "forward12m": 118,
+      "unmatchedWithholding": {
+        "count": 0,
+        "amount": 0
+      },
+      "forwardCoverage": {
+        "payers": 1,
+        "covered": 1
+      },
+      "yieldOnCost": 0.0049,
+      "currentYield": 0.0043
+    }
+  ],
+  "months": [
+    {
+      "month": "2026-01",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 288,
+        "acct-rrsp": 224,
+        "acct-personal": 128
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 352
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 128
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 96
+        },
+        {
+          "symbol": "Other",
+          "net": 64
+        }
+      ],
+      "net": 640,
+      "gross": 640,
+      "withholding": 0,
+      "interest": 4.1
+    },
+    {
+      "month": "2026-02",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 94.5,
+        "acct-rrsp": 73.5,
+        "acct-personal": 42
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 115.5
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 42
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 31.5
+        },
+        {
+          "symbol": "Other",
+          "net": 21
+        }
+      ],
+      "net": 210,
+      "gross": 210,
+      "withholding": 0,
+      "interest": 4.3
+    },
+    {
+      "month": "2026-03",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 335.25,
+        "acct-rrsp": 260.75,
+        "acct-personal": 149
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 409.75
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 149
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 111.75
+        },
+        {
+          "symbol": "Other",
+          "net": 74.5
+        }
+      ],
+      "net": 745,
+      "gross": 745,
+      "withholding": 0,
+      "interest": 4.6
+    },
+    {
+      "month": "2026-04",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 85.5,
+        "acct-rrsp": 66.5,
+        "acct-personal": 38
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 104.5
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 38
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 28.5
+        },
+        {
+          "symbol": "Other",
+          "net": 19
+        }
+      ],
+      "net": 190,
+      "gross": 190,
+      "withholding": 0,
+      "interest": 4.4
+    },
+    {
+      "month": "2026-05",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 171,
+        "acct-rrsp": 133,
+        "acct-personal": 76
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 209
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 76
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 57
+        },
+        {
+          "symbol": "Other",
+          "net": 38
+        }
+      ],
+      "net": 380,
+      "gross": 380,
+      "withholding": 0,
+      "interest": 4.5
+    },
+    {
+      "month": "2026-06",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 342,
+        "acct-rrsp": 266,
+        "acct-personal": 152
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 418
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 152
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 114
+        },
+        {
+          "symbol": "Other",
+          "net": 76
+        }
+      ],
+      "net": 760,
+      "gross": 760,
+      "withholding": 0,
+      "interest": 4.9
+    },
+    {
+      "month": "2026-07",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 92.25,
+        "acct-rrsp": 71.75,
+        "acct-personal": 41
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 112.75
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 41
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 30.75
+        },
+        {
+          "symbol": "Other",
+          "net": 20.5
+        }
+      ],
+      "net": 205,
+      "gross": 205,
+      "withholding": 0,
+      "interest": 5.1
+    },
+    {
+      "month": "2026-08",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 177.75,
+        "acct-rrsp": 138.25,
+        "acct-personal": 79
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 217.25
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 79
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 59.25
+        },
+        {
+          "symbol": "Other",
+          "net": 39.5
+        }
+      ],
+      "net": 395,
+      "gross": 395,
+      "withholding": 0,
+      "interest": 5
+    },
+    {
+      "month": "2026-09",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 351,
+        "acct-rrsp": 273,
+        "acct-personal": 156
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 429
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 156
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 117
+        },
+        {
+          "symbol": "Other",
+          "net": 78
+        }
+      ],
+      "net": 780,
+      "gross": 780,
+      "withholding": 0,
+      "interest": 5.2
+    },
+    {
+      "month": "2026-10",
+      "currency": "CAD",
+      "byAccount": {
+        "acct-tfsa": 103.5,
+        "acct-rrsp": 80.5,
+        "acct-personal": 46
+      },
+      "payers": [
+        {
+          "symbol": "XEQT.TO",
+          "net": 126.5
+        },
+        {
+          "symbol": "VFV.TO",
+          "net": 46
+        },
+        {
+          "symbol": "RY.TO",
+          "net": 34.5
+        },
+        {
+          "symbol": "Other",
+          "net": 23
+        }
+      ],
+      "net": 230,
+      "gross": 230,
+      "withholding": 0,
+      "interest": 5.3
+    },
+    {
+      "month": "2026-02",
+      "currency": "USD",
+      "byAccount": {
+        "acct-personal-usd": 18.06
+      },
+      "payers": [
+        {
+          "symbol": "AAPL",
+          "net": 18.06
+        }
+      ],
+      "net": 18.06,
+      "gross": 21.25,
+      "withholding": 3.19,
+      "interest": 0
+    },
+    {
+      "month": "2026-05",
+      "currency": "USD",
+      "byAccount": {
+        "acct-personal-usd": 18.06
+      },
+      "payers": [
+        {
+          "symbol": "AAPL",
+          "net": 18.06
+        }
+      ],
+      "net": 18.06,
+      "gross": 21.25,
+      "withholding": 3.19,
+      "interest": 0
+    },
+    {
+      "month": "2026-08",
+      "currency": "USD",
+      "byAccount": {
+        "acct-personal-usd": 18.06
+      },
+      "payers": [
+        {
+          "symbol": "AAPL",
+          "net": 18.06
+        }
+      ],
+      "net": 18.06,
+      "gross": 21.25,
+      "withholding": 3.19,
+      "interest": 0
+    },
+    {
+      "month": "2026-10",
+      "currency": "USD",
+      "byAccount": {
+        "acct-personal-usd": 32.64
+      },
+      "payers": [
+        {
+          "symbol": "AAPL",
+          "net": 32.64
+        }
+      ],
+      "net": 32.64,
+      "gross": 38.4,
+      "withholding": 5.76,
+      "interest": 0
+    }
+  ],
+  "topPayers": [
+    {
+      "symbol": "XEQT.TO",
+      "currency": "CAD",
+      "net": 2540,
+      "yieldOnCost": 0.0398
+    },
+    {
+      "symbol": "VFV.TO",
+      "currency": "CAD",
+      "net": 905,
+      "yieldOnCost": 0.0216
+    },
+    {
+      "symbol": "RY.TO",
+      "currency": "CAD",
+      "net": 703,
+      "yieldOnCost": 0.0499
+    },
+    {
+      "symbol": "AAPL",
+      "currency": "USD",
+      "net": 86.82,
+      "yieldOnCost": 0.0049
+    }
+  ],
+  "yields": [
+    {
+      "symbol": "XEQT.TO",
+      "currency": "CAD",
+      "yieldOnCost": 0.0398,
+      "currentYield": 0.0327,
+      "estimated": true
+    },
+    {
+      "symbol": "RY.TO",
+      "currency": "CAD",
+      "yieldOnCost": 0.0499,
+      "currentYield": 0.0384,
+      "estimated": true
+    }
+  ],
+  "withholding": [
+    {
+      "accountType": "TFSA",
+      "currency": "USD",
+      "gross": 12.5,
+      "withholding": 1.88,
+      "rate": 0.15
+    },
+    {
+      "accountType": "RRSP",
+      "currency": "CAD",
+      "gross": 2150,
+      "withholding": 0,
+      "rate": 0
+    },
+    {
+      "accountType": "Personal",
+      "currency": "USD",
+      "gross": 89.65,
+      "withholding": 13.45,
+      "rate": 0.15
+    }
+  ],
+  "contributions": [
+    {
+      "accountType": "TFSA",
+      "currency": "CAD",
+      "amount": 7000
+    },
+    {
+      "accountType": "RRSP",
+      "currency": "CAD",
+      "amount": 6200
+    },
+    {
+      "accountType": "FHSA",
+      "currency": "CAD",
+      "amount": 5000
+    }
+  ],
+  "accounts": [
+    {
+      "id": "acct-tfsa",
+      "label": "TFSA"
+    },
+    {
+      "id": "acct-rrsp",
+      "label": "RRSP"
+    },
+    {
+      "id": "acct-fhsa",
+      "label": "FHSA"
+    },
+    {
+      "id": "acct-personal",
+      "label": "Personal"
+    }
+  ],
+  "syncing": [],
+  "filters": {},
+  "settings": {
+    "benchmark": "sp500",
+    "cadView": false,
+    "privacyDefault": false
+  },
+  "asOf": "@now"
+}

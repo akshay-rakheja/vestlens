@@ -1,0 +1,76 @@
+{
+  "asOf": "@today",
+  "activityFrom": null,
+  "calls": {
+    "checked": 0,
+    "items": [],
+    "summary": {
+      "compared": 0,
+      "ahead": 0,
+      "behind": 0,
+      "even": 0,
+      "best": null,
+      "worst": null,
+      "aheadUnmeasured": []
+    },
+    "cantTell": {
+      "count": 0,
+      "reasons": []
+    }
+  },
+  "afterSold": {
+    "items": [],
+    "summary": {
+      "sells": 0,
+      "rose": 0,
+      "fell": 0,
+      "unchanged": 0,
+      "keptVsSoldCad": null,
+      "estimated": false,
+      "rateDate": null,
+      "notConverted": 0,
+      "native": []
+    },
+    "cantTell": {
+      "count": 0,
+      "reasons": []
+    }
+  },
+  "tradingCost": {
+    "conversion": {
+      "rows": 0,
+      "convertedCad": 0,
+      "estimated": false,
+      "rateDate": null,
+      "native": [],
+      "cantTell": {
+        "count": 0,
+        "reasons": []
+      },
+      "estimate": {
+        "rows": 0,
+        "minRows": 20,
+        "costCad": null,
+        "sharePct": null,
+        "estimated": true,
+        "rateDates": null,
+        "cantTell": {
+          "count": 0,
+          "reasons": []
+        }
+      }
+    },
+    "fees": {
+      "rows": 0,
+      "totalCad": 0,
+      "estimated": false,
+      "rateDate": null,
+      "native": [],
+      "cantTell": {
+        "count": 0,
+        "reasons": []
+      }
+    }
+  },
+  "overall": null
+}

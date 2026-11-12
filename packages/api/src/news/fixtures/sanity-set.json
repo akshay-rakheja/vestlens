@@ -1,0 +1,476 @@
+[
+  {
+    "ticker": "ZZAPX",
+    "company": "Apex Zeta Corp",
+    "headline": "Apex Zeta wins $2 billion multi-year government contract",
+    "snippet": "The company said the award covers five years and adds about a quarter to its order backlog, according to a filing.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 2,
+      "eventType": "product"
+    }
+  },
+  {
+    "ticker": "ZZBRK",
+    "company": "Brookline Zeta Inc",
+    "headline": "Brookline Zeta recalls its flagship device after reports of fires",
+    "snippet": "The firm said it is halting sales worldwide and will refund buyers while regulators examine 14 incidents.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "product"
+    }
+  },
+  {
+    "ticker": "ZZCEL",
+    "company": "Celeron Zeta Ltd",
+    "headline": "Celeron Zeta beats quarterly earnings estimates and lifts revenue 18%",
+    "snippet": "Net income rose to $412 million as subscription sales grew, the company reported on Tuesday.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 2,
+      "eventType": "earnings"
+    }
+  },
+  {
+    "ticker": "ZZDLT",
+    "company": "Delta Zeta Holdings",
+    "headline": "Delta Zeta misses profit forecast as margins shrink",
+    "snippet": "Quarterly earnings came in 22% below analyst forecasts, the company said, citing higher input costs.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "earnings"
+    }
+  },
+  {
+    "ticker": "ZZECO",
+    "company": "Ecoline Zeta Corp",
+    "headline": "Ecoline Zeta cuts full-year guidance on weak demand",
+    "snippet": "Management lowered its annual revenue outlook by 12% and said orders slowed sharply in the final month.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "guidance"
+    }
+  },
+  {
+    "ticker": "ZZFLX",
+    "company": "Flexon Zeta Inc",
+    "headline": "Flexon Zeta raises annual outlook after record quarter",
+    "snippet": "The company now expects revenue growth of 20 to 24%, up from 15 to 18% previously, it said in a statement.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 2,
+      "eventType": "guidance"
+    }
+  },
+  {
+    "ticker": "ZZGLO",
+    "company": "Globex Zeta Ltd",
+    "headline": "Globex Zeta agrees to be acquired by Harbor Zeta in $9 billion deal",
+    "snippet": "Shareholders will receive $48 a share in cash, a 31% premium, under the agreement announced Monday.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 2,
+      "eventType": "m_and_a"
+    }
+  },
+  {
+    "ticker": "ZZHRB",
+    "company": "Harbor Zeta Group",
+    "headline": "Harbor Zeta to buy Globex Zeta, funding the deal with new debt",
+    "snippet": "Harbor Zeta will issue $6 billion of bonds to finance the purchase and expects the deal to close next year.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "neutral",
+      "materialityMin": 2,
+      "eventType": "m_and_a"
+    }
+  },
+  {
+    "ticker": "ZZINF",
+    "company": "Inflect Zeta Corp",
+    "headline": "Regulator fines Inflect Zeta $300 million over data practices",
+    "snippet": "The agency said the company misled customers about data sharing and ordered changes to its practices.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "regulatory"
+    }
+  },
+  {
+    "ticker": "ZZJUN",
+    "company": "Juniper Zeta Pharma",
+    "headline": "Health agency approves Juniper Zeta's lead drug for broad use",
+    "snippet": "The approval covers adults with the condition and allows launch within weeks, the company said.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 2,
+      "eventType": "regulatory"
+    }
+  },
+  {
+    "ticker": "ZZKYO",
+    "company": "Kyoto Zeta Systems",
+    "headline": "Court rules against Kyoto Zeta in patent case, orders $750 million in damages",
+    "snippet": "A jury found the company infringed three patents held by a rival and the company said it will appeal.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "legal"
+    }
+  },
+  {
+    "ticker": "ZZLUM",
+    "company": "Lumen Zeta Inc",
+    "headline": "Lumen Zeta settles class action for $15 million",
+    "snippet": "The settlement resolves claims from former customers and includes no admission of wrongdoing, a filing said.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "neutral",
+      "materialityMin": 0,
+      "eventType": "legal"
+    }
+  },
+  {
+    "ticker": "ZZMNT",
+    "company": "Monet Zeta Corp",
+    "headline": "Monet Zeta unveils new chip line, ships to first customers this month",
+    "snippet": "The company introduced three processors it says double performance per watt and began first deliveries.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 2,
+      "eventType": "product"
+    }
+  },
+  {
+    "ticker": "ZZNOV",
+    "company": "Novara Zeta Ltd",
+    "headline": "Novara Zeta opens new office in Calgary",
+    "snippet": "The company said the office will house 40 staff and is part of routine regional expansion.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 0
+    }
+  },
+  {
+    "ticker": "ZZORB",
+    "company": "Orbit Zeta Technologies",
+    "headline": "Oil and rates drive stocks lower as central bank signals pause",
+    "snippet": "Markets fell broadly after the central bank held rates, with energy, banks and technology shares all down.",
+    "expect": {
+      "relevant": "low",
+      "sentimentBand": "negative",
+      "materialityMin": 0,
+      "eventType": "macro"
+    }
+  },
+  {
+    "ticker": "ZZPLM",
+    "company": "Palm Zeta Holdings",
+    "headline": "Ten stocks to watch this week as inflation data lands",
+    "snippet": "Analysts flagged ten names ahead of Thursday's inflation report, including Palm Zeta and others.",
+    "expect": {
+      "relevant": "low",
+      "sentimentBand": "neutral",
+      "materialityMin": 0,
+      "eventType": "macro"
+    }
+  },
+  {
+    "ticker": "ZZQRT",
+    "company": "Quartz Zeta Inc",
+    "headline": "Market wrap: indexes slide as yields climb",
+    "snippet": "Stocks closed lower with Quartz Zeta, Radian Zeta and several other large caps among the decliners.",
+    "expect": {
+      "relevant": "low",
+      "sentimentBand": "negative",
+      "materialityMin": 0,
+      "eventType": "macro"
+    }
+  },
+  {
+    "ticker": "ZZRAD",
+    "company": "Radian Zeta Corp",
+    "headline": "Central bank holds rates; inflation cooled to 2.4% in September",
+    "snippet": "The statement said the economy is growing modestly and gave no signal on the next move.",
+    "expect": {
+      "relevant": "low",
+      "sentimentBand": "neutral",
+      "materialityMin": 0,
+      "eventType": "macro"
+    }
+  },
+  {
+    "ticker": "ZZSOL",
+    "company": "Solace Zeta Energy",
+    "headline": "Broker upgrades Solace Zeta to outperform, raises price target to $64",
+    "snippet": "The analyst cited improving margins and said the shares are undervalued relative to peers.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 0,
+      "eventType": "analyst_rating"
+    }
+  },
+  {
+    "ticker": "ZZTEN",
+    "company": "Tenor Zeta Ltd",
+    "headline": "Research firm downgrades Tenor Zeta, cuts target to $22",
+    "snippet": "The firm said slowing growth and rising competition weigh on the outlook for the shares.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 0,
+      "eventType": "analyst_rating"
+    }
+  },
+  {
+    "ticker": "ZZUMB",
+    "company": "Umbra Zeta Inc",
+    "headline": "Umbra Zeta chief executive sells $18 million of shares",
+    "snippet": "A regulatory filing showed the executive sold 400,000 shares under a pre-arranged trading plan.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 0,
+      "eventType": "insider"
+    }
+  },
+  {
+    "ticker": "ZZVAL",
+    "company": "Valor Zeta Corp",
+    "headline": "Valor Zeta director buys $5 million of company stock in open market",
+    "snippet": "A filing shows the Valor Zeta director bought 100,000 shares at $50 on Friday.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 0,
+      "eventType": "insider"
+    }
+  },
+  {
+    "ticker": "ZZWEX",
+    "company": "Wexler Zeta Bank",
+    "headline": "Wexler Zeta raises quarterly dividend by 8%",
+    "snippet": "The board declared a dividend of $1.08 a share, payable next month to holders of record.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 0,
+      "eventType": "dividend"
+    }
+  },
+  {
+    "ticker": "ZZXEN",
+    "company": "Xenon Zeta Utilities",
+    "headline": "Xenon Zeta suspends its dividend to preserve cash",
+    "snippet": "The utility said it will redirect cash to debt reduction after a costly outage.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "dividend"
+    }
+  },
+  {
+    "ticker": "ZZYAR",
+    "company": "Yarrow Zeta Foods",
+    "headline": "You won't believe what this stock just did, and it could change everything",
+    "snippet": "Shares of Yarrow Zeta moved slightly on Wednesday in light volume.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "neutral",
+      "materialityMin": 0
+    }
+  },
+  {
+    "ticker": "ZZZEN",
+    "company": "Zenith Zeta Corp",
+    "headline": "Zenith Zeta stock set to EXPLODE, insiders quietly loading up",
+    "snippet": "A newsletter writer says Zenith Zeta may rise, citing unnamed sources and no filings.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "any",
+      "materialityMin": 0,
+      "clickbait": "high"
+    }
+  },
+  {
+    "ticker": "ZZAQU",
+    "company": "Aquila Zeta Mining",
+    "headline": "Aquila Zeta plunges? The shocking truth traders are hiding",
+    "snippet": "Aquila Zeta shares ended the day unchanged after a quiet session.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "neutral",
+      "materialityMin": 0
+    }
+  },
+  {
+    "ticker": "ZZBAR",
+    "company": "Barrow Zeta Inc",
+    "headline": "SPONSORED: Why Barrow Zeta could be the next big winner, sign up for our free report",
+    "snippet": "Paid content: our editors highlight Barrow Zeta and invite you to subscribe to a premium service.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "neutral",
+      "materialityMin": 0
+    }
+  },
+  {
+    "ticker": "ZZCAS",
+    "company": "Cascade Zeta Ltd",
+    "headline": "Cascade Zeta named in this week's top picks from our trading club",
+    "snippet": "Join our members-only chat room to see the full list. Past performance is not a guarantee.",
+    "expect": {
+      "relevant": "low",
+      "sentimentBand": "any",
+      "materialityMin": 0,
+      "credible": "low"
+    }
+  },
+  {
+    "ticker": "ZZDUN",
+    "company": "Dunmore Zeta Corp",
+    "headline": "Best growth stocks to buy now: Dunmore Zeta, Eland Zeta, Fenwick Zeta and 12 more",
+    "snippet": "A roundup of 15 shares that readers searched for this month, with one line on each company.",
+    "expect": {
+      "relevant": "low",
+      "sentimentBand": "any",
+      "materialityMin": 0,
+      "credible": "low"
+    }
+  },
+  {
+    "ticker": "ZZELD",
+    "company": "Eland Zeta Inc",
+    "headline": "Why tech earnings season matters: what Eland Zeta and peers will report",
+    "snippet": "Analysts preview results for eight large technology firms due over the next two weeks.",
+    "expect": {
+      "relevant": "low",
+      "sentimentBand": "neutral",
+      "materialityMin": 0
+    }
+  },
+  {
+    "ticker": "ZZFEN",
+    "company": "Fenwick Zeta Ltd",
+    "headline": "Supplier named Fenwick Zeta is mentioned among customers of Gable Zeta",
+    "snippet": "Gable Zeta said revenue rose 5%; the release lists Fenwick Zeta and six other customers.",
+    "expect": {
+      "relevant": "low",
+      "sentimentBand": "neutral",
+      "materialityMin": 0
+    }
+  },
+  {
+    "ticker": "ZZGAB",
+    "company": "Gable Zeta Holdings",
+    "headline": "Gable Zeta reports revenue up 5% as cloud demand holds steady",
+    "snippet": "Quarterly sales were in line with forecasts and the company reaffirmed its outlook, it said.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 1,
+      "eventType": "earnings"
+    }
+  },
+  {
+    "ticker": "ZZHAR",
+    "company": "Harlan Zeta Corp",
+    "headline": "Harlan Zeta shuts its largest plant after a fire, output cut by a third",
+    "snippet": "The company said it halted production at the site and expects repairs to take at least six months.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "product"
+    }
+  },
+  {
+    "ticker": "ZZIVY",
+    "company": "Ivy Zeta Therapeutics",
+    "headline": "Ivy Zeta trial misses main goal, shares of the biotech tumble",
+    "snippet": "The late-stage study failed to show benefit over placebo and the company will end the program.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "product"
+    }
+  },
+  {
+    "ticker": "ZZJAS",
+    "company": "Jasper Zeta Ltd",
+    "headline": "Regulator opens investigation into Jasper Zeta's accounting",
+    "snippet": "The securities regulator confirmed a formal probe of the company's revenue recognition practices.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "regulatory"
+    }
+  },
+  {
+    "ticker": "ZZKES",
+    "company": "Kestrel Zeta Inc",
+    "headline": "Kestrel Zeta signs supply deal with Lumen Zeta worth $120 million",
+    "snippet": "The three-year agreement covers components for next year's product line, the companies said.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 2,
+      "eventType": "product"
+    }
+  },
+  {
+    "ticker": "ZZLAN",
+    "company": "Lancer Zeta Corp",
+    "headline": "Lancer Zeta announces $2 billion share buyback and a special dividend",
+    "snippet": "The board authorised repurchases of up to $2 billion and a one-time dividend of $2 a share.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "positive",
+      "materialityMin": 2,
+      "eventType": "dividend"
+    }
+  },
+  {
+    "ticker": "ZZMAR",
+    "company": "Marlow Zeta Ltd",
+    "headline": "Marlow Zeta chief financial officer to retire next year",
+    "snippet": "The company said the CFO will retire after 12 years and a search for a successor has begun.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "neutral",
+      "materialityMin": 0,
+      "eventType": "other"
+    }
+  },
+  {
+    "ticker": "ZZNEX",
+    "company": "Nexus Zeta Group",
+    "headline": "Nexus Zeta restates two years of results after accounting error",
+    "snippet": "The company said it will correct previously reported earnings and delayed its annual filing.",
+    "expect": {
+      "relevant": "high",
+      "sentimentBand": "negative",
+      "materialityMin": 2,
+      "eventType": "earnings"
+    }
+  }
+]

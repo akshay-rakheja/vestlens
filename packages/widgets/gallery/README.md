@@ -1,0 +1,2 @@
+Dev-only preview of every MCP Apps widget with synthetic fixtures (not part of the widget build or the Docker image). Build, then serve from this package: `npm --prefix packages/widgets run build`, then `cd packages/widgets && python3 -m http.server 4174 --bind 127.0.0.1`.
+Open http://127.0.0.1:4174/gallery/?theme=light (or `theme=dark`), add `&only=<widget>` for one widget (for example `&only=tfsa-room`); fixtures are in `gallery/fixtures/`, relative dates use `@today`, `@monday` and `@now` tokens resolved by `host.js`.

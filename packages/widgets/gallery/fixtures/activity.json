@@ -1,0 +1,218 @@
+{
+  "rows": [
+    {
+      "id": "r1",
+      "date": "@today-0",
+      "accountId": "acct-tfsa",
+      "accountLabel": "TFSA",
+      "category": "investing",
+      "type": "BUY",
+      "symbol": "VFV.TO",
+      "description": "Bought VFV.TO",
+      "units": 10,
+      "price": 142.4,
+      "priceCurrency": "CAD",
+      "amount": -1424,
+      "currency": "CAD"
+    },
+    {
+      "id": "r2",
+      "date": "@today-0",
+      "accountId": "acct-rrsp",
+      "accountLabel": "RRSP",
+      "category": "investing",
+      "type": "DIVIDEND",
+      "symbol": "XEQT.TO",
+      "description": "Dividend XEQT.TO",
+      "units": null,
+      "price": null,
+      "priceCurrency": null,
+      "amount": 118.62,
+      "currency": "CAD"
+    },
+    {
+      "id": "r3",
+      "date": "@today-2",
+      "accountId": "acct-personal-usd",
+      "accountLabel": "Personal (USD)",
+      "category": "investing",
+      "type": "SELL",
+      "symbol": "AAPL",
+      "description": "Sold AAPL",
+      "units": 5,
+      "price": 230.1,
+      "priceCurrency": "USD",
+      "amount": 1150.5,
+      "currency": "USD"
+    },
+    {
+      "id": "r4",
+      "date": "@today-2",
+      "accountId": "acct-personal-usd",
+      "accountLabel": "Personal (USD)",
+      "category": "investing",
+      "type": "DIVIDEND",
+      "symbol": "AAPL",
+      "description": "Dividend AAPL",
+      "units": null,
+      "price": null,
+      "priceCurrency": null,
+      "amount": 18.7,
+      "currency": "USD"
+    },
+    {
+      "id": "r5",
+      "date": "@today-5",
+      "accountId": "acct-fhsa",
+      "accountLabel": "FHSA",
+      "category": "moving_money",
+      "type": "DEPOSIT",
+      "symbol": null,
+      "description": "Contribution",
+      "units": null,
+      "price": null,
+      "priceCurrency": null,
+      "amount": 500,
+      "currency": "CAD"
+    },
+    {
+      "id": "r6",
+      "date": "@today-9",
+      "accountId": "acct-tfsa",
+      "accountLabel": "TFSA",
+      "category": "investing",
+      "type": "BUY",
+      "symbol": "XEQT.TO",
+      "description": "Bought XEQT.TO",
+      "units": 40,
+      "price": 35.2,
+      "priceCurrency": "CAD",
+      "amount": -1408,
+      "currency": "CAD"
+    },
+    {
+      "id": "r7",
+      "date": "@today-14",
+      "accountId": "acct-personal",
+      "accountLabel": "Personal",
+      "category": "cash",
+      "type": "INTEREST",
+      "symbol": null,
+      "description": "Interest",
+      "units": null,
+      "price": null,
+      "priceCurrency": null,
+      "amount": 5.31,
+      "currency": "CAD"
+    },
+    {
+      "id": "r8",
+      "date": "@today-21",
+      "accountId": "acct-rrsp",
+      "accountLabel": "RRSP",
+      "category": "investing",
+      "type": "BUY",
+      "symbol": "RY.TO",
+      "description": "Bought RY.TO",
+      "units": 5,
+      "price": 190.5,
+      "priceCurrency": "CAD",
+      "amount": -952.5,
+      "currency": "CAD"
+    },
+    {
+      "id": "r9",
+      "date": "@today-33",
+      "accountId": "acct-tfsa",
+      "accountLabel": "TFSA",
+      "category": "moving_money",
+      "type": "DEPOSIT",
+      "symbol": null,
+      "description": "Contribution",
+      "units": null,
+      "price": null,
+      "priceCurrency": null,
+      "amount": 1000,
+      "currency": "CAD"
+    }
+  ],
+  "nextCursor": "cursor-2",
+  "restarted": false,
+  "totals": [
+    {
+      "currency": "CAD",
+      "bought": 3784.5,
+      "sold": 0,
+      "dividends": 118.62,
+      "dividendsGross": 118.62,
+      "withholding": 0,
+      "deposits": 1500,
+      "withdrawals": 0,
+      "feeTransactions": 0
+    },
+    {
+      "currency": "USD",
+      "bought": 0,
+      "sold": 1150.5,
+      "dividends": 15.9,
+      "dividendsGross": 18.7,
+      "withholding": -2.8,
+      "deposits": 0,
+      "withdrawals": 0,
+      "feeTransactions": 0
+    }
+  ],
+  "counts": {
+    "total": 9,
+    "byType": {
+      "BUY": 3,
+      "SELL": 1,
+      "DIVIDEND": 2,
+      "DEPOSIT": 2,
+      "INTEREST": 1
+    }
+  },
+  "filters": {
+    "categories": [
+      "investing",
+      "moving_money",
+      "cash"
+    ],
+    "from": "@today-90",
+    "to": "@today-0"
+  },
+  "accounts": [
+    {
+      "id": "acct-tfsa",
+      "label": "TFSA",
+      "kind": "investment"
+    },
+    {
+      "id": "acct-rrsp",
+      "label": "RRSP",
+      "kind": "investment"
+    },
+    {
+      "id": "acct-fhsa",
+      "label": "FHSA",
+      "kind": "investment"
+    },
+    {
+      "id": "acct-personal",
+      "label": "Personal",
+      "kind": "investment"
+    },
+    {
+      "id": "acct-personal-usd",
+      "label": "Personal (USD)",
+      "kind": "investment"
+    }
+  ],
+  "syncing": [],
+  "settings": {
+    "benchmark": "sp500",
+    "cadView": false,
+    "privacyDefault": false
+  },
+  "asOf": "@now"
+}

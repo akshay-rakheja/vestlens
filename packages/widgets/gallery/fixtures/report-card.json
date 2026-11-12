@@ -1,0 +1,318 @@
+{
+  "asOf": "@today",
+  "activityFrom": "2024-03-04",
+  "calls": {
+    "checked": 9,
+    "items": [
+      {
+        "symbol": "XEQT.TO",
+        "returnPct": 31.2,
+        "vsSp500Pct": 9.4,
+        "vsTsxPct": 6.1,
+        "startDate": "2024-03-04",
+        "endDate": "2026-10-23",
+        "estimated": false,
+        "rateDate": null
+      },
+      {
+        "symbol": "SYNA",
+        "returnPct": 44.0,
+        "vsSp500Pct": 8.7,
+        "vsTsxPct": 10.2,
+        "startDate": "2025-01-06",
+        "endDate": "2026-10-23",
+        "estimated": true,
+        "rateDate": "2026-10-23"
+      },
+      {
+        "symbol": "SHOP.TO",
+        "returnPct": 22.5,
+        "vsSp500Pct": 3.1,
+        "vsTsxPct": 5.8,
+        "startDate": "2024-06-03",
+        "endDate": "2026-10-23",
+        "estimated": false,
+        "rateDate": null
+      },
+      {
+        "symbol": "SYNB",
+        "returnPct": 12.4,
+        "vsSp500Pct": 0.6,
+        "vsTsxPct": 2.0,
+        "startDate": "2025-02-03",
+        "endDate": "2026-10-23",
+        "estimated": true,
+        "rateDate": "2026-10-23"
+      },
+      {
+        "symbol": "VFV.TO",
+        "returnPct": 14.8,
+        "vsSp500Pct": -0.4,
+        "vsTsxPct": 1.9,
+        "startDate": "2024-09-03",
+        "endDate": "2026-10-23",
+        "estimated": false,
+        "rateDate": null
+      },
+      {
+        "symbol": "SYNC",
+        "returnPct": -8.3,
+        "vsSp500Pct": -21.5,
+        "vsTsxPct": -17.2,
+        "startDate": "2025-05-01",
+        "endDate": "2026-10-23",
+        "estimated": true,
+        "rateDate": "2026-10-23"
+      },
+      {
+        "symbol": "SYND.TO",
+        "returnPct": -2.1,
+        "vsSp500Pct": -24.6,
+        "vsTsxPct": -19.0,
+        "startDate": "2024-11-04",
+        "endDate": "2026-10-23",
+        "estimated": false,
+        "rateDate": null
+      }
+    ],
+    "summary": {
+      "compared": 8,
+      "ahead": 5,
+      "behind": 3,
+      "even": 0,
+      "best": {
+        "symbol": "XEQT.TO",
+        "returnPct": 31.2,
+        "vsSp500Pct": 9.4,
+        "vsTsxPct": 6.1,
+        "startDate": "2024-03-04",
+        "endDate": "2026-10-23",
+        "estimated": false,
+        "rateDate": null
+      },
+      "worst": {
+        "symbol": "SYND.TO",
+        "returnPct": -2.1,
+        "vsSp500Pct": -24.6,
+        "vsTsxPct": -19.0,
+        "startDate": "2024-11-04",
+        "endDate": "2026-10-23",
+        "estimated": false,
+        "rateDate": null
+      },
+      "aheadUnmeasured": [
+        {
+          "symbol": "SYNE",
+          "returnPct": 38.0,
+          "startDate": "2024-04-01",
+          "endDate": "2025-08-05",
+          "estimated": false,
+          "rateDate": null
+        }
+      ]
+    },
+    "cantTell": {
+      "count": 1,
+      "reasons": [
+        {
+          "reason": "stored activity doesn't cover this holding's full history",
+          "count": 1,
+          "symbols": [
+            "SYNF.TO"
+          ]
+        }
+      ]
+    }
+  },
+  "afterSold": {
+    "items": [
+      {
+        "symbol": "SYNE",
+        "date": "2025-08-05",
+        "units": 12,
+        "salePrice": 48.2,
+        "currency": "CAD",
+        "estimated": false,
+        "priceRateDate": null,
+        "recordedPrice": null,
+        "latestClose": 55.1,
+        "latestCloseDate": "2026-10-23",
+        "changePct": 14.3,
+        "keptVsSold": {
+          "native": {
+            "amount": 82.8,
+            "currency": "CAD"
+          },
+          "cad": 82.8,
+          "estimated": false,
+          "rateDate": null
+        }
+      },
+      {
+        "symbol": "SYNG",
+        "date": "2026-03-02",
+        "units": 5,
+        "salePrice": 120,
+        "currency": "USD",
+        "estimated": true,
+        "priceRateDate": "2026-03-02",
+        "recordedPrice": {
+          "amount": 162.6,
+          "currency": "CAD"
+        },
+        "latestClose": 104.5,
+        "latestCloseDate": "2026-10-23",
+        "changePct": -12.9,
+        "keptVsSold": {
+          "native": {
+            "amount": -77.5,
+            "currency": "USD"
+          },
+          "cad": -107.88,
+          "estimated": true,
+          "rateDate": "2026-10-23"
+        }
+      },
+      {
+        "symbol": "SYNH.TO",
+        "date": "2025-11-03",
+        "units": 20,
+        "salePrice": 31.5,
+        "currency": "CAD",
+        "estimated": false,
+        "priceRateDate": null,
+        "recordedPrice": null,
+        "latestClose": 33.9,
+        "latestCloseDate": "2026-10-23",
+        "changePct": 7.6,
+        "keptVsSold": {
+          "native": {
+            "amount": 48,
+            "currency": "CAD"
+          },
+          "cad": 48,
+          "estimated": false,
+          "rateDate": null
+        }
+      }
+    ],
+    "summary": {
+      "sells": 3,
+      "rose": 2,
+      "fell": 1,
+      "unchanged": 0,
+      "keptVsSoldCad": 22.92,
+      "estimated": true,
+      "rateDate": "2026-10-23",
+      "notConverted": 0,
+      "native": [
+        {
+          "currency": "USD",
+          "amount": -77.5
+        }
+      ]
+    },
+    "cantTell": {
+      "count": 2,
+      "reasons": [
+        {
+          "reason": "no price history for this symbol",
+          "count": 1,
+          "symbols": [
+            "SYNJ"
+          ]
+        },
+        {
+          "reason": "the sale's units, price or date weren't recorded",
+          "count": 1,
+          "symbols": [
+            "SYNK.TO"
+          ]
+        }
+      ]
+    }
+  },
+  "tradingCost": {
+    "conversion": {
+      "rows": 26,
+      "convertedCad": 18450,
+      "estimated": true,
+      "rateDate": "2026-10-23",
+      "native": [
+        {
+          "currency": "USD",
+          "amount": 2400
+        }
+      ],
+      "cantTell": {
+        "count": 1,
+        "reasons": [
+          {
+            "reason": "the trade's amount or date wasn't recorded",
+            "count": 1,
+            "symbols": [
+              "SYNA"
+            ]
+          }
+        ]
+      },
+      "estimate": {
+        "rows": 22,
+        "minRows": 20,
+        "costCad": 276.5,
+        "sharePct": 1.5,
+        "estimated": true,
+        "rateDates": {
+          "first": "2025-01-06",
+          "last": "2026-09-15"
+        },
+        "cantTell": {
+          "count": 3,
+          "reasons": [
+            {
+              "reason": "no closing price within 3 days of the trade",
+              "count": 3,
+              "symbols": [
+                "SYNB",
+                "SYNC"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "fees": {
+      "rows": 4,
+      "totalCad": 19.96,
+      "estimated": true,
+      "rateDate": "2026-06-01",
+      "native": [
+        {
+          "currency": "USD",
+          "amount": 4.99
+        }
+      ],
+      "cantTell": {
+        "count": 0,
+        "reasons": []
+      }
+    }
+  },
+  "overall": {
+    "period": "YTD",
+    "from": "2026-01-01",
+    "to": "2026-10-23",
+    "returnPct": 9.8,
+    "sp500Pct": 11.6,
+    "returnEstimated": true,
+    "sp500Estimated": true,
+    "sinceStart": {
+      "from": "2023-01-03",
+      "to": "2026-10-23",
+      "years": 3.8,
+      "cagrPct": 11.2,
+      "sp500CagrPct": 9.3,
+      "estimated": true
+    }
+  }
+}

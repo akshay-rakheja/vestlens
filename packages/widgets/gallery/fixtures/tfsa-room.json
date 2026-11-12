@@ -1,0 +1,93 @@
+{
+  "year": 2026,
+  "withdrawnCad": 0,
+  "basis": [
+    "CRA room of $7,000 you stated",
+    "3 contributions this year"
+  ],
+  "fx": {
+    "contributions": {
+      "estimated": false,
+      "rateDates": [],
+      "native": []
+    },
+    "withdrawals": {
+      "estimated": false,
+      "rateDates": [],
+      "native": []
+    }
+  },
+  "fxDates": [],
+  "dashboardUrl": "https://portfolio.example.com/room",
+  "status": "known",
+  "roomLeftCad": 1500,
+  "contributedCad": 5500,
+  "craRoomCad": 7000,
+  "estimated": false,
+  "overLimitCad": 0,
+  "activityAsOf": "2026-10-25T14:00:00Z",
+  "ledger": {
+    "overSince": null,
+    "undatedExcess": false,
+    "rows": [
+      {
+        "date": "2026-01-01",
+        "kind": "cra_room",
+        "label": "CRA room",
+        "amountCad": 7000,
+        "estimated": false,
+        "rateDate": null,
+        "native": null,
+        "roomLeftCad": 7000,
+        "excessCad": null,
+        "wentOver": false
+      },
+      {
+        "date": "2026-01-15",
+        "kind": "contribution",
+        "label": "TFSA",
+        "amountCad": 1500,
+        "estimated": false,
+        "rateDate": null,
+        "native": null,
+        "roomLeftCad": 5500,
+        "excessCad": null,
+        "wentOver": false
+      },
+      {
+        "date": "2026-04-01",
+        "kind": "contribution",
+        "label": "TFSA",
+        "amountCad": 2000,
+        "estimated": false,
+        "rateDate": null,
+        "native": null,
+        "roomLeftCad": 3500,
+        "excessCad": null,
+        "wentOver": false
+      },
+      {
+        "date": "2026-07-02",
+        "kind": "contribution",
+        "label": "TFSA",
+        "amountCad": 2000,
+        "estimated": false,
+        "rateDate": null,
+        "native": null,
+        "roomLeftCad": 1500,
+        "excessCad": null,
+        "wentOver": false
+      }
+    ]
+  },
+  "fhsa": {
+    "status": "known",
+    "year": 2026,
+    "headline": "About $3,000 of FHSA room left this year",
+    "note": null,
+    "disclosures": [
+      "Based on activity up to 25 October 2026; deposits made since then aren't included",
+      "Withdrawals are counted as taxable withdrawals"
+    ]
+  }
+}

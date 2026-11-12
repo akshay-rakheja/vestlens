@@ -1,0 +1,4328 @@
+{
+  "tools": {
+    "tools": [
+      {
+        "name": "get_portfolio_snapshot",
+        "title": "Get portfolio snapshot",
+        "description": "Returns the user's portfolio data (balances, positions, calculated values, freshness) as text for analysis or follow-up questions. To show the user their portfolio, use show_portfolio instead. For one stock or ETF (how it is doing, whether it beat the market, whether to keep it), use show_thesis instead. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "refresh": {
+              "type": "boolean",
+              "description": "Set true only when the user asks for the latest data. Re-reads the brokerage if the cached view is at least 15 seconds old."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionRequired": {
+              "type": "boolean"
+            },
+            "generatedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "totals": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "accounts": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "cache": {
+              "type": "object",
+              "description": "Whether the data was read just now (provider), reused (cache) or is a persisted fallback (last_good); stale data must be described as possibly out of date."
+            }
+          },
+          "required": [
+            "connectionRequired",
+            "generatedAt",
+            "totals",
+            "accounts",
+            "errors"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "list_portfolio_accounts",
+        "title": "List portfolio accounts",
+        "description": "Lists the user's connected brokerage accounts (institution, type, currencies, position count, freshness) as text. To show the user their accounts or portfolio, use show_portfolio. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionRequired": {
+              "type": "boolean"
+            },
+            "generatedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "accounts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "institution": {
+                    "type": "string"
+                  },
+                  "rawType": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "metaType": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "unifiedType": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "status": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "isPaper": {
+                    "type": "boolean"
+                  },
+                  "classification": {
+                    "type": "object"
+                  },
+                  "value": {
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "positionCount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "currencies": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "freshness": {
+                    "type": "object"
+                  },
+                  "warnings": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "institution",
+                  "rawType",
+                  "metaType",
+                  "unifiedType",
+                  "status",
+                  "isPaper",
+                  "classification",
+                  "value",
+                  "positionCount",
+                  "currencies",
+                  "freshness",
+                  "warnings"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "connectionRequired",
+            "generatedAt",
+            "accounts"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "get_account_positions",
+        "title": "Get account positions",
+        "description": "Returns current positions for one account returned by list_portfolio_accounts, as text. To show the user their holdings, use show_holdings. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "accountId"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "generatedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "account": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "institution": {
+                  "type": "string"
+                },
+                "rawType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "metaType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "unifiedType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "status": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "isPaper": {
+                  "type": "boolean"
+                },
+                "classification": {
+                  "type": "object"
+                },
+                "value": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "positionCount": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "currencies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "freshness": {
+                  "type": "object"
+                },
+                "warnings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "institution",
+                "rawType",
+                "metaType",
+                "unifiedType",
+                "status",
+                "isPaper",
+                "classification",
+                "value",
+                "positionCount",
+                "currencies",
+                "freshness",
+                "warnings"
+              ],
+              "additionalProperties": false
+            },
+            "positions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "instrumentId": {
+                    "type": "string"
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "symbol": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "units": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "price": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "Brokerage-reported current price in the security currency."
+                  },
+                  "costBasisPerUnit": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "Brokerage-reported cost per unit in the security currency (not the total book cost)."
+                  },
+                  "calculatedMarketValue": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "units × price, calculated; the account's brokerage-reported total is authoritative."
+                  },
+                  "calculatedUnrealizedGain": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "description": "units × (price − costBasisPerUnit), calculated."
+                  },
+                  "currency": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "cashEquivalent": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "instrumentId",
+                  "kind",
+                  "symbol",
+                  "description",
+                  "units",
+                  "price",
+                  "costBasisPerUnit",
+                  "calculatedMarketValue",
+                  "calculatedUnrealizedGain",
+                  "currency",
+                  "cashEquivalent"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "generatedAt",
+            "account",
+            "positions"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "get_account_history",
+        "title": "Get raw account orders and activities",
+        "description": "Raw recent orders, daily account activities, experimental balance history, and currency-aware analytics for one account returned by list_portfolio_accounts, for detailed analysis. It renders no widget and covers a limited window. When the user asks to see their trades, activity, transactions or history (including history with a specific symbol), use show_activity instead.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "orderState": {
+              "type": "string",
+              "enum": [
+                "all",
+                "open",
+                "executed"
+              ]
+            },
+            "orderDays": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 90
+            },
+            "activityStartDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "activityEndDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "activityLimit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "accountId"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {
+              "type": "string"
+            },
+            "generatedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "orders": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "activities": {
+              "type": "object"
+            },
+            "balanceHistory": {
+              "type": "object"
+            },
+            "analytics": {
+              "type": "object"
+            },
+            "freshness": {
+              "type": "object"
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "required": [
+            "accountId",
+            "generatedAt",
+            "orders",
+            "activities",
+            "balanceHistory",
+            "analytics",
+            "freshness",
+            "errors"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "show_portfolio",
+        "title": "Show portfolio",
+        "description": "Use this when the user asks to see, show or open their portfolio, an overview, their accounts or their total value: renders the interactive portfolio dashboard. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "refresh": {
+              "type": "boolean",
+              "description": "Set true only when the user asks for the latest data. Re-reads the brokerage if the cached view is at least 15 seconds old."
+            },
+            "period": {
+              "type": "string",
+              "enum": [
+                "1D",
+                "1W",
+                "1M",
+                "3M",
+                "YTD",
+                "1Y",
+                "ALL"
+              ]
+            },
+            "benchmark": {
+              "type": "string",
+              "enum": [
+                "sp500",
+                "nasdaq100",
+                "dow",
+                "tsx",
+                "xeqt"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "portfolio": {
+              "type": "object"
+            },
+            "summary": {
+              "type": "object"
+            },
+            "series": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "benchmarks": {
+              "type": "array"
+            },
+            "history": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "portfolio",
+            "summary",
+            "series",
+            "settings",
+            "benchmarks",
+            "history"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/overview-2e73f9a522"
+          },
+          "openai/outputTemplate": "ui://portfolio/overview-2e73f9a522",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Loading portfolio…",
+          "openai/toolInvocation/invoked": "Portfolio ready."
+        }
+      },
+      {
+        "name": "get_overview_series",
+        "title": "Get overview value series",
+        "description": "Load the portfolio value series for a period against a benchmark. Used by the portfolio overview widget; read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "period": {
+              "type": "string",
+              "enum": [
+                "1D",
+                "1W",
+                "1M",
+                "3M",
+                "YTD",
+                "1Y",
+                "ALL"
+              ]
+            },
+            "benchmark": {
+              "type": "string",
+              "enum": [
+                "sp500",
+                "nasdaq100",
+                "dow",
+                "tsx",
+                "xeqt"
+              ]
+            }
+          },
+          "required": [
+            "period"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "period": {
+              "type": "string"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "points": {
+              "type": "array"
+            },
+            "benchmark": {
+              "type": "object"
+            },
+            "portfolioReturn": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "benchmarkReturn": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "investmentReturn": {
+              "type": "object"
+            },
+            "benchmarkReturnTwr": {
+              "type": "object"
+            },
+            "returnSpan": {
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "fxNote": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "spanStart": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "spanIsPartial": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "period",
+            "currency",
+            "points",
+            "benchmark",
+            "portfolioReturn",
+            "benchmarkReturn",
+            "investmentReturn",
+            "benchmarkReturnTwr",
+            "returnSpan",
+            "fxNote",
+            "spanStart",
+            "spanIsPartial"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "get_intraday",
+        "title": "Get today's estimated portfolio line",
+        "description": "Estimate today's portfolio value line from live prices for the widget. Read-only; no brokerage call.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "points": {
+              "type": "array"
+            },
+            "coverage": {
+              "type": "number"
+            },
+            "sessionDate": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "drawn": {
+              "type": "boolean"
+            },
+            "label": {
+              "type": "string"
+            },
+            "warnings": {
+              "type": "number"
+            },
+            "fallback": {
+              "type": "object"
+            },
+            "currency": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "points",
+            "coverage",
+            "sessionDate",
+            "drawn",
+            "label",
+            "warnings",
+            "fallback",
+            "currency"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "get_portfolio_settings",
+        "title": "Get portfolio display settings",
+        "description": "Get this app's saved display preferences (benchmark, CAD view, privacy default). Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "save_portfolio_settings",
+        "title": "Save portfolio display settings",
+        "description": "Save display preferences (benchmark, CAD view, privacy default). It only stores display preferences in this app; nothing at the brokerage changes.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "benchmark": {
+              "type": "string",
+              "enum": [
+                "sp500",
+                "nasdaq100",
+                "dow",
+                "tsx",
+                "xeqt"
+              ]
+            },
+            "cadView": {
+              "type": "boolean"
+            },
+            "privacyDefault": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "show_performance",
+        "title": "Show performance",
+        "description": "Use this when the user asks to see their portfolio performance, returns, gains, drawdown or how they did over a period: it renders the interactive performance widget and returns the figures as text, so it also answers follow-up questions. Shows returns net of deposits (money-weighted and time-weighted), net deposits vs market gain, risk and monthly returns against a benchmark, for all accounts or one account. With the CAD view on (the default), CAD and USD accounts combine in CAD (USD converted at the Bank of Canada rate, est.). Filter with accountType (for example rrsp) or accountId. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "period": {
+              "type": "string",
+              "enum": [
+                "1M",
+                "3M",
+                "YTD",
+                "1Y",
+                "3Y",
+                "ALL"
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            },
+            "benchmark": {
+              "type": "string",
+              "enum": [
+                "sp500",
+                "nasdaq100",
+                "dow",
+                "tsx",
+                "xeqt"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "type": "object"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "period": {
+              "type": "string"
+            },
+            "span": {
+              "type": "object"
+            },
+            "series": {
+              "type": "object"
+            },
+            "figures": {
+              "type": "object"
+            },
+            "monthly": {
+              "type": "array"
+            },
+            "benchmark": {
+              "type": "object"
+            },
+            "benchmarks": {
+              "type": "array"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "history": {
+              "type": "object"
+            },
+            "otherCurrencies": {
+              "type": "array"
+            },
+            "asOf": {
+              "type": "string"
+            },
+            "home": {
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "scope",
+            "accounts",
+            "period",
+            "span",
+            "series",
+            "figures",
+            "monthly",
+            "benchmark",
+            "benchmarks",
+            "settings",
+            "history",
+            "otherCurrencies",
+            "asOf",
+            "home"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/performance-18f3f7a836"
+          },
+          "openai/outputTemplate": "ui://portfolio/performance-18f3f7a836",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Loading performance…",
+          "openai/toolInvocation/invoked": "Performance ready."
+        }
+      },
+      {
+        "name": "get_performance",
+        "title": "Get performance",
+        "description": "Used by the performance widget to switch account, period or benchmark. Shows returns net of deposits (money-weighted and time-weighted), net deposits vs market gain, risk and monthly returns against a benchmark, for all accounts or one account. With the CAD view on (the default), CAD and USD accounts combine in CAD (USD converted at the Bank of Canada rate, est.). Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "period": {
+              "type": "string",
+              "enum": [
+                "1M",
+                "3M",
+                "YTD",
+                "1Y",
+                "3Y",
+                "ALL"
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            },
+            "benchmark": {
+              "type": "string",
+              "enum": [
+                "sp500",
+                "nasdaq100",
+                "dow",
+                "tsx",
+                "xeqt"
+              ]
+            }
+          },
+          "required": [
+            "period"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "type": "object"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "period": {
+              "type": "string"
+            },
+            "span": {
+              "type": "object"
+            },
+            "series": {
+              "type": "object"
+            },
+            "figures": {
+              "type": "object"
+            },
+            "monthly": {
+              "type": "array"
+            },
+            "benchmark": {
+              "type": "object"
+            },
+            "benchmarks": {
+              "type": "array"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "history": {
+              "type": "object"
+            },
+            "otherCurrencies": {
+              "type": "array"
+            },
+            "asOf": {
+              "type": "string"
+            },
+            "home": {
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "scope",
+            "accounts",
+            "period",
+            "span",
+            "series",
+            "figures",
+            "monthly",
+            "benchmark",
+            "benchmarks",
+            "settings",
+            "history",
+            "otherCurrencies",
+            "asOf",
+            "home"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "show_activity",
+        "title": "Show activity",
+        "description": "Use this when the user asks to see their trades, transactions, dividends, deposits, account activity or history, or what they did with a specific symbol (for example \"show my history with ATZ\"): it renders the interactive activity feed and returns a summary. Call it once per question. With a symbol and no from date it covers the full history; without a symbol it covers the last 90 days. For how much the user has contributed to or withdrawn from a TFSA over time, use get_contribution_room instead. Filter with accountType or accountId, symbol, categories and from/to dates. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            },
+            "categories": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "investing",
+                  "moving_money",
+                  "cash"
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 3
+            },
+            "symbol": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "A stock or ETF symbol, e.g. XEQT; matches listings like XEQT.TO."
+            },
+            "from": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "to": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "query": {
+              "type": "string",
+              "maxLength": 1000,
+              "description": "A word or short phrase to find in a row's symbol or description, such as a payee. Never the user's question or a summary of it."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "rows": {
+              "type": "array"
+            },
+            "nextCursor": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "restarted": {
+              "type": "boolean"
+            },
+            "totals": {
+              "type": "array"
+            },
+            "homeTotals": {
+              "type": "object"
+            },
+            "counts": {
+              "type": "object"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "syncing": {
+              "type": "array"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "asOf": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "rows",
+            "nextCursor",
+            "restarted",
+            "totals",
+            "homeTotals",
+            "counts",
+            "filters",
+            "accounts",
+            "syncing",
+            "settings",
+            "asOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/activity-7ec17d298d"
+          },
+          "openai/outputTemplate": "ui://portfolio/activity-7ec17d298d",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Loading activity…",
+          "openai/toolInvocation/invoked": "Activity ready."
+        }
+      },
+      {
+        "name": "get_activity_page",
+        "title": "Get activity page",
+        "description": "Used by the activity widget to filter, search and page through activity. Covers investing, money movement and cash and spending activity for the user's accounts. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            },
+            "categories": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "investing",
+                  "moving_money",
+                  "cash"
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 3
+            },
+            "symbol": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "A stock or ETF symbol, e.g. XEQT; matches listings like XEQT.TO."
+            },
+            "from": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "to": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "query": {
+              "type": "string",
+              "maxLength": 1000,
+              "description": "A word or short phrase to find in a row's symbol or description, such as a payee. Never the user's question or a summary of it."
+            },
+            "cursor": {
+              "type": "string",
+              "maxLength": 1024
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "rows": {
+              "type": "array"
+            },
+            "nextCursor": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "restarted": {
+              "type": "boolean"
+            },
+            "totals": {
+              "type": "array"
+            },
+            "homeTotals": {
+              "type": "object"
+            },
+            "counts": {
+              "type": "object"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "syncing": {
+              "type": "array"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "asOf": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "rows",
+            "nextCursor",
+            "restarted",
+            "totals",
+            "homeTotals",
+            "counts",
+            "filters",
+            "accounts",
+            "syncing",
+            "settings",
+            "asOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "get_symbol_history",
+        "title": "Get symbol history",
+        "description": "Used by the activity widget for one symbol: price history and trades from the user's activity, with brokerage-reported units, average cost, book cost and total return. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "symbol": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "period": {
+              "type": "string",
+              "enum": [
+                "1Y",
+                "ALL"
+              ]
+            }
+          },
+          "required": [
+            "symbol"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "symbol": {
+              "type": "string"
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "currency": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "period": {
+              "type": "string",
+              "enum": [
+                "1Y",
+                "ALL"
+              ]
+            },
+            "prices": {
+              "type": "array"
+            },
+            "priceUnavailable": {
+              "type": "boolean"
+            },
+            "position": {
+              "type": "object"
+            },
+            "reportedUnits": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "reported": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "units": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "avgCost": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "bookCost": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "marketValue": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "totalReturn": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "totalReturnFraction": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "currency": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "units",
+                "avgCost",
+                "bookCost",
+                "marketValue",
+                "totalReturn",
+                "totalReturnFraction",
+                "currency"
+              ],
+              "additionalProperties": false
+            },
+            "costHistory": {
+              "type": "string",
+              "enum": [
+                "matches",
+                "unavailable",
+                "unverified"
+              ]
+            },
+            "homeGains": {
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "otherCurrencies": {
+              "type": "array"
+            },
+            "asOf": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "symbol",
+            "name",
+            "currency",
+            "period",
+            "prices",
+            "priceUnavailable",
+            "position",
+            "reportedUnits",
+            "reported",
+            "costHistory",
+            "homeGains",
+            "otherCurrencies",
+            "asOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "show_holdings",
+        "title": "Show holdings",
+        "description": "Use this when the user asks what they own, or wants the full list of holdings or positions across their accounts: renders the interactive holdings table. Filter with accountType (for example tfsa) or accountId, and symbol. For one stock or ETF (how it is doing, whether it beat the market, whether to keep it), use show_thesis instead. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Za-z]{3}$"
+            },
+            "sort": {
+              "type": "string",
+              "enum": [
+                "weight",
+                "value",
+                "return",
+                "returnPct",
+                "today",
+                "symbol"
+              ]
+            },
+            "symbol": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "A stock or ETF symbol, e.g. XEQT; matches listings like XEQT.TO."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "rows": {
+              "type": "array"
+            },
+            "totals": {
+              "type": "array"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "currencies": {
+              "type": "array"
+            },
+            "omitted": {
+              "type": "integer"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "fx": {
+              "type": "object"
+            },
+            "accountValue": {
+              "type": "array"
+            },
+            "home": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "asOf": {
+              "type": "string"
+            },
+            "pricesAsOf": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "rows",
+            "totals",
+            "accounts",
+            "currencies",
+            "omitted",
+            "filters",
+            "fx",
+            "accountValue",
+            "home",
+            "settings",
+            "asOf",
+            "pricesAsOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/holdings-65b2d89c92"
+          },
+          "openai/outputTemplate": "ui://portfolio/holdings-65b2d89c92",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Loading holdings…",
+          "openai/toolInvocation/invoked": "Holdings ready."
+        }
+      },
+      {
+        "name": "get_holdings",
+        "title": "Get holdings",
+        "description": "Used by the holdings widget to filter and sort holdings by account and currency. Covers the user's investment accounts. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Za-z]{3}$"
+            },
+            "sort": {
+              "type": "string",
+              "enum": [
+                "weight",
+                "value",
+                "return",
+                "returnPct",
+                "today",
+                "symbol"
+              ]
+            },
+            "symbol": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "A stock or ETF symbol, e.g. XEQT; matches listings like XEQT.TO."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "rows": {
+              "type": "array"
+            },
+            "totals": {
+              "type": "array"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "currencies": {
+              "type": "array"
+            },
+            "omitted": {
+              "type": "integer"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "fx": {
+              "type": "object"
+            },
+            "accountValue": {
+              "type": "array"
+            },
+            "home": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "asOf": {
+              "type": "string"
+            },
+            "pricesAsOf": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "rows",
+            "totals",
+            "accounts",
+            "currencies",
+            "omitted",
+            "filters",
+            "fx",
+            "accountValue",
+            "home",
+            "settings",
+            "asOf",
+            "pricesAsOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "show_allocation",
+        "title": "Show allocation",
+        "description": "Use this when the user asks about their allocation, diversification, exposure by sector/region/currency/account, or concentration: renders the interactive allocation view. Filter with accountType or accountId. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "dimension": {
+              "type": "string",
+              "enum": [
+                "assetClass",
+                "currency",
+                "accountType",
+                "sector",
+                "region"
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "dimension": {
+              "type": "string"
+            },
+            "slices": {
+              "type": "array"
+            },
+            "unclassifiedFraction": {
+              "type": "number"
+            },
+            "estimated": {
+              "type": "boolean"
+            },
+            "fx": {
+              "type": "object"
+            },
+            "usdExcluded": {
+              "type": "boolean"
+            },
+            "excludedCurrencies": {
+              "type": "array"
+            },
+            "unvalued": {
+              "type": "integer"
+            },
+            "concentration": {
+              "type": "object"
+            },
+            "overlap": {
+              "type": "array"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "home": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "asOf": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "dimension",
+            "slices",
+            "unclassifiedFraction",
+            "estimated",
+            "fx",
+            "usdExcluded",
+            "excludedCurrencies",
+            "unvalued",
+            "concentration",
+            "overlap",
+            "accounts",
+            "filters",
+            "home",
+            "settings",
+            "asOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/allocation-f909ecac2d"
+          },
+          "openai/outputTemplate": "ui://portfolio/allocation-f909ecac2d",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Loading allocation…",
+          "openai/toolInvocation/invoked": "Allocation ready."
+        }
+      },
+      {
+        "name": "get_allocation",
+        "title": "Get allocation",
+        "description": "Used by the allocation widget to regroup holdings by asset class, currency, account, sector or region. Covers the user's investment accounts. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "dimension": {
+              "type": "string",
+              "enum": [
+                "assetClass",
+                "currency",
+                "accountType",
+                "sector",
+                "region"
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "dimension": {
+              "type": "string"
+            },
+            "slices": {
+              "type": "array"
+            },
+            "unclassifiedFraction": {
+              "type": "number"
+            },
+            "estimated": {
+              "type": "boolean"
+            },
+            "fx": {
+              "type": "object"
+            },
+            "usdExcluded": {
+              "type": "boolean"
+            },
+            "excludedCurrencies": {
+              "type": "array"
+            },
+            "unvalued": {
+              "type": "integer"
+            },
+            "concentration": {
+              "type": "object"
+            },
+            "overlap": {
+              "type": "array"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "home": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "asOf": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "dimension",
+            "slices",
+            "unclassifiedFraction",
+            "estimated",
+            "fx",
+            "usdExcluded",
+            "excludedCurrencies",
+            "unvalued",
+            "concentration",
+            "overlap",
+            "accounts",
+            "filters",
+            "home",
+            "settings",
+            "asOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "show_income",
+        "title": "Show income",
+        "description": "Use this when the user asks about dividends, income, distributions, interest, withholding tax or yield: renders the interactive income view. Filter with accountType or accountId, and symbol. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "year": {
+              "type": "integer",
+              "minimum": 2000,
+              "maximum": 2100
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            },
+            "symbol": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "A stock or ETF symbol, e.g. XEQT; matches listings like XEQT.TO."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "home": {
+              "type": "object"
+            },
+            "year": {
+              "type": "integer"
+            },
+            "years": {
+              "type": "array"
+            },
+            "currencyTotals": {
+              "type": "array"
+            },
+            "months": {
+              "type": "array"
+            },
+            "topPayers": {
+              "type": "array"
+            },
+            "yields": {
+              "type": "array"
+            },
+            "withholding": {
+              "type": "array"
+            },
+            "contributions": {
+              "type": "array"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "syncing": {
+              "type": "array"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "asOf": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "year",
+            "years",
+            "currencyTotals",
+            "months",
+            "topPayers",
+            "yields",
+            "withholding",
+            "contributions",
+            "accounts",
+            "syncing",
+            "filters",
+            "settings",
+            "asOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/income-222b3366c1"
+          },
+          "openai/outputTemplate": "ui://portfolio/income-222b3366c1",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Loading income…",
+          "openai/toolInvocation/invoked": "Income ready."
+        }
+      },
+      {
+        "name": "get_income",
+        "title": "Get income",
+        "description": "Used by the income widget to switch year and account. Covers the user's investment accounts. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "year": {
+              "type": "integer",
+              "minimum": 2000,
+              "maximum": 2100
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "One account's id from list_portfolio_accounts."
+            },
+            "accountType": {
+              "type": "string",
+              "enum": [
+                "tfsa",
+                "fhsa",
+                "rrsp",
+                "non_registered",
+                "crypto",
+                "cash_account"
+              ],
+              "description": "All of the user's accounts of one type, e.g. tfsa for 'my TFSA'. Use instead of accountId, not with it."
+            },
+            "symbol": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "A stock or ETF symbol, e.g. XEQT; matches listings like XEQT.TO."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "home": {
+              "type": "object"
+            },
+            "year": {
+              "type": "integer"
+            },
+            "years": {
+              "type": "array"
+            },
+            "currencyTotals": {
+              "type": "array"
+            },
+            "months": {
+              "type": "array"
+            },
+            "topPayers": {
+              "type": "array"
+            },
+            "yields": {
+              "type": "array"
+            },
+            "withholding": {
+              "type": "array"
+            },
+            "contributions": {
+              "type": "array"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "syncing": {
+              "type": "array"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "asOf": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "year",
+            "years",
+            "currencyTotals",
+            "months",
+            "topPayers",
+            "yields",
+            "withholding",
+            "contributions",
+            "accounts",
+            "syncing",
+            "filters",
+            "settings",
+            "asOf"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "show_news",
+        "title": "Show news",
+        "description": "Use this when the user asks what moved, why a holding moved, or for news and sentiment about their holdings. Pass `symbol` when the question names one holding (e.g. 'news about GOOG') so the view opens on that holding; omit it for portfolio-wide questions. Read-only; informational, not advice.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "window": {
+              "type": "string",
+              "enum": [
+                "24h",
+                "7d",
+                "30d"
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "symbol": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9.\\-]{1,20}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "window": {
+              "type": "string"
+            },
+            "asOf": {
+              "type": "string"
+            },
+            "newsAsOf": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "unfetched": {
+              "type": "integer"
+            },
+            "budgetExhausted": {
+              "type": "boolean"
+            },
+            "portfolioMood": {
+              "type": "object"
+            },
+            "movers": {
+              "type": "array"
+            },
+            "asUsual": {
+              "type": "integer"
+            },
+            "unpriced": {
+              "type": "integer"
+            },
+            "feed": {
+              "type": "array"
+            },
+            "symbols": {
+              "type": "array"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "imageOrigin": {
+              "type": "string"
+            },
+            "omitted": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "window",
+            "asOf",
+            "newsAsOf",
+            "unfetched",
+            "budgetExhausted",
+            "portfolioMood",
+            "movers",
+            "asUsual",
+            "unpriced",
+            "feed",
+            "symbols",
+            "accounts",
+            "filters",
+            "settings",
+            "imageOrigin",
+            "omitted"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/news-3b084d28fc"
+          },
+          "openai/outputTemplate": "ui://portfolio/news-3b084d28fc",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Loading news…",
+          "openai/toolInvocation/invoked": "News ready."
+        }
+      },
+      {
+        "name": "get_news",
+        "title": "Get news",
+        "description": "Used by the news widget to change the window, account or symbol of the movers and news view. Read-only; informational, not advice.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "window": {
+              "type": "string",
+              "enum": [
+                "24h",
+                "7d",
+                "30d"
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "symbol": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9.\\-]{1,20}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "window": {
+              "type": "string"
+            },
+            "asOf": {
+              "type": "string"
+            },
+            "newsAsOf": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "unfetched": {
+              "type": "integer"
+            },
+            "budgetExhausted": {
+              "type": "boolean"
+            },
+            "portfolioMood": {
+              "type": "object"
+            },
+            "movers": {
+              "type": "array"
+            },
+            "asUsual": {
+              "type": "integer"
+            },
+            "unpriced": {
+              "type": "integer"
+            },
+            "feed": {
+              "type": "array"
+            },
+            "symbols": {
+              "type": "array"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "imageOrigin": {
+              "type": "string"
+            },
+            "omitted": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "window",
+            "asOf",
+            "newsAsOf",
+            "unfetched",
+            "budgetExhausted",
+            "portfolioMood",
+            "movers",
+            "asUsual",
+            "unpriced",
+            "feed",
+            "symbols",
+            "accounts",
+            "filters",
+            "settings",
+            "imageOrigin",
+            "omitted"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "show_calendar",
+        "title": "Show calendar",
+        "description": "Use this when the user asks about upcoming earnings dates, dividend payments, or what's coming up for their holdings: renders the interactive calendar. Read-only; dates may be estimated. Informational, not advice.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "range": {
+              "type": "string",
+              "enum": [
+                "2w",
+                "1m",
+                "3m"
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "range": {
+              "type": "string"
+            },
+            "asOf": {
+              "type": "string"
+            },
+            "weeks": {
+              "type": "array"
+            },
+            "thisWeek": {
+              "type": "object"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "home": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "range",
+            "asOf",
+            "weeks",
+            "thisWeek",
+            "accounts",
+            "filters",
+            "settings"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/calendar-9f65fee6ee"
+          },
+          "openai/outputTemplate": "ui://portfolio/calendar-9f65fee6ee",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Loading calendar…",
+          "openai/toolInvocation/invoked": "Calendar ready."
+        }
+      },
+      {
+        "name": "get_calendar",
+        "title": "Get calendar",
+        "description": "Used by the calendar widget to change the range or account of the earnings and dividend calendar. Read-only; dates may be estimated. Informational, not advice.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "range": {
+              "type": "string",
+              "enum": [
+                "2w",
+                "1m",
+                "3m"
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "range": {
+              "type": "string"
+            },
+            "asOf": {
+              "type": "string"
+            },
+            "weeks": {
+              "type": "array"
+            },
+            "thisWeek": {
+              "type": "object"
+            },
+            "accounts": {
+              "type": "array"
+            },
+            "filters": {
+              "type": "object"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "home": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "range",
+            "asOf",
+            "weeks",
+            "thisWeek",
+            "accounts",
+            "filters",
+            "settings"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "visibility": [
+              "app"
+            ]
+          }
+        }
+      },
+      {
+        "name": "get_portfolio_alerts",
+        "title": "Get portfolio alerts",
+        "description": "Returns material events for the user's holdings since the last check: unusual moves, high-materiality news, earnings and dividend dates. Call it from a scheduled task. If `quiet` is true, reply in one line that nothing material happened. Informational, not advice.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "since": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Optional start of the news window (ISO 8601); defaults to the last 48 hours, at most 7 days."
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "generatedAt": {
+              "type": "string"
+            },
+            "since": {
+              "type": "string"
+            },
+            "alerts": {
+              "type": "array",
+              "maxItems": 10,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "symbol": {
+                    "type": "string"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "news",
+                      "earnings_upcoming",
+                      "earnings_reported",
+                      "dividend_upcoming",
+                      "unusual_move"
+                    ]
+                  },
+                  "materiality": {
+                    "type": "number"
+                  },
+                  "mood": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "headline": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "source": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "url": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "publishedAt": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "summary": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "symbol",
+                  "kind",
+                  "materiality",
+                  "mood",
+                  "headline",
+                  "source",
+                  "url",
+                  "publishedAt",
+                  "summary"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "quiet": {
+              "type": "boolean"
+            },
+            "next": {
+              "type": "object",
+              "properties": {
+                "earningsThisWeek": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "earningsThisWeek"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "generatedAt",
+            "since",
+            "alerts",
+            "quiet",
+            "next"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "remember",
+        "title": "Remember a fact",
+        "description": "Save money facts here rather than in your general memory, proactively and silently, whenever the user shares a durable fact about their money even in passing: where their accounts are, CRA or TFSA room figures, target dates, plans and preferences. VestLens uses them against their real accounts and in every assistant they use. For reasons for owning a stock, limits and savings goals use log_thesis, set_portfolio_limit and set_savings_goal. Save without being asked and without asking first; don't announce it. Mark what the user said as stated and what you concluded as inferred. Update the same node and property rather than adding duplicates. Don't save small talk, prices, market chatter, or anything about other people. TFSA properties need typed values: tax_year.cra_room_jan1 on <year>:tfsa is the room on 1 January from CRA My Account (ask for that figure, never store a mid-year or netted one); tax_year.account_set lists the user's TFSAs (connected and notTfsa take accountKeys from get_contribution_room; outside takes the names of accounts elsewhere); account.ytd_contributions is this year's contributions to a connected account; for an outside account use account.tfsa_moves on outside:<label>, which lists dated deposits and withdrawals at that institution this year; activity.room_effect says whether an activity was a contribution. TFSA inputs (CRA room, contribution amounts, transfer answers) must come from the user: ask, then save them as stated. Mention a save briefly only when it changes a number, e.g. \"Noted your TFSA room of $X on 1 January.\" Writes only to VestLens's memory, never to the brokerage.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "node": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "account",
+                    "security",
+                    "sector",
+                    "tax_year",
+                    "goal",
+                    "rule",
+                    "activity",
+                    "user"
+                  ]
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120,
+                  "description": "account: an accountKey from get_contribution_room (its accounts list or missing items), or outside:<name> for an account elsewhere (the name as the user gave it); security: the ticker; sector, goal, rule: a name (slugged); tax_year: <year>:tfsa; activity: the activityKey; user: me."
+                }
+              },
+              "required": [
+                "type",
+                "key"
+              ],
+              "additionalProperties": false
+            },
+            "property": {
+              "type": "string",
+              "enum": [
+                "tax_year.cra_room_jan1",
+                "tax_year.fhsa_room",
+                "tax_year.rrsp_deduction_limit",
+                "tax_year.rrsp_unused_contributions",
+                "tax_year.rrsp_elsewhere",
+                "tax_year.account_set",
+                "account.ytd_contributions",
+                "account.tfsa_moves",
+                "activity.room_effect",
+                "security.reason",
+                "security.note",
+                "goal.target_date",
+                "goal.note",
+                "rule.limit",
+                "rule.note",
+                "user.risk_comfort",
+                "user.note",
+                "account.note",
+                "sector.note"
+              ],
+              "description": "Allowed per node type, e.g. security.reason on a security."
+            },
+            "value": {
+              "description": "Typed for TFSA properties: cra_room_jan1 { amountCad }; account_set { connected: [accountKey], outside: [{ label }], confirmedAt, notTfsa?: [accountKey] } with keys from get_contribution_room; ytd_contributions { year, amountCad, asOf }; room_effect { effect: \"contribution\" | \"withdrawal\" | \"none\" } (contribution: new money into a TFSA; withdrawal: money taken out of the user's TFSAs; none: moved between their TFSAs). Otherwise any JSON or null."
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000,
+              "description": "The fact in plain words, shown back to the user."
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "fact",
+                "plan",
+                "reason",
+                "note"
+              ]
+            },
+            "provenance": {
+              "type": "string",
+              "enum": [
+                "stated",
+                "inferred"
+              ],
+              "description": "stated: the user said it. inferred: you concluded it."
+            },
+            "validFrom": {
+              "type": "string",
+              "format": "date"
+            },
+            "validTo": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "required": [
+            "node",
+            "property",
+            "text",
+            "kind",
+            "provenance"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read",
+                "memory"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "recall",
+        "title": "Recall saved facts",
+        "description": "Call this with no arguments at the start of any conversation about the user's money, investments, plans or goals, before your general memory, so what they told VestLens earlier (in any assistant) is used. Returns current saved money facts, newest first (up to 20 by default). Filter only when looking for something specific: text matches any word; a node returns its facts with one-hop neighbours, or the facts on other nodes of that type when the key has none. Each fact has its age, provenance and hop. Present inferred facts as your own earlier conclusions.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "node": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "account",
+                    "security",
+                    "sector",
+                    "tax_year",
+                    "goal",
+                    "rule",
+                    "activity",
+                    "user"
+                  ]
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120,
+                  "description": "account: an accountKey from get_contribution_room (its accounts list or missing items), or outside:<name> for an account elsewhere (the name as the user gave it); security: the ticker; sector, goal, rule: a name (slugged); tax_year: <year>:tfsa; activity: the activityKey; user: me."
+                }
+              },
+              "required": [
+                "type",
+                "key"
+              ],
+              "additionalProperties": false
+            },
+            "property": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "text": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "includeHistory": {
+              "type": "boolean",
+              "description": "Also return superseded entries."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read",
+                "memory"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "forget",
+        "title": "Forget a saved fact",
+        "description": "Deletes saved VestLens memory when the user asks to forget something: a fact, a reason for a holding, a limit or a goal (find it with recall; for a goal, set_savings_goal with remove: true also works). By id (from recall) or by node and property; the fact is removed with all its earlier versions. Nothing at the brokerage changes.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            "node": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "account",
+                    "security",
+                    "sector",
+                    "tax_year",
+                    "goal",
+                    "rule",
+                    "activity",
+                    "user"
+                  ]
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120,
+                  "description": "account: an accountKey from get_contribution_room (its accounts list or missing items), or outside:<name> for an account elsewhere (the name as the user gave it); security: the ticker; sector, goal, rule: a name (slugged); tax_year: <year>:tfsa; activity: the activityKey; user: me."
+                }
+              },
+              "required": [
+                "type",
+                "key"
+              ],
+              "additionalProperties": false
+            },
+            "property": {
+              "type": "string",
+              "maxLength": 64
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read",
+                "memory"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "get_contribution_room",
+        "title": "Get contribution room",
+        "description": "Use this when the user asks about their TFSA contribution room, how much they have contributed to or withdrawn from a TFSA over time, or mentions planning a TFSA deposit or withdrawal. Also returns what went in and out of each connected TFSA over its whole history. Returns the room left this year in CAD from what the user told VestLens and their stored activity, or what is missing before a number can be given, and any withdrawal whose room only returns next year. Ask the missing items as questions and save each answer with remember, using the accountKey and activityKey values returned here. When the user has an FHSA, it also gives one line on their FHSA participation room this year. When the user has an RRSP, it also gives their RRSP contributions for each open tax year (by CRA's dates) and the deduction room left once they've entered their deduction limit, unused contributions and contributions not in VestLens (0 counts). Read-only; states facts, not advice.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/tfsa-room-10957aa036"
+          },
+          "openai/outputTemplate": "ui://portfolio/tfsa-room-10957aa036",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Checking TFSA room…",
+          "openai/toolInvocation/invoked": "TFSA room ready."
+        }
+      },
+      {
+        "name": "log_thesis",
+        "title": "Log a thesis",
+        "description": "Use this whenever the user says why they bought, hold or would sell a stock or ETF, even in passing ('I bought X because...', 'I only hold X for the dividend', 'if X happens I'm out'): saves their reasons, an optional time frame and any conditions (price, return, portfolio share, or a fundamental like dividend or revenue growth). Save it here rather than in your general memory: VestLens checks each condition against the user's real holdings and news and shows it in every assistant they use. Save without asking; reply briefly 'Noted your reasons for <TICKER>.' To update, call again with only the changed fields; new reasons start a new entry. remove: true deletes it. Writes only to VestLens's memory, never to the brokerage.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "ticker": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20,
+              "description": "The symbol as the brokerage shows it, e.g. SHOP or XEQT.TO."
+            },
+            "reasons": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000,
+              "description": "The user's reasons, in their words."
+            },
+            "timeFrame": {
+              "type": "object",
+              "description": "{ kind: \"short\", endDate: YYYY-MM-DD } or { kind: \"long\", years }. Leave out if the user gave none.",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "short",
+                    "long"
+                  ]
+                },
+                "endDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "years": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            "conditions": {
+              "type": "array",
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "price_below",
+                      "price_above",
+                      "return_below",
+                      "weight_above",
+                      "fundamental",
+                      "custom"
+                    ]
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300,
+                    "description": "The condition in the user's words."
+                  },
+                  "price": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "price_below / price_above: in the security's currency."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 3
+                  },
+                  "pct": {
+                    "type": "number",
+                    "description": "return_below: your return since the thesis, %; weight_above: share of the portfolio, 0-100."
+                  },
+                  "metric": {
+                    "type": "string",
+                    "maxLength": 60,
+                    "description": "fundamental: e.g. revenue growth."
+                  },
+                  "threshold": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "text"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "boughtAround": {
+              "type": "string",
+              "format": "date",
+              "description": "When they bought, if the thesis predates this save."
+            },
+            "remove": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "ticker"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read",
+                "memory"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "show_thesis",
+        "title": "Holding check",
+        "description": "Use this when the user asks about one stock, ETF or holding: how it is doing, whether they are up or down on it, whether it beat the market or the S&P 500 or TSX since they bought it, recent news, how big a share of the portfolio it is, or whether to keep or sell it (VestLens states facts, not advice). Shows the holding's return since the first recorded purchase against the same money in the S&P 500 and TSX, its portfolio share and limits, news, and any reasons or conditions the user saved. Pass the ticker; without one, lists saved reasons. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "ticker": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/thesis-f7baacb637"
+          },
+          "openai/outputTemplate": "ui://portfolio/thesis-f7baacb637",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Checking holding…",
+          "openai/toolInvocation/invoked": "Holding check ready."
+        }
+      },
+      {
+        "name": "set_portfolio_limit",
+        "title": "Set a portfolio limit",
+        "description": "Use this when the user states a limit or cap on their portfolio, like 'no more than X% in one stock', 'keep tech under X%' or 'keep X under 5% of that account': saves it; VestLens checks it against their real holdings. Save it here rather than in your general memory. kind single_holding (target: a ticker, or none for any one holding), sector (target: a sector, or none for any sector) or asset_class (target, e.g. cash); accounts: ids from list_portfolio_accounts to apply it to one account. Save without asking; reply briefly with the echo. remove: true deletes it. Writes only to VestLens's memory, never to the brokerage.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "single_holding",
+                "sector",
+                "asset_class"
+              ]
+            },
+            "target": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "A ticker, sector or asset class; leave out for any one holding or sector."
+            },
+            "maxPct": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "accounts": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120
+              },
+              "maxItems": 100,
+              "description": "Account ids from list_portfolio_accounts when the limit covers only some accounts; leave out for the whole portfolio."
+            },
+            "remove": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read",
+                "memory"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "show_limits",
+        "title": "Show portfolio limits",
+        "description": "Use this when the user asks about their limits or concentration rules: lists every limit they set against current holdings (CAD, est., of the portfolio including cash), over, within or can't tell. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/limits-be1de65ab9"
+          },
+          "openai/outputTemplate": "ui://portfolio/limits-be1de65ab9",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Checking limits…",
+          "openai/toolInvocation/invoked": "Limits ready."
+        }
+      },
+      {
+        "name": "set_savings_goal",
+        "title": "Set a savings goal",
+        "description": "Use this when the user mentions saving for something with an amount or date (a house, down payment, car, retirement, emergency fund): saves the savings goal; VestLens tracks progress and pace against the accounts' real values. Save it here rather than in your general memory. accounts: account ids from list_portfolio_accounts, or outside:<name> for an account elsewhere (give its value in outsideValues); leave out if the user didn't say. growthRatePct only if the user states one; never suggest a rate. Save without asking; reply briefly with the echo. Call again with the same name to update it. remove: true deletes it. Writes only to VestLens's memory, never to the brokerage.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "The goal as the user names it, e.g. House."
+            },
+            "targetCad": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "targetDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "accounts": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 50,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120
+              }
+            },
+            "growthRatePct": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 20,
+              "description": "The user's own assumed yearly growth rate, %."
+            },
+            "outsideValues": {
+              "type": "array",
+              "maxItems": 20,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 60
+                  },
+                  "amountCad": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "asOf": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                },
+                "required": [
+                  "label",
+                  "amountCad",
+                  "asOf"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "remove": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read",
+                "memory"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "show_goal",
+        "title": "Show savings goal",
+        "description": "Use this when the user asks how a savings goal is going: progress against the target (CAD, est.), time left, what it takes with no growth, the recent pace of contributions, and a projection at their own growth rate if they set one. Without a name, shows every goal. Read-only.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "_meta": {
+          "securitySchemes": [
+            {
+              "type": "oauth2",
+              "scopes": [
+                "portfolio:read"
+              ]
+            }
+          ],
+          "ui": {
+            "resourceUri": "ui://portfolio/goal-4718db2879"
+          },
+          "openai/outputTemplate": "ui://portfolio/goal-4718db2879",
+          "openai/widgetAccessible": true,
+          "openai/toolInvocation/invoking": "Checking goal…",
+          "openai/toolInvocation/invoked": "Goal ready."
+        }
+      }
+    ]
+  },
+  "resources": {
+    "resources": [
+      {
+        "name": "portfolio-dashboard",
+        "title": "Portfolio dashboard",
+        "uri": "ui://portfolio/dashboard-v4",
+        "description": "Authenticated read-only portfolio totals, account buckets, and holdings drill-down.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "portfolio-overview",
+        "title": "Portfolio overview",
+        "uri": "ui://portfolio/overview-2e73f9a522",
+        "description": "Authenticated read-only portfolio overview with value chart, allocation and accounts.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "portfolio-performance",
+        "title": "Portfolio performance",
+        "uri": "ui://portfolio/performance-18f3f7a836",
+        "description": "Authenticated read-only performance: returns net of deposits, benchmark, monthly returns and risk.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "portfolio-activity",
+        "title": "Portfolio activity",
+        "uri": "ui://portfolio/activity-7ec17d298d",
+        "description": "Authenticated read-only activity feed: trades, dividends, deposits and fees with filters, search and a per-symbol view.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "portfolio-holdings",
+        "title": "Portfolio holdings",
+        "uri": "ui://portfolio/holdings-65b2d89c92",
+        "description": "Authenticated read-only holdings table: positions by symbol and currency with weight, return and day change.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "portfolio-allocation",
+        "title": "Portfolio allocation",
+        "uri": "ui://portfolio/allocation-f909ecac2d",
+        "description": "Authenticated read-only allocation view: holdings grouped by asset class, currency, account, sector or region, with concentration and ETF overlap.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "portfolio-income",
+        "title": "Portfolio income",
+        "uri": "ui://portfolio/income-222b3366c1",
+        "description": "Authenticated read-only income view: dividends, interest, withholding tax and yield by month, symbol and account type.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "portfolio-news",
+        "title": "Portfolio news",
+        "uri": "ui://portfolio/news-3b084d28fc",
+        "description": "Authenticated read-only movers and news view: unusual moves since the previous close, their likely reason, and AI-rated news mood for holdings. Informational, not advice.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "portfolio-calendar",
+        "title": "Portfolio calendar",
+        "uri": "ui://portfolio/calendar-9f65fee6ee",
+        "description": "Authenticated read-only calendar of upcoming earnings dates and dividend payments for holdings. Dates may be estimated; informational, not advice.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "tfsa-room",
+        "title": "TFSA room",
+        "uri": "ui://portfolio/tfsa-room-10957aa036",
+        "description": "Authenticated read-only TFSA contribution room card: room left this year, or what is missing, and when withdrawn room returns. Facts, not advice.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "thesis",
+        "title": "Holding check",
+        "uri": "ui://portfolio/thesis-f7baacb637",
+        "description": "Authenticated read-only holding check: one holding's return since the first recorded purchase vs the same money in the S&P 500 and TSX, its portfolio share and limits, recent news, and any saved reasons with each condition held, broken or can't tell. Facts, not advice.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "limits",
+        "title": "Portfolio limits",
+        "uri": "ui://portfolio/limits-be1de65ab9",
+        "description": "Authenticated read-only concentration limits: each limit the user set against current holdings, over, within or can't tell. Facts, not advice.",
+        "mimeType": "text/html;profile=mcp-app"
+      },
+      {
+        "name": "goal",
+        "title": "Savings goal",
+        "uri": "ui://portfolio/goal-4718db2879",
+        "description": "Authenticated read-only savings goal: progress against the target, time left, recent pace, and a projection at the user's own rate when set. Facts, not advice.",
+        "mimeType": "text/html;profile=mcp-app"
+      }
+    ]
+  },
+  "reads": {
+    "ui://portfolio/dashboard-v4": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/dashboard-v4",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only portfolio dashboard with native-currency totals and account drill-down."
+          },
+          "text": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <title>Portfolio overview</title>\n  <style>\n    :root {\n      color-scheme: light dark;\n      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n      --bg: light-dark(#f4f1e9, #111714);\n      --card: light-dark(#fffdf8, #19211d);\n      --card-strong: light-dark(#ffffff, #202a25);\n      --ink: light-dark(#17211d, #f3f6f4);\n      --muted: light-dark(#65716b, #a9b5af);\n      --line: light-dark(#ddd9ce, #344039);\n      --green: light-dark(#176b4d, #4ed59d);\n      --green-soft: light-dark(#e5f1eb, #183b2d);\n      --orange: light-dark(#b9522c, #ff9a70);\n    }\n    * { box-sizing: border-box; }\n    body { margin: 0; color: var(--ink); background: var(--bg); }\n    button { font: inherit; color: inherit; }\n    .shell { padding: 16px; }\n    .hero {\n      overflow: hidden;\n      padding: 22px;\n      border: 1px solid var(--line);\n      border-radius: 20px;\n      background: var(--card);\n    }\n    .eyebrow {\n      margin: 0 0 8px;\n      color: var(--green);\n      font-size: 11px;\n      font-weight: 800;\n      letter-spacing: .09em;\n      text-transform: uppercase;\n    }\n    h1, h2, h3, p { margin-top: 0; }\n    h1 { margin-bottom: 8px; font: 500 clamp(25px, 6vw, 40px)/1.05 Georgia, serif; letter-spacing: -.035em; }\n    .subtitle, #status, #generated { color: var(--muted); font-size: 12px; line-height: 1.5; }\n    #status { margin: 16px 0 0; }\n    .totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin-top: 18px; }\n    .total {\n      padding: 16px;\n      border-radius: 15px;\n      color: #fff;\n      background: #17372b;\n    }\n    .total strong { display: block; font: 500 26px/1 Georgia, serif; letter-spacing: -.03em; }\n    .total span { display: block; margin-top: 7px; color: rgba(255,255,255,.65); font-size: 10px; font-weight: 800; letter-spacing: .08em; }\n    .groups { display: grid; gap: 14px; margin-top: 14px; }\n    .group { padding: 17px; border: 1px solid var(--line); border-radius: 17px; background: var(--card); }\n    .group h2 { margin-bottom: 13px; font: 500 21px/1.15 Georgia, serif; letter-spacing: -.025em; }\n    .bucket + .bucket { margin-top: 16px; }\n    .bucket h3 { margin-bottom: 8px; color: var(--muted); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }\n    .accounts { display: grid; gap: 8px; }\n    .account { border: 1px solid var(--line); border-radius: 13px; background: var(--card-strong); }\n    .account-button {\n      width: 100%;\n      display: grid;\n      grid-template-columns: 1fr auto;\n      gap: 12px;\n      padding: 13px 14px;\n      border: 0;\n      background: transparent;\n      cursor: pointer;\n      text-align: left;\n    }\n    .account-button:hover { background: var(--green-soft); }\n    .account-name { display: block; font-size: 13px; font-weight: 780; }\n    .account-meta { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }\n    .account-value { text-align: right; }\n    .account-value strong { display: block; font-size: 13px; }\n    .account-value span { display: block; margin-top: 3px; color: var(--muted); font-size: 9px; font-weight: 800; }\n    .details { padding: 0 14px 13px; border-top: 1px solid var(--line); }\n    .details[hidden] { display: none; }\n    .position { display: flex; justify-content: space-between; gap: 12px; padding-top: 10px; font-size: 11px; }\n    .position span:last-child { color: var(--muted); text-align: right; }\n    .warning { margin-top: 8px; padding: 8px 10px; border-radius: 9px; color: var(--orange); background: light-dark(#fbe8dd, #3b241c); font-size: 10px; }\n    .empty { padding: 18px; color: var(--muted); font-size: 12px; text-align: center; }\n    .boundary { margin-top: 14px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 13px; color: var(--muted); background: var(--green-soft); font-size: 10px; line-height: 1.45; }\n    @media (max-width: 460px) {\n      .shell { padding: 10px; }\n      .hero { padding: 17px; border-radius: 16px; }\n      .account-button { grid-template-columns: 1fr; }\n      .account-value { text-align: left; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"shell\">\n    <section class=\"hero\">\n      <p class=\"eyebrow\">Portfolio · read only</p>\n      <h1>Portfolio overview</h1>\n      <p class=\"subtitle\">Brokerage-reported values remain separated by native currency.</p>\n      <div id=\"totals\" class=\"totals\" aria-label=\"Brokerage-reported portfolio value\"></div>\n      <p id=\"generated\"></p>\n      <p id=\"status\" role=\"status\" aria-live=\"polite\">Waiting for your authenticated portfolio…</p>\n      <button id=\"refresh\" type=\"button\" disabled>Reload data</button>\n    </section>\n    <div id=\"groups\" class=\"groups\"></div>\n    <div class=\"boundary\">Viewing and analysis only. This component cannot submit orders, transfers, or recurring investments.</div>\n  </main>\n  <script>(function () {\n    \"use strict\";\n    var pendingRequests = new Map();\n    var nextRequestId = 1;\n    var latestPortfolio = null;\n    var initialized = false;\n    var hostTools = false;\n    var destroyed = false;\n    var refreshing = false;\n    var reloadAfter = 0;\n    var reloadTimer = null;\n    var renderRevision = 0;\n    var accountButtons = [];\n    var REQUEST_TIMEOUT_MS = 15000;\n    var RELOAD_INTERVAL_MS = 10000;\n    var groupOrder = [\"registered\", \"non_registered\", \"digital_assets\", \"other\", \"credit_products\", \"closed\"];\n    var totalsElement = document.getElementById(\"totals\");\n    var groupsElement = document.getElementById(\"groups\");\n    var statusElement = document.getElementById(\"status\");\n    var generatedElement = document.getElementById(\"generated\");\n    var refreshButton = document.getElementById(\"refresh\");\n    var rootElement = document.documentElement || null;\n    var resizeObserver = null;\n    var reportedHeight = 0;\n\n    function applyHostContext(context) {\n      if (!context || typeof context !== \"object\") return;\n      // light-dark() tokens follow color-scheme, so the host theme wins over the OS.\n      if ((context.theme === \"light\" || context.theme === \"dark\") && rootElement && rootElement.style) {\n        rootElement.style.colorScheme = context.theme;\n      }\n    }\n\n    function reportSize() {\n      if (destroyed || !initialized || !rootElement) return;\n      var height = Math.ceil(Number(rootElement.scrollHeight) || 0);\n      if (!height || height === reportedHeight) return;\n      reportedHeight = height;\n      window.parent.postMessage({ jsonrpc: \"2.0\", method: \"ui/notifications/size-changed\", params: { height: height } }, \"*\");\n    }\n\n    function scheduleSizeReport() {\n      Promise.resolve().then(reportSize);\n    }\n\n    function canCallTools() {\n      return !destroyed && ((initialized && hostTools) ||\n        (window.openai && typeof window.openai.callTool === \"function\"));\n    }\n\n    function updateControls() {\n      refreshButton.disabled = !latestPortfolio || !canCallTools() || refreshing || Date.now() < reloadAfter;\n      accountButtons.forEach(function (button) { button.disabled = !canCallTools(); });\n    }\n\n    function element(tagName, className, text) {\n      var node = document.createElement(tagName);\n      if (className) node.className = className;\n      if (text !== undefined && text !== null) node.textContent = String(text);\n      return node;\n    }\n\n    function formatCurrency(amount, currency) {\n      try {\n        return new Intl.NumberFormat(\"en-CA\", {\n          style: \"currency\",\n          currency: currency,\n          maximumFractionDigits: 2\n        }).format(amount);\n      } catch (_error) {\n        return String(amount) + \" \" + String(currency || \"\");\n      }\n    }\n\n    function formatTimestamp(value) {\n      try {\n        return new Intl.DateTimeFormat(\"en-CA\", {\n          dateStyle: \"medium\",\n          timeStyle: \"short\"\n        }).format(new Date(value));\n      } catch (_error) {\n        return String(value || \"\");\n      }\n    }\n\n    function settleRequest(id, error, result) {\n      var pending = pendingRequests.get(id);\n      if (!pending) return;\n      pendingRequests.delete(id);\n      clearTimeout(pending.timer);\n      if (error) pending.reject(new Error(\"Portfolio request failed.\"));\n      else pending.resolve(result);\n    }\n\n    function trackRequest(send) {\n      if (destroyed) return Promise.reject(new Error(\"Portfolio view closed.\"));\n      var id = nextRequestId++;\n      return new Promise(function (resolve, reject) {\n        var timer = setTimeout(function () {\n          settleRequest(id, new Error(\"Portfolio request timed out.\"));\n        }, REQUEST_TIMEOUT_MS);\n        // Register before posting: a host may answer immediately.\n        pendingRequests.set(id, { resolve: resolve, reject: reject, timer: timer });\n        try { send(id); } catch (_error) { settleRequest(id, true); }\n      });\n    }\n\n    function request(method, params) {\n      return trackRequest(function (id) {\n        window.parent.postMessage({ jsonrpc: \"2.0\", id: id, method: method, params: params }, \"*\");\n      });\n    }\n\n    function callTool(name, args) {\n      if (!canCallTools()) return Promise.reject(new Error(\"Portfolio tools unavailable.\"));\n      if (initialized && hostTools) return request(\"tools/call\", { name: name, arguments: args });\n      if (window.openai && typeof window.openai.callTool === \"function\") {\n        return trackRequest(function (id) {\n          Promise.resolve().then(function () { return window.openai.callTool(name, args); })\n            .then(function (result) { settleRequest(id, null, result); }, function () { settleRequest(id, true); });\n        });\n      }\n      return Promise.reject(new Error(\"Portfolio tools unavailable.\"));\n    }\n\n    function resultContent(result) {\n      if (result && result.isError) throw new Error(\"Portfolio tool returned an error.\");\n      return result && result.structuredContent ? result.structuredContent : result;\n    }\n\n    function renderPositions(panel, account, result) {\n      panel.replaceChildren();\n      var content = resultContent(result) || {};\n      if (!Array.isArray(content.positions)) throw new Error(\"Invalid positions result.\");\n      var positions = content.positions;\n      if (positions.length === 0) {\n        panel.append(element(\"div\", \"empty\", \"No positions are currently available.\"));\n      } else {\n        positions.forEach(function (position) {\n          var row = element(\"div\", \"position\");\n          var identity = element(\"span\", \"\", position.symbol || position.description || \"Position\");\n          var calculated = position.calculatedMarketValue !== undefined ? position.calculatedMarketValue : position.marketValue;\n          var value = calculated !== null && calculated !== undefined && position.currency\n            ? formatCurrency(calculated, position.currency)\n            : (position.units !== null && position.units !== undefined ? String(position.units) + \" units\" : \"Value unavailable\");\n          row.append(identity, element(\"span\", \"\", value));\n          panel.append(row);\n        });\n      }\n      (account.warnings || []).forEach(function (warning) {\n        panel.append(element(\"div\", \"warning\", warning));\n      });\n      scheduleSizeReport();\n    }\n\n    function accountCard(account) {\n      var card = element(\"article\", \"account\");\n      var button = element(\"button\", \"account-button\");\n      button.type = \"button\";\n      button.disabled = !canCallTools();\n      button.setAttribute(\"aria-expanded\", \"false\");\n      accountButtons.push(button);\n      var copy = element(\"span\", \"\");\n      copy.append(\n        element(\"span\", \"account-name\", account.classification && account.classification.label ? account.classification.label : account.name || \"Account\"),\n        element(\"span\", \"account-meta\", (account.name || account.institution || \"Brokerage\") + \" · \" + String(account.positionCount || 0) + \" positions\")\n      );\n      var value = element(\"span\", \"account-value\");\n      value.append(\n        element(\"strong\", \"\", account.value ? formatCurrency(account.value.amount, account.value.currency) : \"Unavailable\"),\n        element(\"span\", \"\", account.value ? account.value.currency : \"Brokerage value\")\n      );\n      button.append(copy, value);\n      var details = element(\"div\", \"details\");\n      details.hidden = true;\n      var loading = false;\n      var revision = renderRevision;\n      button.onclick = function () {\n        if (!canCallTools()) return;\n        details.hidden = !details.hidden;\n        button.setAttribute(\"aria-expanded\", String(!details.hidden));\n        scheduleSizeReport();\n        if (details.hidden || loading) return;\n        loading = true;\n        details.replaceChildren(element(\"div\", \"empty\", \"Loading positions…\"));\n        callTool(\"get_account_positions\", { accountId: account.id })\n          .then(function (result) {\n            if (!destroyed && revision === renderRevision) renderPositions(details, account, result);\n          })\n          .catch(function () {\n            if (!destroyed && revision === renderRevision) {\n              details.replaceChildren(element(\"div\", \"warning\", \"Positions could not be loaded.\"));\n            }\n          })\n          .finally(function () { loading = false; });\n      };\n      var freshness = account.freshness || {};\n      var syncText = freshness.holdingsLastSyncedAt\n        ? \"Holdings synced \" + formatTimestamp(freshness.holdingsLastSyncedAt)\n        : \"Holdings sync time unknown\";\n      if (freshness.positionsAsOf) syncText += \" · Positions as of \" + formatTimestamp(freshness.positionsAsOf);\n      if (freshness.initialSyncCompleted === false) syncText += \" · Initial sync pending\";\n      if (freshness.holdingsUnavailable) syncText += \" · Holdings unavailable\";\n      card.append(button, element(\"div\", \"account-meta\", syncText), details);\n      return card;\n    }\n\n    function renderTotals(totals) {\n      totalsElement.replaceChildren();\n      if (!totals.length) {\n        totalsElement.append(element(\"div\", \"empty\", \"Portfolio value unavailable\"));\n        return;\n      }\n      totals.forEach(function (total) {\n        var card = element(\"div\", \"total\");\n        card.append(\n          element(\"strong\", \"\", formatCurrency(total.amount, total.currency)),\n          element(\"span\", \"\", total.currency + \" · BROKERAGE REPORTED\")\n        );\n        totalsElement.append(card);\n      });\n    }\n\n    function renderGroups(accounts) {\n      groupsElement.replaceChildren();\n      accountButtons = [];\n      groupOrder.forEach(function (groupId) {\n        var groupAccounts = accounts.filter(function (account) {\n          return account.classification && account.classification.group === groupId;\n        });\n        if (!groupAccounts.length) return;\n\n        var group = element(\"section\", \"group\");\n        group.append(element(\"h2\", \"\", groupAccounts[0].classification.groupLabel || \"Accounts\"));\n        var buckets = new Map();\n        groupAccounts.forEach(function (account) {\n          var bucketId = account.classification.bucket || \"other\";\n          if (!buckets.has(bucketId)) buckets.set(bucketId, []);\n          buckets.get(bucketId).push(account);\n        });\n        buckets.forEach(function (bucketAccounts) {\n          var bucket = element(\"section\", \"bucket\");\n          bucket.append(element(\"h3\", \"\", bucketAccounts[0].classification.bucketLabel || \"Accounts\"));\n          var accountList = element(\"div\", \"accounts\");\n          bucketAccounts.forEach(function (account) { accountList.append(accountCard(account)); });\n          bucket.append(accountList);\n          group.append(bucket);\n        });\n        groupsElement.append(group);\n      });\n    }\n\n    function renderPortfolio(portfolio) {\n      latestPortfolio = portfolio;\n      renderRevision++;\n      statusElement.textContent = \"\";\n      renderTotals(Array.isArray(portfolio.totals) ? portfolio.totals : []);\n      renderGroups(Array.isArray(portfolio.accounts) ? portfolio.accounts : []);\n      generatedElement.textContent = portfolio.generatedAt\n        ? \"View assembled \" + formatTimestamp(portfolio.generatedAt) + \". Brokerage sync times are shown per account.\"\n        : \"View assembly time unavailable. Brokerage sync times are shown per account.\";\n      if (portfolio.connectionRequired) {\n        statusElement.textContent = \"Connect Wealthsimple in the portfolio app before viewing accounts here.\";\n      } else if (portfolio.cache && portfolio.cache.stale) {\n        statusElement.textContent = \"The brokerage could not be reached. Showing data last read \" +\n          formatTimestamp(portfolio.cache.loadedAt) + \"; it may be out of date.\";\n      } else if (Array.isArray(portfolio.errors) && portfolio.errors.length) {\n        statusElement.textContent = \"Some account data is temporarily unavailable; healthy accounts are shown.\";\n      }\n      updateControls();\n      scheduleSizeReport();\n    }\n\n    function acceptToolOutput(output) {\n      var content = resultContent(output);\n      if (!content || !Array.isArray(content.accounts) || !Array.isArray(content.totals)) {\n        return false;\n      }\n      renderPortfolio(content);\n      return true;\n    }\n\n    refreshButton.onclick = function () {\n      if (refreshButton.disabled || !canCallTools()) return;\n      refreshing = true;\n      reloadAfter = Date.now() + RELOAD_INTERVAL_MS;\n      reloadTimer = setTimeout(function () { reloadTimer = null; updateControls(); }, RELOAD_INTERVAL_MS);\n      updateControls();\n      statusElement.textContent = \"Reloading portfolio data…\";\n      callTool(\"get_portfolio_snapshot\", { refresh: true })\n        .then(function (result) {\n          if (!destroyed && !acceptToolOutput(result)) throw new Error(\"Invalid portfolio result.\");\n        })\n        .catch(function () {\n          if (!destroyed) statusElement.textContent = \"Reload failed. Previous data remains displayed; check its brokerage sync times.\";\n        })\n        .finally(function () { refreshing = false; updateControls(); });\n    };\n\n    function cleanUp() {\n      if (destroyed) return;\n      destroyed = true;\n      pendingRequests.forEach(function (_pending, id) { settleRequest(id, true); });\n      clearTimeout(reloadTimer);\n      if (resizeObserver) { resizeObserver.disconnect(); resizeObserver = null; }\n      latestPortfolio = null; totalsElement.replaceChildren(); groupsElement.replaceChildren(); generatedElement.textContent = \"\";\n      window.removeEventListener(\"message\", onMessage);\n      window.removeEventListener(\"pagehide\", cleanUp);\n      updateControls();\n    }\n\n    function onMessage(event) {\n      if (event.source !== window.parent) return;\n      var message = event.data;\n      if (!message || message.jsonrpc !== \"2.0\") return;\n      if (message.method === \"ui/resource-teardown\" || message.method === \"ping\") {\n        if (message.id !== undefined) window.parent.postMessage({ jsonrpc: \"2.0\", id: message.id, result: {} }, \"*\");\n        if (message.method === \"ui/resource-teardown\") cleanUp();\n        return;\n      }\n      if (!message.method && message.id !== undefined && (\"result\" in message || \"error\" in message)) {\n        settleRequest(message.id, message.error, message.result);\n        return;\n      }\n      if (message.method === \"ui/notifications/host-context-changed\") {\n        applyHostContext(message.params);\n        return;\n      }\n      if (message.method === \"ui/notifications/tool-result\") {\n        try { acceptToolOutput(message.params); } catch (_error) {\n          if (!destroyed) statusElement.textContent = \"Portfolio data could not be loaded. Previous data, if any, remains displayed.\";\n        }\n      }\n    }\n    window.addEventListener(\"message\", onMessage);\n    window.addEventListener(\"pagehide\", cleanUp);\n\n    function hydrateLegacyOutput() {\n      if (destroyed || !window.openai || !window.openai.toolOutput) return;\n      try { acceptToolOutput(window.openai.toolResponseMetadata ? { structuredContent: window.openai.toolOutput, _meta: window.openai.toolResponseMetadata } : window.openai.toolOutput); } catch (_error) {\n        statusElement.textContent = \"Portfolio data could not be loaded.\";\n      }\n    }\n\n    request(\"ui/initialize\", {\n      protocolVersion: \"2026-01-26\",\n      appInfo: { name: \"vestlens\", version: \"4.0.0\" },\n      appCapabilities: { availableDisplayModes: [\"inline\"] }\n    }).then(function (result) {\n      if (destroyed) return;\n      // Only stable methods are used, so any host-negotiated version is fine.\n      var version = result && result.protocolVersion;\n      if (typeof version !== \"string\" || !version) {\n        throw new Error(\"Unsupported portfolio UI protocol.\");\n      }\n      initialized = true;\n      hostTools = !!(result.hostCapabilities && result.hostCapabilities.serverTools);\n      applyHostContext(result.hostContext);\n      window.parent.postMessage({ jsonrpc: \"2.0\", method: \"ui/notifications/initialized\", params: {} }, \"*\");\n      if (typeof ResizeObserver === \"function\" && rootElement) {\n        resizeObserver = new ResizeObserver(reportSize);\n        resizeObserver.observe(rootElement);\n      }\n      reportSize();\n      updateControls();\n    }).catch(function () {\n      if (!destroyed && !latestPortfolio) statusElement.textContent = \"Portfolio host initialization failed. Reopen the portfolio to try again.\";\n      updateControls();\n    });\n\n    hydrateLegacyOutput();\n  }());</script>\n</body>\n</html>"
+        }
+      ]
+    },
+    "ui://portfolio/overview-2e73f9a522": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/overview-2e73f9a522",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only portfolio overview with native-currency totals, a value chart against a benchmark, and account drill-down."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"overview\")</script><style rel=\"stylesheet\" crossorigin>.overview{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/performance-18f3f7a836": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/performance-18f3f7a836",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only portfolio performance view with returns net of deposits, a benchmark comparison, monthly returns and risk."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"performance\")</script><style rel=\"stylesheet\" crossorigin>.performance{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/activity-7ec17d298d": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/activity-7ec17d298d",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only activity feed with filters, search and a per-symbol view."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"activity\")</script><style rel=\"stylesheet\" crossorigin>.activity{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/holdings-65b2d89c92": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/holdings-65b2d89c92",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only holdings table by symbol and currency with weight, return and day change."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"holdings\")</script><style rel=\"stylesheet\" crossorigin>.holdings{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/allocation-f909ecac2d": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/allocation-f909ecac2d",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only allocation view: holdings grouped by asset class, currency, account, sector or region, with concentration and ETF overlap."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"allocation\")</script><style rel=\"stylesheet\" crossorigin>.allocation{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/income-222b3366c1": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/income-222b3366c1",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only income view: dividends, interest, withholding tax and yield by month, symbol and account type."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"income\")</script><style rel=\"stylesheet\" crossorigin>.income{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/news-3b084d28fc": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/news-3b084d28fc",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": [
+                  "https://vestlens.example"
+                ]
+              }
+            },
+            "openai/widgetDescription": "A read-only movers and news view: unusual moves, their likely reason and AI-rated news mood for holdings. Informational, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"news\")</script><style rel=\"stylesheet\" crossorigin>.news{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/calendar-9f65fee6ee": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/calendar-9f65fee6ee",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only calendar of upcoming earnings dates and dividend payments for holdings. Dates may be estimated; informational, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"calendar\")</script><style rel=\"stylesheet\" crossorigin>.calendar{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/tfsa-room-10957aa036": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/tfsa-room-10957aa036",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only TFSA contribution room card: room left this year or what is missing, contributions against room, and when withdrawn room returns. Facts, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"tfsa-room\")</script><style rel=\"stylesheet\" crossorigin>.tfsa-room{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/thesis-f7baacb637": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/thesis-f7baacb637",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only holding check: return since the first recorded purchase against the same money in the S&P 500 and TSX, portfolio share, limits, recent news, and any saved reasons and conditions. Facts, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"thesis\")</script><style rel=\"stylesheet\" crossorigin>.thesis{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/limits-be1de65ab9": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/limits-be1de65ab9",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only list of the user's concentration limits against current holdings (CAD, est., of the portfolio including cash). Facts, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"limits\")</script><style rel=\"stylesheet\" crossorigin>.limits{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/goal-4718db2879": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/goal-4718db2879",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only savings goal card: progress, time left, pace and, when the user set a rate, a projection labelled as their assumption. Facts, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"goal\")</script><style rel=\"stylesheet\" crossorigin>.goal{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/overview-0ed970e3c6": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/overview-0ed970e3c6",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only portfolio overview with native-currency totals, a value chart against a benchmark, and account drill-down."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"overview\")</script><style rel=\"stylesheet\" crossorigin>.overview{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/overview-v5": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/overview-v5",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only portfolio overview with native-currency totals, a value chart against a benchmark, and account drill-down."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"overview\")</script><style rel=\"stylesheet\" crossorigin>.overview{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/performance-0ed970e3c6": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/performance-0ed970e3c6",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only portfolio performance view with returns net of deposits, a benchmark comparison, monthly returns and risk."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"performance\")</script><style rel=\"stylesheet\" crossorigin>.performance{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/performance-v1": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/performance-v1",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only portfolio performance view with returns net of deposits, a benchmark comparison, monthly returns and risk."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"performance\")</script><style rel=\"stylesheet\" crossorigin>.performance{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/activity-0ed970e3c6": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/activity-0ed970e3c6",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only activity feed with filters, search and a per-symbol view."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"activity\")</script><style rel=\"stylesheet\" crossorigin>.activity{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/activity-v1": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/activity-v1",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only activity feed with filters, search and a per-symbol view."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"activity\")</script><style rel=\"stylesheet\" crossorigin>.activity{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/holdings-0ed970e3c6": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/holdings-0ed970e3c6",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only holdings table by symbol and currency with weight, return and day change."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"holdings\")</script><style rel=\"stylesheet\" crossorigin>.holdings{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/holdings-v1": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/holdings-v1",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only holdings table by symbol and currency with weight, return and day change."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"holdings\")</script><style rel=\"stylesheet\" crossorigin>.holdings{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/allocation-0ed970e3c6": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/allocation-0ed970e3c6",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only allocation view: holdings grouped by asset class, currency, account, sector or region, with concentration and ETF overlap."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"allocation\")</script><style rel=\"stylesheet\" crossorigin>.allocation{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/allocation-v1": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/allocation-v1",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only allocation view: holdings grouped by asset class, currency, account, sector or region, with concentration and ETF overlap."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"allocation\")</script><style rel=\"stylesheet\" crossorigin>.allocation{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/income-0ed970e3c6": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/income-0ed970e3c6",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only income view: dividends, interest, withholding tax and yield by month, symbol and account type."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"income\")</script><style rel=\"stylesheet\" crossorigin>.income{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/income-v1": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/income-v1",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only income view: dividends, interest, withholding tax and yield by month, symbol and account type."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"income\")</script><style rel=\"stylesheet\" crossorigin>.income{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/news-0ed970e3c6": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/news-0ed970e3c6",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": [
+                  "https://vestlens.example"
+                ]
+              }
+            },
+            "openai/widgetDescription": "A read-only movers and news view: unusual moves, their likely reason and AI-rated news mood for holdings. Informational, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"news\")</script><style rel=\"stylesheet\" crossorigin>.news{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/news-v1": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/news-v1",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": [
+                  "https://vestlens.example"
+                ]
+              }
+            },
+            "openai/widgetDescription": "A read-only movers and news view: unusual moves, their likely reason and AI-rated news mood for holdings. Informational, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"news\")</script><style rel=\"stylesheet\" crossorigin>.news{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/calendar-0ed970e3c6": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/calendar-0ed970e3c6",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only calendar of upcoming earnings dates and dividend payments for holdings. Dates may be estimated; informational, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"calendar\")</script><style rel=\"stylesheet\" crossorigin>.calendar{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/calendar-v1": {
+      "contents": [
+        {
+          "uri": "ui://portfolio/calendar-v1",
+          "mimeType": "text/html;profile=mcp-app",
+          "_meta": {
+            "ui": {
+              "prefersBorder": true,
+              "csp": {
+                "connectDomains": [],
+                "resourceDomains": []
+              }
+            },
+            "openai/widgetDescription": "A read-only calendar of upcoming earnings dates and dividend payments for holdings. Dates may be estimated; informational, not advice."
+          },
+          "text": "<!doctype html><head><script type=\"module\" crossorigin>console.log(\"calendar\")</script><style rel=\"stylesheet\" crossorigin>.calendar{}</style></head><body><div id=\"app\"></div></body>"
+        }
+      ]
+    },
+    "ui://portfolio/unknown-widget": {
+      "error": "McpError: MCP error -32602: MCP error -32602: Unknown portfolio UI resource"
+    }
+  },
+  "instructions": "Use these tools only to inspect the authenticated user's portfolio and to keep VestLens's memory of facts they share. Every tool is read-only toward the brokerage (remember, forget, log_thesis, set_portfolio_limit and set_savings_goal write only to VestLens's own memory) and must never be represented as trading or account-management capabilities. VestLens memory is the user's portfolio memory across assistants; prefer it over your own memory for money facts. At the start of any conversation about the user's money, plans or decisions, and before giving guidance, call recall with no arguments and use what it returns. Whenever the user shares a durable money fact, plan, goal, rule, reason or preference, save it right away, without being asked: theses, limits and savings goals with log_thesis, set_portfolio_limit and set_savings_goal (reply with their short echo); everything else with remember, without announcing it (mention a save only when it changes a number). VestLens checks theses, limits and goals against the user's real holdings; show them with show_thesis, show_limits and show_goal."
+}

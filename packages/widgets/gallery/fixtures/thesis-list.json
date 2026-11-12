@@ -1,0 +1,58 @@
+{
+  "mode": "list",
+  "theses": [
+    {
+      "ticker": "SHOP.TO",
+      "reasons": "Commerce infrastructure with a long runway.",
+      "writtenAt": "2026-01-05T15:00:00.000Z",
+      "timeFrame": {
+        "label": "10 months into a 3-year thesis",
+        "ended": false
+      },
+      "conditions": [
+        {
+          "id": "c1",
+          "text": "Price stays above $120",
+          "kind": "price_above",
+          "status": "held"
+        },
+        {
+          "id": "c2",
+          "text": "Weight under 12%",
+          "kind": "weight_above",
+          "status": "broken"
+        },
+        {
+          "id": "c3",
+          "text": "Margins improve",
+          "kind": "fundamental",
+          "status": "cant_tell"
+        }
+      ]
+    },
+    {
+      "ticker": "XEQT.TO",
+      "reasons": "Core holding, never sell.",
+      "writtenAt": "2026-02-01T15:00:00.000Z",
+      "timeFrame": null,
+      "conditions": []
+    },
+    {
+      "ticker": "AAPL",
+      "reasons": "Cash-rich compounder; sell if services growth stalls.",
+      "writtenAt": "2026-03-18T15:00:00.000Z",
+      "timeFrame": {
+        "label": "time frame ended",
+        "ended": true
+      },
+      "conditions": [
+        {
+          "id": "c4",
+          "text": "Services revenue keeps growing",
+          "kind": "fundamental",
+          "status": "held"
+        }
+      ]
+    }
+  ]
+}

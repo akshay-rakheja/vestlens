@@ -1,0 +1,25 @@
+node_modules/
+dist/
+.source-handoff/
+.env
+.env.*
+!.env.example
+docker-compose.override.yml
+*.db
+*.sqlite
+*.sqlite3
+*.tsbuildinfo
+packages/web/vite.config.js
+packages/web/vite.config.d.ts
+
+# Private runtime/review outputs and generated local artifacts
+*.log
+.DS_Store
+coverage/
+test-results/
+playwright-report/
+*.zip
+*.tar.gz
+localtunnel.url
+.superpowers/
+packages/widgets/dist/

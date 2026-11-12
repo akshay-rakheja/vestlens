@@ -1,0 +1,160 @@
+{
+  "dimension": "assetClass",
+  "slices": [
+    {
+      "key": "etfs-funds",
+      "label": "ETFs & funds",
+      "valueCad": 142300,
+      "fraction": 0.58,
+      "estimated": false,
+      "holdings": [
+        {
+          "holdingKey": "XEQT.TO|CAD",
+          "symbol": "XEQT.TO",
+          "valueCad": 77658
+        },
+        {
+          "holdingKey": "VFV.TO|CAD",
+          "symbol": "VFV.TO",
+          "valueCad": 54264
+        },
+        {
+          "holdingKey": "ZEB.TO|CAD",
+          "symbol": "ZEB.TO",
+          "valueCad": 19188
+        },
+        {
+          "holdingKey": "VOO|USD",
+          "symbol": "VOO",
+          "valueCad": 10153
+        }
+      ],
+      "moreHoldings": 1
+    },
+    {
+      "key": "stocks",
+      "label": "Stocks",
+      "valueCad": 83400,
+      "fraction": 0.34,
+      "estimated": true,
+      "holdings": [
+        {
+          "holdingKey": "SHOP.TO|CAD",
+          "symbol": "SHOP.TO",
+          "valueCad": 35364
+        },
+        {
+          "holdingKey": "AAPL|USD",
+          "symbol": "AAPL",
+          "valueCad": 32868
+        },
+        {
+          "holdingKey": "RY.TO|CAD",
+          "symbol": "RY.TO",
+          "valueCad": 18268
+        },
+        {
+          "holdingKey": "MSFT|USD",
+          "symbol": "MSFT",
+          "valueCad": 13522
+        }
+      ],
+      "moreHoldings": 2
+    },
+    {
+      "key": "cash",
+      "label": "Cash",
+      "valueCad": 8283,
+      "fraction": 0.032,
+      "estimated": true,
+      "holdings": [
+        {
+          "holdingKey": "cash:TFSA:CAD",
+          "symbol": "Cash (CAD)",
+          "valueCad": 7710
+        },
+        {
+          "holdingKey": "cash:Personal:USD",
+          "symbol": "Cash (USD)",
+          "valueCad": 573
+        }
+      ],
+      "moreHoldings": 0
+    },
+    {
+      "key": "bonds",
+      "label": "Bonds",
+      "valueCad": 11400,
+      "fraction": 0.046,
+      "estimated": false,
+      "holdings": [
+        {
+          "holdingKey": "ZAG.TO|CAD",
+          "symbol": "ZAG.TO",
+          "valueCad": 11400
+        }
+      ],
+      "moreHoldings": 0
+    }
+  ],
+  "unclassifiedFraction": 0.004,
+  "estimated": true,
+  "fx": {
+    "rate": 1.3912,
+    "date": "2026-10-26"
+  },
+  "usdExcluded": false,
+  "excludedCurrencies": [],
+  "unvalued": 0,
+  "concentration": {
+    "top10": 0.86,
+    "effectiveN": 7.4,
+    "estimated": true,
+    "largest": {
+      "symbol": "XEQT.TO",
+      "fraction": 0.312
+    },
+    "largestWithLookThrough": null
+  },
+  "overlap": [
+    {
+      "symbol": "AAPL",
+      "direct": 0.134,
+      "indirect": 0.041,
+      "combined": 0.175,
+      "estimated": true
+    },
+    {
+      "symbol": "MSFT",
+      "direct": 0.055,
+      "indirect": 0.038,
+      "combined": 0.093,
+      "estimated": true
+    }
+  ],
+  "accounts": [
+    {
+      "id": "acct-tfsa",
+      "label": "TFSA"
+    },
+    {
+      "id": "acct-rrsp",
+      "label": "RRSP"
+    },
+    {
+      "id": "acct-fhsa",
+      "label": "FHSA"
+    },
+    {
+      "id": "acct-personal",
+      "label": "Personal"
+    }
+  ],
+  "filters": {},
+  "settings": {
+    "benchmark": "sp500",
+    "cadView": false,
+    "privacyDefault": false
+  },
+  "asOf": "@now"
+}

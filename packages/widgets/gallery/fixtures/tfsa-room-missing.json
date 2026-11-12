@@ -1,0 +1,74 @@
+{
+  "year": 2026,
+  "withdrawnCad": 0,
+  "basis": [
+    "2 contributions this year"
+  ],
+  "fx": {
+    "contributions": {
+      "estimated": false,
+      "rateDates": [],
+      "native": []
+    },
+    "withdrawals": {
+      "estimated": false,
+      "rateDates": [],
+      "native": []
+    }
+  },
+  "fxDates": [],
+  "dashboardUrl": "https://portfolio.example.com/room",
+  "status": "missing",
+  "missing": [
+    {
+      "kind": "cra_room"
+    },
+    {
+      "kind": "outside_contributions",
+      "label": "your TFSA at another institution",
+      "accountKey": "outside-1"
+    },
+    {
+      "kind": "stale_activity",
+      "label": "TFSA",
+      "accountKey": "acct-tfsa",
+      "lastSyncedAt": "2026-10-20T14:00:00Z"
+    },
+    {
+      "kind": "ambiguous",
+      "count": 2,
+      "rows": [
+        {
+          "activityKey": "a1",
+          "date": "2026-08-12",
+          "amountCad": 2500,
+          "estimated": false,
+          "rateDate": null,
+          "native": null,
+          "type": "INTERNAL_CASH_TRANSFER_IN",
+          "label": "TFSA"
+        },
+        {
+          "activityKey": "a2",
+          "date": "2026-09-03",
+          "amountCad": 800,
+          "estimated": false,
+          "rateDate": null,
+          "native": null,
+          "type": "TRANSFER_IN",
+          "label": "TFSA"
+        }
+      ]
+    }
+  ],
+  "fhsa": {
+    "status": "missing",
+    "year": 2026,
+    "headline": "I can't give a number yet",
+    "missing": [
+      {
+        "kind": "fhsa_room"
+      }
+    ]
+  }
+}

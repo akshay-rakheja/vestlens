@@ -1,0 +1,19 @@
+# Allowlist: only the read-only API and web packages enter the build context.
+*
+!Dockerfile
+!packages/api/package.json
+!packages/api/package-lock.json
+!packages/api/tsconfig.json
+!packages/api/prisma/schema.prisma
+!packages/api/prisma/migrations/**
+!packages/api/src/**
+!packages/web/**
+packages/web/node_modules
+packages/web/dist
+!packages/widgets/**
+packages/widgets/node_modules
+packages/widgets/dist
+**/.env
+**/.env.*
+**/*.db
+**/*.tsbuildinfo

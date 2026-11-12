@@ -1,0 +1,13 @@
+# Used only by scripts/compose-smoke.mjs, layered over docker-compose.yml. Never part of a real install.
+# Points the app at a fake SnapTrade served by the smoke script on the host (read-only, synthetic data).
+services:
+  app:
+    # Replaces (not appends to) the published port: the smoke test picks a free one.
+    ports: !override
+      - "127.0.0.1:${SMOKE_APP_PORT}:8080"
+    environment:
+      NODE_ENV: test
+      SNAPTRADE_BASE_PATH: ${SMOKE_SNAPTRADE_BASE_PATH}
+    # Lets the container reach the host on Linux (CI) as it can on Docker Desktop.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

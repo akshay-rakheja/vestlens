@@ -1,0 +1,88 @@
+[
+  { "question": "Refresh my data and give me a plain-text summary of every account.", "tool": "get_portfolio_snapshot", "args": { "refresh": true }, "note": "Text-only summary; refresh because the user asked for the latest." },
+  { "question": "Give me the raw numbers for my whole portfolio, no charts please.", "tool": "get_portfolio_snapshot", "args": {} },
+  { "question": "Which accounts do I have connected right now?", "tool": "list_portfolio_accounts", "args": {} },
+  { "question": "List the accounts you can see, with their ids.", "tool": "list_portfolio_accounts", "args": {}, "note": "Ids are what accountId filters need." },
+  { "question": "Show me every position in my second account, one line each.", "tool": "get_account_positions", "args": { "accountId": "acct-synthetic-002" }, "note": "After list_portfolio_accounts supplies the id." },
+  { "question": "Did any of my orders in that account fill in the last 30 days?", "tool": "get_account_history", "args": { "accountId": "acct-synthetic-001", "orderState": "executed", "orderDays": 30 } },
+  { "question": "Pull the raw activity for that account between September 1 and September 30.", "tool": "get_account_history", "args": { "accountId": "acct-synthetic-001", "activityStartDate": "2026-09-01T00:00:00Z", "activityEndDate": "2026-09-30T23:59:59Z" } },
+
+  { "question": "What's my portfolio worth right now?", "tool": "show_portfolio", "args": {} },
+  { "question": "Can you refresh and show me my total value? I just made a deposit.", "tool": "show_portfolio", "args": { "refresh": true } },
+  { "question": "How am I doing this month compared to the TSX?", "tool": "show_performance", "args": { "period": "1M", "benchmark": "tsx" }, "note": "Returns against a benchmark are show_performance's job." },
+  { "question": "Give me an overview of everything I own, year to date.", "tool": "show_portfolio", "args": { "period": "YTD" } },
+
+  { "question": "How's my TFSA done this year against the S&P 500?", "tool": "show_performance", "args": { "accountType": "tfsa", "period": "YTD", "benchmark": "sp500" } },
+  { "question": "What's my return on crypto over the past three years?", "tool": "show_performance", "args": { "accountType": "crypto", "period": "3Y" } },
+  { "question": "Is my RRSP keeping up with XEQT over the last year?", "tool": "show_performance", "args": { "accountType": "rrsp", "period": "1Y", "benchmark": "xeqt" } },
+  { "question": "Am I beating the Nasdaq 100 over the past three months?", "tool": "show_performance", "args": { "period": "3M", "benchmark": "nasdaq100" } },
+  { "question": "How has my non-registered account performed since I opened it?", "tool": "show_performance", "args": { "accountType": "non_registered", "period": "ALL" } },
+  { "question": "What's the one-month return on my FHSA?", "tool": "show_performance", "args": { "accountType": "fhsa", "period": "1M" } },
+
+  { "question": "How much cash do I have?", "tool": "show_holdings", "args": {}, "note": "Generic cash question: holdings include cash in every account. Never accountType cash_account." },
+  { "question": "What's in my Wealthsimple Cash account?", "tool": "show_holdings", "args": { "accountType": "cash_account" }, "note": "Explicitly the Wealthsimple Cash account, so cash_account is right here." },
+  { "question": "What do I hold in my FHSA?", "tool": "show_holdings", "args": { "accountType": "fhsa" } },
+  { "question": "List my TFSA holdings from best to worst return percentage.", "tool": "show_holdings", "args": { "accountType": "tfsa", "sort": "returnPct" } },
+  { "question": "How many shares of XEQT do I own?", "tool": "show_holdings", "args": { "symbol": "XEQT" } },
+  { "question": "Which of my positions moved the most today?", "tool": "show_holdings", "args": { "sort": "today" } },
+  { "question": "Show me my holdings priced in US dollars.", "tool": "show_holdings", "args": { "currency": "USD" } },
+  { "question": "What crypto am I holding and what's it worth?", "tool": "show_holdings", "args": { "accountType": "crypto" } },
+  { "question": "What's in my RRSP, biggest positions first?", "tool": "show_holdings", "args": { "accountType": "rrsp", "sort": "weight" } },
+  { "question": "What stocks and ETFs sit in my non-registered account?", "tool": "show_holdings", "args": { "accountType": "non_registered" } },
+
+  { "question": "What's in my Kids Savings account?", "tool": "show_holdings", "args": { "accountId": "acct-synthetic-003" }, "note": "A named account: accountId from list_portfolio_accounts." },
+  { "question": "Show the trades in my Kids Savings account from last month.", "tool": "show_activity", "args": { "accountId": "acct-synthetic-003", "categories": ["investing"], "from": "2026-09-01", "to": "2026-09-30" } },
+
+  { "question": "How diversified am I across sectors?", "tool": "show_allocation", "args": { "dimension": "sector" } },
+  { "question": "What's the geographic split of my RRSP?", "tool": "show_allocation", "args": { "accountType": "rrsp", "dimension": "region" } },
+  { "question": "How much of my money is in US dollars versus Canadian?", "tool": "show_allocation", "args": { "dimension": "currency" } },
+  { "question": "Break my portfolio down by account type.", "tool": "show_allocation", "args": { "dimension": "accountType" } },
+  { "question": "What's the stocks-versus-bonds mix in my TFSA?", "tool": "show_allocation", "args": { "accountType": "tfsa", "dimension": "assetClass" } },
+  { "question": "How is my crypto account split across coins?", "tool": "show_allocation", "args": { "accountType": "crypto" } },
+
+  { "question": "How much has XEQT paid me in dividends in 2025?", "tool": "show_income", "args": { "symbol": "XEQT", "year": 2025 } },
+  { "question": "What dividends did my TFSA collect this year?", "tool": "show_income", "args": { "accountType": "tfsa", "year": 2026 } },
+  { "question": "How much interest has my Wealthsimple Cash account earned this year?", "tool": "show_income", "args": { "accountType": "cash_account", "year": 2026 } },
+  { "question": "Show my dividends and withholding tax for last year.", "tool": "show_income", "args": { "year": 2025 } },
+  { "question": "Has my non-registered account paid any income so far?", "tool": "show_income", "args": { "accountType": "non_registered" } },
+
+  { "question": "What did I buy or sell between September 1 and September 30?", "tool": "show_activity", "args": { "from": "2026-09-01", "to": "2026-09-30", "categories": ["investing"] } },
+  { "question": "Show every deposit into my FHSA since January.", "tool": "show_activity", "args": { "accountType": "fhsa", "categories": ["moving_money"], "from": "2026-01-01" } },
+  { "question": "Did I buy any AAPL in the last quarter?", "tool": "show_activity", "args": { "symbol": "AAPL", "from": "2026-07-01", "to": "2026-09-30" } },
+  { "question": "What came in and out of my Wealthsimple Cash account in October?", "tool": "show_activity", "args": { "accountType": "cash_account", "from": "2026-10-01", "to": "2026-10-31" } },
+  { "question": "List my RRSP contributions this year.", "tool": "show_activity", "args": { "accountType": "rrsp", "categories": ["moving_money"], "from": "2026-01-01" } },
+  { "question": "Have I made any trades in my crypto account lately?", "tool": "show_activity", "args": { "accountType": "crypto", "categories": ["investing"] } },
+  { "question": "Find every transaction in my TFSA that mentions dividend.", "tool": "show_activity", "args": { "accountType": "tfsa", "query": "dividend" } },
+  { "question": "Anything in my non-registered account that looks like a fee?", "tool": "show_activity", "args": { "accountType": "non_registered", "query": "fee" } },
+
+  { "question": "What's the news on my holdings this week?", "tool": "show_news", "args": { "window": "7d" } },
+  { "question": "Anything new on SHOP in the last day?", "tool": "show_news", "args": { "symbol": "SHOP", "window": "24h" } },
+  { "question": "Why did my portfolio move this month?", "tool": "show_news", "args": { "window": "30d" } },
+
+  { "question": "Which of my holdings report earnings in the next month?", "tool": "show_calendar", "args": { "range": "1m" } },
+  { "question": "Any dividend dates coming up in the next two weeks?", "tool": "show_calendar", "args": { "range": "2w" } },
+
+  { "question": "Is there anything I should know about my portfolio since Monday?", "tool": "get_portfolio_alerts", "args": { "since": "2026-10-26T00:00:00Z" } },
+  { "question": "Any alerts on my accounts?", "tool": "get_portfolio_alerts", "args": {} },
+
+  { "question": "How much TFSA contribution room do I have left?", "tool": "get_contribution_room", "args": {} },
+  { "question": "Can I still put money into my FHSA this year?", "tool": "get_contribution_room", "args": {} },
+  { "question": "What's my RRSP room for this year?", "tool": "get_contribution_room", "args": {} },
+  { "question": "Where do I stand on contribution room across my registered accounts?", "tool": "get_contribution_room", "args": {} },
+
+  { "question": "My CRA My Account says my TFSA room on January 1 was $7,000, can you save that?", "tool": "remember", "args": { "node": { "type": "tax_year", "key": "2026:tfsa" }, "property": "tax_year.cra_room_jan1", "value": { "amountCad": 7000 }, "text": "TFSA room of $7,000 on 1 January 2026, from CRA My Account.", "kind": "fact", "provenance": "stated" }, "note": "Stated room input only." },
+  { "question": "My FHSA room is $8,000 according to the CRA, remember that.", "tool": "remember", "args": { "node": { "type": "tax_year", "key": "2026:fhsa" }, "property": "tax_year.fhsa_room", "value": { "amountCad": 8000 }, "text": "FHSA room of $8,000 for 2026, from the CRA.", "kind": "fact", "provenance": "stated" } },
+
+  { "question": "How has Shopify done compared with the S&P 500 and the TSX?", "tool": "show_thesis", "args": { "ticker": "SHOP" } },
+  { "question": "Tell me the story of my VFV holding.", "tool": "show_thesis", "args": { "ticker": "VFV" } },
+
+  { "question": "I never want a single stock to be more than 10% of my portfolio.", "tool": "set_portfolio_limit", "args": { "kind": "single_holding", "maxPct": 10 } },
+  { "question": "Keep technology under 30% of everything I own.", "tool": "set_portfolio_limit", "args": { "kind": "sector", "target": "Technology", "maxPct": 30 } },
+  { "question": "Drop the limit I set on cash.", "tool": "set_portfolio_limit", "args": { "kind": "asset_class", "target": "cash", "remove": true } },
+  { "question": "Am I within the limits I set?", "tool": "show_limits", "args": {} },
+  { "question": "Show me my concentration limits against what I hold.", "tool": "show_limits", "args": {} },
+
+  { "question": "How has my investing gone so far?", "tool": "show_report_card", "args": {} },
+  { "question": "Give me my report card.", "tool": "show_report_card", "args": {} },
+  { "question": "How much have I contributed to my TFSA over the years, and how much have I taken out?", "tool": "get_contribution_room", "args": {} }
+]

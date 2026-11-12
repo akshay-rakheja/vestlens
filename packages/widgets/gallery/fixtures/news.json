@@ -1,0 +1,393 @@
+{
+  "window": "7d",
+  "asOf": "@now",
+  "newsAsOf": "@now-1h",
+  "unfetched": 0,
+  "budgetExhausted": false,
+  "portfolioMood": {
+    "level": "positive",
+    "value": 0.24,
+    "spread": {
+      "positive": 5,
+      "negative": 2,
+      "neutral": 1,
+      "unknown": 2
+    }
+  },
+  "movers": [
+    {
+      "symbol": "SHOP.TO",
+      "currency": "CAD",
+      "returnFraction": 0.034,
+      "dollarMove": 1180.4,
+      "estimated": false,
+      "flagged": true,
+      "limitedHistory": false,
+      "units": 210,
+      "marketValue": 35364,
+      "sessionDate": "2026-10-26",
+      "reason": {
+        "kind": "article",
+        "card": {
+          "articleId": "art-1",
+          "headline": "Shopify reports invented quarterly results ahead of estimates",
+          "snippet": "A synthetic summary of an invented article, used only for layout previews.",
+          "source": "Example Wire",
+          "publishedAt": "@now-3h",
+          "imageUrl": null,
+          "url": "https://news.example.test/a1",
+          "symbols": [
+            "SHOP.TO"
+          ],
+          "tags": {
+            "eventType": "earnings_report",
+            "impactLevel": 2,
+            "mood": "positive",
+            "credible": true
+          },
+          "alsoReportedBy": [],
+          "via": null
+        },
+        "via": null,
+        "lookThrough": false
+      },
+      "mood": {
+        "level": "positive",
+        "value": 0.3,
+        "articles": 3,
+        "mostRecentAt": "@now-2h",
+        "estimated": true,
+        "lookThrough": false,
+        "lookThroughMissing": false
+      }
+    },
+    {
+      "symbol": "AAPL",
+      "currency": "USD",
+      "returnFraction": -0.027,
+      "dollarMove": -531.2,
+      "estimated": true,
+      "flagged": true,
+      "limitedHistory": false,
+      "units": 85,
+      "marketValue": 19677.5,
+      "sessionDate": "2026-10-26",
+      "reason": {
+        "kind": "article",
+        "card": {
+          "articleId": "art-3",
+          "headline": "Apple supplier flags softer demand for the next phone cycle",
+          "snippet": "A synthetic summary of an invented article, used only for layout previews.",
+          "source": "Example Wire",
+          "publishedAt": "@now-3h",
+          "imageUrl": null,
+          "url": "https://news.example.test/a1",
+          "symbols": [
+            "AAPL"
+          ],
+          "tags": {
+            "eventType": "supply_chain",
+            "impactLevel": 2,
+            "mood": "negative",
+            "credible": true
+          },
+          "alsoReportedBy": [],
+          "via": null
+        },
+        "via": null,
+        "lookThrough": false
+      },
+      "mood": {
+        "level": "negative",
+        "value": -0.4,
+        "articles": 3,
+        "mostRecentAt": "@now-2h",
+        "estimated": true,
+        "lookThrough": false,
+        "lookThroughMissing": false
+      }
+    },
+    {
+      "symbol": "ENB.TO",
+      "currency": "CAD",
+      "returnFraction": 0.019,
+      "dollarMove": 361.2,
+      "estimated": false,
+      "flagged": true,
+      "limitedHistory": false,
+      "units": 300,
+      "marketValue": 19020,
+      "sessionDate": "2026-10-26",
+      "reason": {
+        "kind": "no_clear_news",
+        "card": null,
+        "via": null,
+        "lookThrough": false
+      },
+      "mood": {
+        "level": "not_enough_news",
+        "value": null,
+        "articles": 0,
+        "mostRecentAt": null,
+        "estimated": true,
+        "lookThrough": false,
+        "lookThroughMissing": false
+      }
+    },
+    {
+      "symbol": "XEQT.TO",
+      "currency": "CAD",
+      "returnFraction": 0.012,
+      "dollarMove": 840,
+      "estimated": false,
+      "flagged": true,
+      "limitedHistory": false,
+      "units": 2150,
+      "marketValue": 77658,
+      "sessionDate": "2026-10-26",
+      "reason": {
+        "kind": "nothing_explains",
+        "card": null,
+        "via": null,
+        "lookThrough": false
+      },
+      "mood": {
+        "level": "neutral",
+        "value": 0.02,
+        "articles": 3,
+        "mostRecentAt": "@now-2h",
+        "estimated": true,
+        "lookThrough": true,
+        "lookThroughMissing": false
+      }
+    }
+  ],
+  "asUsual": 9,
+  "unpriced": 0,
+  "feed": [
+    {
+      "articleId": "art-1",
+      "headline": "Shopify reports invented quarterly results ahead of estimates",
+      "snippet": "A synthetic summary of an invented article, used only for layout previews.",
+      "source": "Example Wire",
+      "publishedAt": "@now-3h",
+      "imageUrl": null,
+      "url": "https://news.example.test/a1",
+      "symbols": [
+        "SHOP.TO"
+      ],
+      "tags": {
+        "eventType": "earnings_report",
+        "impactLevel": 2,
+        "mood": "positive",
+        "credible": true
+      },
+      "alsoReportedBy": [
+        "Other Daily",
+        "Third Post"
+      ],
+      "via": null
+    },
+    {
+      "articleId": "art-2",
+      "headline": "Big Canadian bank raises its dividend as profit climbs",
+      "snippet": "A synthetic summary of an invented article, used only for layout previews.",
+      "source": "Example Business",
+      "publishedAt": "@now-9h",
+      "imageUrl": null,
+      "url": "https://news.example.test/a2",
+      "symbols": [
+        "RY.TO"
+      ],
+      "tags": {
+        "eventType": "dividend_change",
+        "impactLevel": 1,
+        "mood": "positive",
+        "credible": true
+      },
+      "alsoReportedBy": [],
+      "via": null
+    },
+    {
+      "articleId": "art-3",
+      "headline": "Apple supplier flags softer demand for the next phone cycle",
+      "snippet": "A synthetic summary of an invented article, used only for layout previews.",
+      "source": "Tech Ledger",
+      "publishedAt": "@now-15h",
+      "imageUrl": null,
+      "url": "https://news.example.test/a3",
+      "symbols": [
+        "AAPL"
+      ],
+      "tags": {
+        "eventType": "supply_chain",
+        "impactLevel": 2,
+        "mood": "negative",
+        "credible": true
+      },
+      "alsoReportedBy": [],
+      "via": null
+    },
+    {
+      "articleId": "art-4",
+      "headline": "Pipeline operator confirms steady volumes through winter",
+      "snippet": "A synthetic summary of an invented article, used only for layout previews.",
+      "source": "Energy Daily",
+      "publishedAt": "@now-30h",
+      "imageUrl": null,
+      "url": "https://news.example.test/a4",
+      "symbols": [
+        "ENB.TO"
+      ],
+      "tags": {
+        "eventType": null,
+        "impactLevel": 0,
+        "mood": "neutral",
+        "credible": true
+      },
+      "alsoReportedBy": [],
+      "via": null
+    },
+    {
+      "articleId": "art-5",
+      "headline": "Index fund constituent updates its guidance",
+      "snippet": "A synthetic summary of an invented article, used only for layout previews.",
+      "source": "Example Wire",
+      "publishedAt": "@now-41h",
+      "imageUrl": null,
+      "url": "https://news.example.test/a5",
+      "symbols": [
+        "XEQT.TO"
+      ],
+      "tags": null,
+      "alsoReportedBy": [],
+      "via": "NVDA"
+    }
+  ],
+  "symbols": [
+    {
+      "symbol": "AAPL",
+      "mood": {
+        "level": "negative",
+        "value": -0.4,
+        "articles": 4,
+        "mostRecentAt": "@now-2h",
+        "estimated": true,
+        "lookThrough": false,
+        "lookThroughMissing": false
+      },
+      "sparkline": [
+        233,
+        232,
+        234,
+        235,
+        233,
+        231.5
+      ]
+    },
+    {
+      "symbol": "ENB.TO",
+      "mood": {
+        "level": "not_enough_news",
+        "value": null,
+        "articles": 0,
+        "mostRecentAt": null,
+        "estimated": true,
+        "lookThrough": false,
+        "lookThroughMissing": false
+      },
+      "sparkline": [
+        62.1,
+        62.5,
+        62.9,
+        63.1,
+        63.4
+      ]
+    },
+    {
+      "symbol": "RY.TO",
+      "mood": {
+        "level": "positive",
+        "value": 0.3,
+        "articles": 2,
+        "mostRecentAt": "@now-2h",
+        "estimated": true,
+        "lookThrough": false,
+        "lookThroughMissing": false
+      },
+      "sparkline": [
+        189,
+        190,
+        191.5,
+        191,
+        192.3
+      ]
+    },
+    {
+      "symbol": "SHOP.TO",
+      "mood": {
+        "level": "strongly_positive",
+        "value": 0.8,
+        "articles": 6,
+        "mostRecentAt": "@now-2h",
+        "estimated": true,
+        "lookThrough": false,
+        "lookThroughMissing": false
+      },
+      "sparkline": [
+        158,
+        160,
+        163,
+        162,
+        165,
+        168.4
+      ]
+    },
+    {
+      "symbol": "XEQT.TO",
+      "mood": {
+        "level": "neutral",
+        "value": 0.02,
+        "articles": 3,
+        "mostRecentAt": "@now-2h",
+        "estimated": true,
+        "lookThrough": true,
+        "lookThroughMissing": false
+      },
+      "sparkline": [
+        35.4,
+        35.6,
+        35.9,
+        36,
+        36.12
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "id": "acct-tfsa",
+      "label": "TFSA"
+    },
+    {
+      "id": "acct-rrsp",
+      "label": "RRSP"
+    },
+    {
+      "id": "acct-fhsa",
+      "label": "FHSA"
+    },
+    {
+      "id": "acct-personal",
+      "label": "Personal"
+    }
+  ],
+  "filters": {
+    "window": "7d"
+  },
+  "settings": {
+    "benchmark": "sp500",
+    "cadView": false,
+    "privacyDefault": false
+  },
+  "imageOrigin": "https://app.example.test"
+}
