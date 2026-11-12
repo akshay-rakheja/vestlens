@@ -317,6 +317,36 @@ What this means from now on:
   address: update `APP_BASE_URL`, run `docker compose up -d`, and reconnect the AI app.
 - **For daily use**, move to a [named Cloudflare Tunnel](docs/hosting/cloudflare-tunnel.md) or [Render](docs/hosting/render.md).
 
+#### Keep the Quick Tunnel running
+
+The steps above tie the tunnel to one terminal window. To keep it running after you close that window, and to stop your
+Mac from idling to sleep while it runs, start it in the background with a log file instead (macOS; on Linux, leave out
+`caffeinate -i`):
+
+```sh
+nohup caffeinate -i cloudflared tunnel --url http://localhost:8080 > ~/vestlens-tunnel.log 2>&1 &
+```
+
+`caffeinate -i` keeps the Mac from sleeping when idle for as long as `cloudflared` runs. Closing a laptop's lid still
+puts it to sleep, and that ends the tunnel.
+
+| To | Run |
+| --- | --- |
+| See the tunnel's address (it takes a few seconds to appear) | `grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' ~/vestlens-tunnel.log \| head -n 1` |
+| Check it is still running | `pgrep -fl "cloudflared tunnel --url"` (no output means it stopped) |
+| Check VestLens answers through it | `curl -s <the address>/health` should print `{"status":"ok"}` |
+| Stop it | `pkill -f "cloudflared tunnel --url"` |
+
+**After a restart, sleep or reboot, the old address is gone.** Start the tunnel again, then:
+
+1. Read the new address with the `grep` command above.
+2. Put it in `.env` as `APP_BASE_URL`, with no trailing slash, and run `docker compose up -d` in the folder you cloned into.
+3. In your AI app, remove the old VestLens connector and add `<new address>/mcp`, then sign in and click Allow again. The
+   old address no longer reaches anything.
+
+If you keep doing this, it's time for a [named Cloudflare Tunnel](docs/hosting/cloudflare-tunnel.md): its address never changes,
+and `cloudflared` can run as a background service that starts at login.
+
 ### Connect your AI app
 
 Menus change, so follow the vendor's current help page and use the MCP address above as the server URL:
